@@ -8,7 +8,7 @@ export default class Menu extends Component {
             <View>
                 <Text>Menu</Text>
                 <DrawerItems {...this.props}></DrawerItems>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.closeDrawer()}>
                     <Text>Sair</Text>
                 </TouchableOpacity>
             </View>
