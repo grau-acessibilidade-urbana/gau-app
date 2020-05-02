@@ -11,8 +11,7 @@ import SearchPlaces from './screens/searchPlaces/SearchPlaces';
 import Profile from './screens/profile/Profile';
 import About from './screens/about/About';
 import AuthenticationOptions from './screens/authenticationOptions/AuthenticationOptions';
-import Help from './screens/help/help';
-import styles from './screens/menu/style';
+import Help from './screens/help/Help';
 
 
 
