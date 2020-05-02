@@ -1,16 +1,19 @@
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
-import SearchPlaces from './screens/SearchPlaces';
-import Menu from './screens/Menu';
 import { Dimensions } from 'react-native';
-import Profile from './screens/Profile';
-import About from './screens/About';
+
+import Menu from './screens/menu/Menu';
+import SearchPlaces from './screens/searchPlaces/SearchPlaces';
+import Profile from './screens/profile/Profile';
+import About from './screens/about/About';
+import AuthenticationOptions from './screens/authenticationOptions/AuthenticationOptions';
 
 const menuNavigator = createDrawerNavigator({
     Home: { screen: SearchPlaces, navigationOptions: { title: 'Início' } },
     Profile: { screen: Profile, navigationOptions: { title: 'Perfil' } },
     History: { screen: Profile, navigationOptions: { title: 'Histórico' } },
-    About: { screen: About, navigationOptions: { title: 'Sobre' } }
+    About: { screen: About, navigationOptions: { title: 'Sobre' } },
+    Logout: {screen: AuthenticationOptions, navigationOptions: {title: "Sair"}}
 }, {
     initialRouteName: 'Home',
     contentComponent: Menu,
