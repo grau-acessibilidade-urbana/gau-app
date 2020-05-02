@@ -2,7 +2,7 @@ export default {
     colors: {
         primaryColor: '#3197b5',
         secondColor: '#CAE4EC',
-        primaryFontColor: '##5D5D5D ',
+        primaryFontColor: '#5D5D5D',
         secondFontColor: '#8B8B8B',
         FullStar: '#FFC107',
         EmptyStar: '#D1D1D1'
