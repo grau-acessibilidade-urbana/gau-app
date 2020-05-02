@@ -8,13 +8,22 @@ export default class Menu extends Component {
     render() {
         return (
             <View>
-                {/* <TouchableOpacity onPress={() => this.props.navigation.closeDrawer()}>
-                    <Text>}>Fechar</Text>
-                </TouchableOpacity> */}
+
 
                 <View style={styles.menuProfile}>
+                    <View style={styles.photoUser}></View>
 
+                    <View style={styles.userData}>
+                        <Text style={styles.textUserData}>Maria Joaquina</Text>
+                        <Text style={styles.textUserData}>mariajoaquina@hotmail.com</Text>
+                    </View>
+                    <TouchableOpacity onPress={() => this.props.navigation.closeDrawer()}>
+                        <Text>x</Text>
+                    </TouchableOpacity>
                 </View>
+
+
+
                 <DrawerItems {...this.props}></DrawerItems>
                 
             </View>

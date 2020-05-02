@@ -14,7 +14,9 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Geocoder from 'react-native-geocoding'
 import Geolocation from '@react-native-community/geolocation';
 
-const { height, width } = Dimensions.get('window');
+import styles from './style';
+
+
 
 export default class SearchPlaces extends Component {
 
@@ -72,63 +74,3 @@ export default class SearchPlaces extends Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    },
-    map: {
-        width: width,
-        height: height,
-    },
-    searchMenu: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 30,
-        marginLeft: 20,
-    },
-    menuButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginRight: 15,
-        backgroundColor: '#3197b5',
-        borderRadius: 25,
-        width: 50,
-        height: 50,
-    },
-    search: {
-        flexDirection: 'row',
-        backgroundColor: '#FFF',
-        alignItems: 'center',
-        width: width * 0.75,
-        height: 50,
-        borderRadius: 15,
-        padding: 5,
-        shadowColor: '#000',
-        shadowOffset: { width: 2, height: 2 },
-        shadowOpacity: 0.8,
-        shadowRadius: 15,
-        elevation: 7
-    },
-    input: {
-        width: '88%',
-        color: '#3197b5',
-        fontSize: 18,
-        padding: 5,
-    },
-    gpsContainer: {
-        position: 'absolute',
-        bottom: 50,
-        right: 15,
-        width: 50,
-        height: 50,
-    },
-    gpsButton: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#3197b5',
-        borderRadius: 25,
-    }
-})
