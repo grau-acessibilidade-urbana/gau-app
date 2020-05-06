@@ -5,10 +5,21 @@ const styles = StyleSheet.create({
     container: {
         flex: 1
     },
+    content: {
+        justifyContent: "center",
+    },
+    btnSteps: {
+        color: commonStyles.colors.primaryColor,
+        textDecorationLine: "underline"
+    },
     label: {
         color: commonStyles.colors.primaryFontColor,
-        textAlign: "center",
-        fontSize: 20
+        fontSize: 20,
+        paddingLeft: 15,
+        paddingRight: 15
+    },
+    CheckBox: {
+
     }
 })
 
