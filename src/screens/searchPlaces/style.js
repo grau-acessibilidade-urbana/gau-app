@@ -58,6 +58,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: commonStyle.colors.primaryColor,
         borderRadius: 25,
+    },
+    predictionContainer: {
+        borderBottomColor: '#EEE',
+        borderBottomWidth: 1,
+    },  
+    predictionButton: {
+        paddingVertical: 15
+    },
+    primaryText: {
+        fontSize: 18
     }
 })
 

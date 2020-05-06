@@ -20,7 +20,8 @@ export default class SearchPlaces extends Component {
             longitudeDelta: 0.0
         },
         query: '',
-        predictions: []
+        predictions: [],
+        showAutoComplete: false
     };
 
     componentDidMount() {
@@ -41,23 +42,46 @@ export default class SearchPlaces extends Component {
     }
 
     onQueryChange = (text) => {
-        this.setState({ query: text });
-        RNGooglePlaces.getAutocompletePredictions(this.state.query, {
-            country: 'BR'
-        })
-            .then((places) => {
-                // console.log(places);
-                this.setState({ predictions: places });
+        this.setState({ query: text, });
+        if (text && text.length > 0) {
+            RNGooglePlaces.getAutocompletePredictions(this.state.query, {
+                country: 'BR',
+                type: 'establishment'
             })
-            .catch(err => console.log(err.message));
+                .then((places) => {
+                    this.setState(
+                        { 
+                            predictions: places, 
+                            showAutoComplete: places && places.length > 0
+                        });
+    
+                })
+                .catch(err => console.log(err.message));
+        } else {
+            this.setState({ showAutoComplete: false })
+        }
+
     }
 
+    onSelectSuggestion(placeID) {
+        console.log(placeID);
+        // getPlaceByID call here
+        RNGooglePlaces.lookUpPlaceByID(placeID, ['photos'])
+        .then((results) => console.log(results))
+        .catch((error) => console.log(error.message));
+    
+        this.setState({
+          showInput: false,
+          predictions: []
+        });
+      }
+
     renderItem = ({ item }) => {
-        console.log('chamei renderItem');
         return (
-            <View>
-                <TouchableOpacity>
-                    <Text>{item.primaryText}</Text>
+            <View style={styles.predictionContainer}> 
+                <TouchableOpacity style={styles.predictionButton}
+                    onPress={() => this.onSelectSuggestion(item.placeID)}>
+                    <Text style={styles.primaryText}>{item.primaryText}</Text>
                 </TouchableOpacity>
                 <View />
             </View>
@@ -86,6 +110,7 @@ export default class SearchPlaces extends Component {
                         data={this.state.predictions}
                         renderItem={this.renderItem}
                         keyExtractor={item => item.placeID}
+                        visible={this.state.showAutoComplete}
                     />
                 </Callout>
                 <Callout style={styles.gpsContainer}>

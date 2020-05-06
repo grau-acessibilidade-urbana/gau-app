@@ -25,7 +25,7 @@ const autoComplete = props => {
                     <Icon name='search' size={25} color='#3197b5'></Icon>
                 </TouchableWithoutFeedback>
             </View>
-            <View style={styles.list}>
+            { props.visible && <View style={styles.list}>
                 <FlatList 
                     data={props.data}
                     renderItem={props.renderItem}
@@ -33,7 +33,7 @@ const autoComplete = props => {
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{flexGrow: 1}}
                 />
-            </View>
+            </View> }
         </View>
     )
 }
@@ -42,9 +42,10 @@ export default autoComplete;
 
 const styles = StyleSheet.create({
     list: {
-        marginTop: 16,
+        marginTop: 5,
         height: 400,
-        backgroundColor: '#FFF'
+        backgroundColor: '#FFF',
+        padding: 15,
       }
 })
 
