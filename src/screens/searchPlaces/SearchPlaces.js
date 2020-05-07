@@ -1,27 +1,28 @@
 import Geolocation from '@react-native-community/geolocation';
 import React, { Component } from 'react';
-import { Alert, TextInput, TouchableOpacity, View, Text } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import RNGooglePlaces from 'react-native-google-places';
-import MapView, { Callout, PROVIDER_GOOGLE } from 'react-native-maps';
+import { Alert, Text, TouchableOpacity, View } from 'react-native';
+import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import styles from './style';
-
 import AutoComplete from '../../components/AutoComplete';
+import styles from './style';
+import * as googleApi from '../../api/google';
 
-
+const initialState = {
+    region: {
+        latitude: 0.0,
+        longitude: 0.0,
+        latitudeDelta: 0.001,
+        longitudeDelta: 0.001
+    },
+    query: '',
+    predictions: [],
+    showAutoComplete: false,
+    selectedPlace: null
+}
 export default class SearchPlaces extends Component {
 
     state = {
-        region: {
-            latitude: 0.0,
-            longitude: 0.0,
-            latitudeDelta: 0.0,
-            longitudeDelta: 0.0
-        },
-        query: '',
-        predictions: [],
-        showAutoComplete: false
+       ...initialState
     };
 
     componentDidMount() {
@@ -41,47 +42,39 @@ export default class SearchPlaces extends Component {
         }, err => Alert.alert('Erro', err.toString()));
     }
 
-    onQueryChange = (text) => {
+    onQueryChange = async (text) => {
         this.setState({ query: text, });
         if (text && text.length > 0) {
-            RNGooglePlaces.getAutocompletePredictions(this.state.query, {
-                country: 'BR',
-                type: 'establishment'
-            })
-                .then((places) => {
-                    this.setState(
-                        { 
-                            predictions: places, 
-                            showAutoComplete: places && places.length > 0
-                        });
-    
-                })
-                .catch(err => console.log(err.message));
+            const predictions = await googleApi.getPlacesPredictions(this.state.query);
+            this.setState(
+                {
+                    predictions,
+                    showAutoComplete: predictions && predictions.length > 0
+                });
         } else {
-            this.setState({ showAutoComplete: false })
+            this.setState({ showAutoComplete: false });
         }
-
     }
 
-    onSelectSuggestion(placeID) {
-        console.log(placeID);
-        // getPlaceByID call here
-        RNGooglePlaces.lookUpPlaceByID(placeID, ['photos'])
-        .then((results) => console.log(results))
-        .catch((error) => console.log(error.message));
-    
+    onSelectSuggestion = async (placeId) => {
+        const placeDetails = await googleApi.getPlaceDetailsById(placeId);
         this.setState({
-          showInput: false,
-          predictions: []
+            selectedPlace: placeDetails,
+            showAutoComplete: false,
+            region: {
+                ...initialState.region,
+                ...placeDetails.location
+            },
+            predictions: []
         });
-      }
+    }
 
     renderItem = ({ item }) => {
         return (
-            <View style={styles.predictionContainer}> 
+            <View style={styles.predictionContainer}>
                 <TouchableOpacity style={styles.predictionButton}
-                    onPress={() => this.onSelectSuggestion(item.placeID)}>
-                    <Text style={styles.primaryText}>{item.primaryText}</Text>
+                    onPress={() => this.onSelectSuggestion(item.id)}>
+                    <Text style={styles.primaryText}>{item.description}</Text>
                 </TouchableOpacity>
                 <View />
             </View>
@@ -97,6 +90,11 @@ export default class SearchPlaces extends Component {
                     loadingEnabled={true}
                     region={this.state.region}
                     onRegionChange={this.onRegionChange}>
+                        {this.state.selectedPlace && 
+                            <Marker  coordinate={this.state.selectedPlace.location}
+                                title={this.state.selectedPlace.name}
+                                description={this.state.selectedPlace.address} />
+                        }
                 </MapView>
                 <Callout style={styles.searchMenu}>
                     <TouchableOpacity style={styles.menuButton} onPress={() => this.props.navigation.openDrawer()}>
@@ -109,7 +107,7 @@ export default class SearchPlaces extends Component {
                         query={this.state.query}
                         data={this.state.predictions}
                         renderItem={this.renderItem}
-                        keyExtractor={item => item.placeID}
+                        keyExtractor={item => item.id}
                         visible={this.state.showAutoComplete}
                     />
                 </Callout>
