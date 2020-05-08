@@ -1,14 +1,5 @@
-import React, { Component } from 'react'
-import {
-    View,
-    Text,
-    FlatList,
-    TouchableOpacity,
-    TextInput,
-    StyleSheet,
-    TouchableWithoutFeedback,
-    Dimensions
-} from 'react-native'
+import React from 'react';
+import { FlatList, StyleSheet, TextInput, TouchableWithoutFeedback, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const autoComplete = props => {
@@ -21,7 +12,7 @@ const autoComplete = props => {
                     onChangeText={props.onChangeText}
                     value={props.query}
                 />
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={props.onSearch}>
                     <Icon name='search' size={25} color='#3197b5'></Icon>
                 </TouchableWithoutFeedback>
             </View>

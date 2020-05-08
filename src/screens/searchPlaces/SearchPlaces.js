@@ -21,6 +21,7 @@ const initialState = {
         longitudeDelta: 0.001
     },
     query: '',
+    places: [],
     predictions: [],
     showAutoComplete: false,
     selectedPlace: null
@@ -77,6 +78,16 @@ export default class SearchPlaces extends Component {
         });
     }
 
+    onSearch = async () => {
+        const places = await googleApi.findNearbyPlacesByText(this.state.currentLocation, this.state.query);
+        console.log('places: ' + JSON.stringify(places));
+        this.setState({ 
+            places,
+            showAutoComplete: false,
+            predictionContainer: []
+        });
+    }
+
     renderItem = ({ item }) => {
         return (
             <View style={styles.predictionContainer}>
@@ -119,6 +130,7 @@ export default class SearchPlaces extends Component {
                         containerStyle={styles.search}
                         inputStyle={styles.input}
                         onChangeText={this.onQueryChange}
+                        onSearch={this.onSearch}
                         query={this.state.query}
                         data={this.state.predictions}
                         renderItem={this.renderItem}

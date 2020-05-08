@@ -40,3 +40,23 @@ export function getPlaceDetailsById(id) {
         })
         .catch(err => console.log(err));
 }
+
+export function findNearbyPlacesByText(location, text) {
+    return axios.get(`/nearbysearch/json?location=${location.latitude},${location.longitude}&radius=50000&type=establishment&keyword=${text}&key=${API_KEY}`)
+        .then(res => {
+            if (res && res.data && res.data.results) {
+                const results = res.data.results;
+                return results.map(place => {
+                    return {
+                        id: place.place_id,
+                        name: place.name,
+                        location: {
+                            latitude: place.geometry.lat,
+                            longitude: place.geometry.lng
+                        }
+                    }
+                })
+            }
+        })
+        .catch(err => console.log(err));
+}
