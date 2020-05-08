@@ -1,6 +1,6 @@
 import Geolocation from '@react-native-community/geolocation';
 import React, { Component } from 'react';
-import { Alert, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Text, TouchableOpacity, View, Image } from 'react-native';
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AutoComplete from '../../components/AutoComplete';
@@ -8,7 +8,13 @@ import styles from './style';
 import * as googleApi from '../../api/google';
 
 const initialState = {
-    region: {
+    mapRegion: {
+        latitude: 0.0,
+        longitude: 0.0,
+        latitudeDelta: 0.001,
+        longitudeDelta: 0.001
+    },
+    currentLocation: {
         latitude: 0.0,
         longitude: 0.0,
         latitudeDelta: 0.001,
@@ -31,13 +37,15 @@ export default class SearchPlaces extends Component {
 
     getCurrentLocation = () => {
         Geolocation.getCurrentPosition(position => {
+            const location = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+                latitudeDelta: 0.02,
+                longitudeDelta: 0.02
+            }
             this.setState({
-                region: {
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                    latitudeDelta: 0.001,
-                    longitudeDelta: 0.001
-                }
+                currentLocation: location,
+                mapRegion: location
             });
         }, err => Alert.alert('Erro', err.toString()));
     }
@@ -61,8 +69,8 @@ export default class SearchPlaces extends Component {
         this.setState({
             selectedPlace: placeDetails,
             showAutoComplete: false,
-            region: {
-                ...initialState.region,
+            mapRegion: {
+                ...initialState.mapRegion,
                 ...placeDetails.location
             },
             predictions: []
@@ -88,8 +96,15 @@ export default class SearchPlaces extends Component {
                     provider={PROVIDER_GOOGLE}
                     style={styles.map}
                     loadingEnabled={true}
-                    region={this.state.region}
+                    region={this.state.mapRegion}
                     onRegionChange={this.onRegionChange}>
+                        <Marker coordinate={this.state.currentLocation}
+                            title='Você está aqui!'
+                            description='Localização atual.'>
+                                <View style={styles.currLocationPin}>
+                                    <Image style={styles.pinImage} source={require('../../../assets/imgs/wheelchair.png')}/>
+                                </View>
+                        </Marker>
                         {this.state.selectedPlace && 
                             <Marker  coordinate={this.state.selectedPlace.location}
                                 title={this.state.selectedPlace.name}

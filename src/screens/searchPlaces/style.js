@@ -68,6 +68,16 @@ const styles = StyleSheet.create({
     },
     primaryText: {
         fontSize: 18
+    },
+    currLocationPin: {
+        height: 50,
+        width: 50,
+        alignItems: 'center',
+        justifyContent : 'center',
+    },
+    pinImage: {
+        height: '100%',
+        width: '100%'
     }
 })
 
