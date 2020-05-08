@@ -1,31 +1,23 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import commonStyle from "../../shared/commonStyle";
-const { height, width } = Dimensions.get('window'); 
+const { height, width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   placeContainer: {
-    display: 'flex',
-    flexDirection: 'column'
+    height: height,
   },
   imageContainer: {
-    // height: height * 35 / 100,
-    // flex: 1,
-    backgroundColor: 'yellow',
-    // height: '100%'
+    flex: 1,
   },
-  // imageLocation: {
-  //   height: '100%',
-  //   width: '100%'
-  // },
+  imageLocation: {
+    height: '100%',
+    width: '100%'
+  },
   detailLocalContainer: {
-    // backgroundColor: 'orange',
-    // flex: 2,
-    // display: 'flex',
-    // justifyContent: 'center', 
-    // flexDirection: 'column',
-    // height: '30%'
+    flex: 2,
+    padding: 5,
   },
   detailLocalContainer_title: {
     fontSize: 22,
@@ -37,19 +29,26 @@ const styles = StyleSheet.create({
     color: commonStyle.colors.secondFontColor,
     fontSize: 16,
   },
-
-
-  // header style 
-  header: {
-    zIndex: 1,
-    // position: 'absolute',
-    width: width,
-    height: 50,
-    display: 'flex',
-    justifyContent: 'center'
+  text: {
+    color: commonStyle.colors.primaryFontColor,
+    fontSize: 18,
   },
-  headerLigth: {backgroundColor: commonStyle.colors.whiteTransparent,},
-  headerDark: {backgroundColor: commonStyle.colors.primaryColor,}
+  rateLocationButton: {
+    position: 'absolute',
+    borderRadius: 5,
+    bottom: 10,
+    right: 10,
+    alignSelf: 'flex-end',
+    backgroundColor: commonStyle.colors.primaryColor,
+    padding: 5,
+    paddingHorizontal: 15
+  },
+  rateLocationText:
+  {
+    color: "#fff",
+    fontSize: 16
+  }
+
 });
 
 export default styles

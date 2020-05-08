@@ -20,8 +20,10 @@ export default Header;
 
 const styles = StyleSheet.create({
   header: {
-    zIndex: 1,
-    position: 'absolute',
+    // zIndex: 1,
+    // position: 'absolute',
+    // left: 0,
+    // top: 0,
     width: width,
     height: 50,
     display: 'flex',
