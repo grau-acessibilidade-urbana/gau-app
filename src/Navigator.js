@@ -13,10 +13,6 @@ import About from './screens/about/About';
 import AuthenticationOptions from './screens/authenticationOptions/AuthenticationOptions';
 import Help from './screens/help/Help';
 
-import PlaceRating from './screens/placeRating/PlaceRating';
-
-
-
 const menuNavigator = createDrawerNavigator({
     Home: {
         screen: SearchPlaces,
@@ -43,8 +39,8 @@ const menuNavigator = createDrawerNavigator({
             drawerIcon: () => <Icon name="history" size={25} color={commonStyles.colors.primaryFontColor}/>
         }
     },
-    PlaceRating: { 
-        screen: PlaceRating,
+    Help: { 
+        screen: Help,
         navigationOptions: {
             title: 'Ajuda',
             drawerIcon: () => <Icon name="help" size={25} color={commonStyles.colors.primaryFontColor}/>
@@ -65,8 +61,8 @@ const menuNavigator = createDrawerNavigator({
         }
     }
 }, {
-    initialRouteName: 'PlaceRating',
-    contentComponent: PlaceRating,
+    initialRouteName: 'Home',
+    contentComponent: Menu,
     drawerWidth: Dimensions.get('screen').width * 0.85,
     contentOptions: {
         labelStyle: {
