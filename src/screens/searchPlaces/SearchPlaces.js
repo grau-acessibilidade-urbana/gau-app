@@ -29,7 +29,7 @@ const initialState = {
 export default class SearchPlaces extends Component {
 
     state = {
-       ...initialState
+        ...initialState
     };
 
     componentDidMount() {
@@ -81,10 +81,11 @@ export default class SearchPlaces extends Component {
     onSearch = async () => {
         const places = await googleApi.findNearbyPlacesByText(this.state.currentLocation, this.state.query);
         console.log('places: ' + JSON.stringify(places));
-        this.setState({ 
+        this.setState({
             places,
             showAutoComplete: false,
-            predictionContainer: []
+            predictionContainer: [],
+            selectedPlace: null
         });
     }
 
@@ -109,18 +110,22 @@ export default class SearchPlaces extends Component {
                     loadingEnabled={true}
                     region={this.state.mapRegion}
                     onRegionChange={this.onRegionChange}>
-                        <Marker coordinate={this.state.currentLocation}
-                            title='Você está aqui!'
-                            description='Localização atual.'>
-                                <View style={styles.currLocationPin}>
-                                    <Image style={styles.pinImage} source={require('../../../assets/imgs/wheelchair.png')}/>
-                                </View>
-                        </Marker>
-                        {this.state.selectedPlace && 
-                            <Marker  coordinate={this.state.selectedPlace.location}
-                                title={this.state.selectedPlace.name}
-                                description={this.state.selectedPlace.address} />
-                        }
+                    <Marker coordinate={this.state.currentLocation}
+                        title='Você está aqui!'
+                        description='Localização atual.'>
+                        <View style={styles.currLocationPin}>
+                            <Image style={styles.pinImage} source={require('../../../assets/imgs/wheelchair.png')} />
+                        </View>
+                    </Marker>
+                    {this.state.selectedPlace &&
+                        <Marker coordinate={this.state.selectedPlace.location}
+                            title={this.state.selectedPlace.name}
+                            description={this.state.selectedPlace.address} />
+                    }
+                    {this.state.places && this.state.places.map((place) => {
+                        return (<Marker key={place.id} coordinate={place.location}
+                            title={place.name} />)
+                    })}
                 </MapView>
                 <Callout style={styles.searchMenu}>
                     <TouchableOpacity style={styles.menuButton} onPress={() => this.props.navigation.openDrawer()}>

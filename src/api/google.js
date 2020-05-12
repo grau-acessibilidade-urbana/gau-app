@@ -51,8 +51,8 @@ export function findNearbyPlacesByText(location, text) {
                         id: place.place_id,
                         name: place.name,
                         location: {
-                            latitude: place.geometry.lat,
-                            longitude: place.geometry.lng
+                            latitude: place.geometry.location.lat,
+                            longitude: place.geometry.location.lng
                         }
                     }
                 })
