@@ -83,6 +83,7 @@ target 'gau' do
 
   pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
 
+
   target 'gauTests' do
     inherit! :complete
     # Pods for testing

@@ -1,6 +1,6 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import commonStyle from "../../shared/commonStyle";
-const { height, width } = Dimensions.get('window'); 
+const { height, width } = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         flex: 1
@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
     },
     searchMenu: {
         flexDirection: 'row',
-        alignItems: 'center',
         marginTop: 30,
         marginLeft: 20,
     },
@@ -59,6 +58,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: commonStyle.colors.primaryColor,
         borderRadius: 25,
+    },
+    predictionContainer: {
+        borderBottomColor: '#EEE',
+        borderBottomWidth: 1,
+    },  
+    predictionButton: {
+        paddingVertical: 15
+    },
+    primaryText: {
+        fontSize: 18
     }
 })
 
