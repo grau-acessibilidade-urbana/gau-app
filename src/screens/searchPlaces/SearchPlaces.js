@@ -75,18 +75,20 @@ export default class SearchPlaces extends Component {
                 ...placeDetails.location
             },
             predictions: []
-        });
+        }, this.map.fitToCoordinates([placeDetails.location]));
     }
 
     onSearch = async () => {
         const places = await googleApi.findNearbyPlacesByText(this.state.currentLocation, this.state.query);
         console.log('places: ' + JSON.stringify(places));
+        const coordinates = places.map(place => place.location);
+        console.log('coordinates:' + JSON.stringify(coordinates));
         this.setState({
             places,
             showAutoComplete: false,
             predictionContainer: [],
             selectedPlace: null
-        });
+        }, this.map.fitToCoordinates(coordinates));
     }
 
     renderItem = ({ item }) => {
@@ -109,7 +111,8 @@ export default class SearchPlaces extends Component {
                     style={styles.map}
                     loadingEnabled={true}
                     region={this.state.mapRegion}
-                    onRegionChange={this.onRegionChange}>
+                    onRegionChange={this.onRegionChange}
+                    ref={map => { this.map = map }}>
                     <Marker coordinate={this.state.currentLocation}
                         title='Você está aqui!'
                         description='Localização atual.'>

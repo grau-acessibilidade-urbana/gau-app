@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_KEY = 'AIzaSyB3ac2_oX6qgsKNLsp3W6e5IZ82-jLeb9s';
+const API_KEY = 'AIzaSyA-1Tg-e61BNPrMgy-FXpVH3wAZnIhKV48';
 axios.defaults.baseURL = 'https://maps.googleapis.com/maps/api/place'
 
 
