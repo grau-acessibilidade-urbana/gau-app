@@ -3,7 +3,6 @@ import axios from "axios";
 const API_KEY = 'AIzaSyA-1Tg-e61BNPrMgy-FXpVH3wAZnIhKV48';
 axios.defaults.baseURL = 'https://maps.googleapis.com/maps/api/place'
 
-
 export function getPlacesPredictions(query, currentLocation) {
     return axios.get(`/autocomplete/json?input=${query}&types=establishment&components=country:br&key=${API_KEY}`)
         .then(res => {

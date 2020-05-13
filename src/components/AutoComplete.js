@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, TextInput, TouchableWithoutFeedback, View } from 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const autoComplete = props => {
+
     return (
         <View>
             <View style={props.containerStyle}>

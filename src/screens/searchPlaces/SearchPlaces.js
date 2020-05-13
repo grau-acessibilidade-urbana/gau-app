@@ -7,18 +7,17 @@ import AutoComplete from '../../components/AutoComplete';
 import styles from './style';
 import * as googleApi from '../../api/google';
 
+const MAP_REGION = {
+    latitude: 0.0,
+    longitude: 0.0,
+    latitudeDelta: 0.001,
+    longitudeDelta: 0.001
+}
+
 const initialState = {
-    mapRegion: {
-        latitude: 0.0,
-        longitude: 0.0,
-        latitudeDelta: 0.001,
-        longitudeDelta: 0.001
-    },
     currentLocation: {
         latitude: 0.0,
         longitude: 0.0,
-        latitudeDelta: 0.001,
-        longitudeDelta: 0.001
     },
     query: '',
     places: [],
@@ -33,7 +32,6 @@ export default class SearchPlaces extends Component {
     };
 
     componentDidMount() {
-        this.getCurrentLocation();
     }
 
     getCurrentLocation = () => {
@@ -46,8 +44,7 @@ export default class SearchPlaces extends Component {
             }
             this.setState({
                 currentLocation: location,
-                mapRegion: location
-            });
+            }, this.map.fitToCoordinates([location], { animated: false }));
         }, err => Alert.alert('Erro', err.toString()));
     }
 
@@ -70,25 +67,19 @@ export default class SearchPlaces extends Component {
         this.setState({
             selectedPlace: placeDetails,
             showAutoComplete: false,
-            mapRegion: {
-                ...initialState.mapRegion,
-                ...placeDetails.location
-            },
             predictions: []
-        }, this.map.fitToCoordinates([placeDetails.location]));
+        }, this.map.fitToCoordinates([placeDetails.location], { animated: true }));
     }
 
     onSearch = async () => {
         const places = await googleApi.findNearbyPlacesByText(this.state.currentLocation, this.state.query);
-        console.log('places: ' + JSON.stringify(places));
         const coordinates = places.map(place => place.location);
-        console.log('coordinates:' + JSON.stringify(coordinates));
         this.setState({
             places,
             showAutoComplete: false,
             predictionContainer: [],
-            selectedPlace: null
-        }, this.map.fitToCoordinates(coordinates));
+            selectedPlace: null,
+        }, this.map.fitToCoordinates(coordinates, { animated: true }));
     }
 
     renderItem = ({ item }) => {
@@ -110,9 +101,9 @@ export default class SearchPlaces extends Component {
                     provider={PROVIDER_GOOGLE}
                     style={styles.map}
                     loadingEnabled={true}
-                    region={this.state.mapRegion}
-                    onRegionChange={this.onRegionChange}
-                    ref={map => { this.map = map }}>
+                    initialRegion={MAP_REGION}
+                    ref={map => { this.map = map }}
+                    onLayout={this.getCurrentLocation}>
                     <Marker coordinate={this.state.currentLocation}
                         title='Você está aqui!'
                         description='Localização atual.'>
@@ -125,8 +116,8 @@ export default class SearchPlaces extends Component {
                             title={this.state.selectedPlace.name}
                             description={this.state.selectedPlace.address} />
                     }
-                    {this.state.places && this.state.places.map((place) => {
-                        return (<Marker key={place.id} coordinate={place.location}
+                    {this.state.places && this.state.places.map((place, i) => {
+                        return (<Marker key={i} identifier={place.id} coordinate={place.location}
                             title={place.name} />)
                     })}
                 </MapView>
@@ -135,6 +126,7 @@ export default class SearchPlaces extends Component {
                         <Icon name='menu' size={25} color='#FFF'></Icon>
                     </TouchableOpacity>
                     <AutoComplete
+                        ref={this.input}
                         containerStyle={styles.search}
                         inputStyle={styles.input}
                         onChangeText={this.onQueryChange}
