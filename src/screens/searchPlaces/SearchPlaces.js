@@ -1,6 +1,12 @@
 import Geolocation from '@react-native-community/geolocation';
 import React, { Component } from 'react';
-import { Alert, Text, TouchableOpacity, View, Image } from 'react-native';
+import {
+    Alert,
+    Text,
+    TouchableOpacity,
+    View,
+    Image
+} from 'react-native';
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AutoComplete from '../../components/AutoComplete';
@@ -62,13 +68,19 @@ export default class SearchPlaces extends Component {
         }
     }
 
-    onSelectSuggestion = async (placeId) => {
-        const placeDetails = await googleApi.getPlaceDetailsById(placeId);
+    onSelectPlace = async (placeId) => {
+        const placeDetails = await googleApi.getPlaceDetailsById(this.state.currentLocation, placeId);
         this.setState({
             selectedPlace: placeDetails,
             showAutoComplete: false,
             predictions: []
         }, this.map.fitToCoordinates([placeDetails.location], { animated: true }));
+    }
+
+    clearSelection = () => {
+        this.setState({
+            selectedPlace: null
+        })
     }
 
     onSearch = async () => {
@@ -86,7 +98,7 @@ export default class SearchPlaces extends Component {
         return (
             <View style={styles.predictionContainer}>
                 <TouchableOpacity style={styles.predictionButton}
-                    onPress={() => this.onSelectSuggestion(item.id)}>
+                    onPress={() => this.onSelectPlace(item.id)}>
                     <Text style={styles.primaryText}>{item.description}</Text>
                 </TouchableOpacity>
                 <View />
@@ -117,8 +129,14 @@ export default class SearchPlaces extends Component {
                             description={this.state.selectedPlace.address} />
                     }
                     {this.state.places && this.state.places.map((place, i) => {
-                        return (<Marker key={i} identifier={place.id} coordinate={place.location}
-                            title={place.name} />)
+                        return (
+                            <Marker
+                                key={i}
+                                identifier={place.id}
+                                coordinate={place.location}
+                                title={place.name}
+                                onPress={() => this.onSelectPlace(place.id)} />
+                        )
                     })}
                 </MapView>
                 <Callout style={styles.searchMenu}>
@@ -143,8 +161,29 @@ export default class SearchPlaces extends Component {
                         <Icon name='gps-fixed' size={30} color='#FFF'></Icon>
                     </TouchableOpacity>
                 </Callout>
+
+                {this.state.selectedPlace &&
+                    <Callout style={styles.placeDetailsContainer}>
+                        <View style={styles.placeDetailsHeader}>
+                            <Text style={styles.placeName}>{this.state.selectedPlace.name}</Text>
+                            <TouchableOpacity onPress={this.clearSelection}>
+                                <Icon name="close" size={20} color='#8B8B8B' />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.placeDetails}>
+                            <Image style={styles.placeImage} source={{ uri: this.state.selectedPlace.image }}></Image>
+                            <View style={styles.placeDescription}>
+                                <Text style={styles.placeAddressTitle}>Endereço:
+                                    <Text style={styles.placeAddress}> {this.state.selectedPlace.address}</Text>
+                                </Text>
+                                <Text style={styles.placeAddress}>{this.state.selectedPlace.distance} de distância</Text>
+                                <TouchableOpacity style={styles.getDetailsButton}>
+                                    <Text style={styles.getDetails}>Ver mais detalhes</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Callout>}
             </View>
         )
     }
 }
-

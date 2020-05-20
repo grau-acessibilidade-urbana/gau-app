@@ -6,7 +6,6 @@ export default {
         secondFontColor: '#8B8B8B',
         FullStar: '#FFC107',
         EmptyStar: '#D1D1D1'
-
     } 
 }
 
