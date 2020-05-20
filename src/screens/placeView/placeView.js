@@ -52,7 +52,6 @@ const comentaries = [
 ];
 
 const PlaceView = ({ ...props }) => {
-  // console.log('P', props)
   return (
     <View>
       <Header goBack={props.navigation.goBack} lightweight />

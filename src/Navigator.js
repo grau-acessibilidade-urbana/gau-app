@@ -1,23 +1,32 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Dimensions } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
-import { Dimensions } from 'react-native';
-
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import commonStyles from './shared/commonStyle';
-
-import Menu from './screens/menu/Menu';
-import SearchPlaces from './screens/searchPlaces/SearchPlaces';
-import Profile from './screens/profile/Profile';
+import { createStackNavigator } from 'react-navigation-stack';
 import About from './screens/about/About';
 import AuthenticationOptions from './screens/authenticationOptions/AuthenticationOptions';
 import Help from './screens/help/Help';
+import Menu from './screens/menu/Menu';
+import Profile from './screens/profile/Profile';
+import SearchPlaces from './screens/searchPlaces/SearchPlaces';
+import commonStyles from './shared/commonStyle';
 import PlaceView from './screens/placeView/placeView';
 
+const stackNavigator = createStackNavigator({
+    SearchPlaces: {
+        screen: SearchPlaces
+    },
+    PlaceView: {
+        screen: PlaceView
+    }
+}, {
+    headerMode: 'none'
+});
 
 const menuNavigator = createDrawerNavigator({
     Home: {
-        screen: PlaceView,
+        screen: stackNavigator,
         navigationOptions: {
             title: 'Início',
             drawerIcon: () => <Icon name="home" size={25} color={commonStyles.colors.primaryFontColor}/>,

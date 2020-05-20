@@ -177,7 +177,7 @@ export default class SearchPlaces extends Component {
                                     <Text style={styles.placeAddress}> {this.state.selectedPlace.address}</Text>
                                 </Text>
                                 <Text style={styles.placeAddress}>{this.state.selectedPlace.distance} de distância</Text>
-                                <TouchableOpacity style={styles.getDetailsButton}>
+                                <TouchableOpacity style={styles.getDetailsButton} onPress={() => this.props.navigation.navigate('PlaceView')}>
                                     <Text style={styles.getDetails}>Ver mais detalhes</Text>
                                 </TouchableOpacity>
                             </View>
