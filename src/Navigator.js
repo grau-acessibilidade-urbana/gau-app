@@ -12,12 +12,12 @@ import Profile from './screens/profile/Profile';
 import About from './screens/about/About';
 import AuthenticationOptions from './screens/authenticationOptions/AuthenticationOptions';
 import Help from './screens/help/Help';
-
+import PlaceView from './screens/placeView/placeView';
 
 
 const menuNavigator = createDrawerNavigator({
     Home: {
-        screen: SearchPlaces,
+        screen: PlaceView,
         navigationOptions: {
             title: 'Início',
             drawerIcon: () => <Icon name="home" size={25} color={commonStyles.colors.primaryFontColor}/>,
