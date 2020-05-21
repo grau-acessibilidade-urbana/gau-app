@@ -3,7 +3,7 @@ import { Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
-import { createStackNavigator } from 'react-navigation-stack';
+import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
 import About from './screens/about/About';
 import AuthenticationOptions from './screens/authenticationOptions/AuthenticationOptions';
 import Help from './screens/help/Help';
@@ -21,7 +21,10 @@ const stackNavigator = createStackNavigator({
         screen: PlaceView
     }
 }, {
-    headerMode: 'none'
+    headerMode: 'none',
+    defaultNavigationOptions: {
+        ...TransitionPresets.SlideFromRightIOS,
+    }
 });
 
 const menuNavigator = createDrawerNavigator({

@@ -78,7 +78,6 @@ export function getDistanceBetweenPlaces(origin, destination) {
                 const distance = res.data.rows
                     .flatMap(row => row.elements)
                     .map(element => element.distance.text);
-                console.log('distance: ' + JSON.stringify(distance));
                 return distance.length > 0 ? distance[0] : 'Não foi possível calcular a distância';
             }
         })
