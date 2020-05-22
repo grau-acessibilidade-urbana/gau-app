@@ -1,19 +1,11 @@
-import Geolocation from '@react-native-community/geolocation';
 import React, { Component } from 'react';
-import {
-    Alert,
-    Text,
-    TouchableOpacity,
-    View,
-    Image
-} from 'react-native';
-import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import AutoComplete from '../../components/AutoComplete';
-import styles from './style';
-import * as googleApi from '../../api/google';
-import { setPlace, queryChanged, clearSelectedPlace, updateCurrentLocation, findPlaces } from '../../store/actions/places';
 import { connect } from 'react-redux';
+import AutoComplete from '../../components/AutoComplete';
+import { clearSelectedPlace, findPlaces, queryChanged, setPlace, updateCurrentLocation } from '../../store/actions/places';
+import styles from './style';
 
 const MAP_REGION = {
     latitude: 0.0,
@@ -23,14 +15,7 @@ const MAP_REGION = {
 }
 
 const initialState = {
-    currentLocation: {
-        latitude: 0.0,
-        longitude: 0.0,
-    },
     query: '',
-    places: [],
-    predictions: [],
-    selectedPlace: null
 }
 class SearchPlaces extends Component {
 
@@ -56,10 +41,10 @@ class SearchPlaces extends Component {
     }
 
     onClearSelection = () => {
-        this.setState({query: null});
+        this.setState({ query: null });
         this.props.onClearSelectedPlace();
     }
-    
+
     onQueryChange = (text) => {
         this.setState({ query: text, });
         this.props.onQueryChange(text);
