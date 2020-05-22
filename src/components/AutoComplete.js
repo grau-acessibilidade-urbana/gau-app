@@ -17,7 +17,7 @@ const autoComplete = props => {
                     <Icon name='search' size={25} color='#3197b5'></Icon>
                 </TouchableWithoutFeedback>
             </View>
-            { props.visible && <View style={styles.list}>
+            { props.data && props.data.length > 0 && <View style={styles.list}>
                 <FlatList 
                     data={props.data}
                     renderItem={props.renderItem}
