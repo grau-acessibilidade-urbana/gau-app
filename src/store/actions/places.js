@@ -1,5 +1,5 @@
 import Geolocation from '@react-native-community/geolocation';
-import { SET_PLACE, QUERY_CHANGED, UPDATE_CURRENT_LOCATION } from '../actionTypes';
+import { SET_PLACE, QUERY_CHANGED, UPDATE_CURRENT_LOCATION, FIND_PLACES } from '../actionTypes';
 import * as googleApi from '../../api/google';
 
 export function setPlace(currentLocation, placeId) {
@@ -9,6 +9,17 @@ export function setPlace(currentLocation, placeId) {
             dispatch({ type: SET_PLACE, payload });
         } catch (error) {
             dispatch({ type: SET_PLACE, payload: error });
+        }
+    }
+}
+
+export function findPlaces(currentLocation, query) {
+    return async (dispatch) => {
+        try {
+            const payload = await googleApi.findNearbyPlacesByText(currentLocation, query);
+            dispatch({ type: FIND_PLACES, payload });
+        } catch (error) {
+            dispatch({ type: FIND_PLACES, payload: error });
         }
     }
 }

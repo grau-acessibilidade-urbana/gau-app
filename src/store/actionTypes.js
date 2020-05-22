@@ -1,3 +1,4 @@
 export const SET_PLACE = 'SET_PLACE';
+export const FIND_PLACES = 'FIND_PLACES';
 export const QUERY_CHANGED = 'QUERY_CHANGED';
 export const UPDATE_CURRENT_LOCATION = 'UPDATE_CURRENT_LOCATION';

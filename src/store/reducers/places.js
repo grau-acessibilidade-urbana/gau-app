@@ -1,9 +1,10 @@
-import { SET_PLACE, QUERY_CHANGED, UPDATE_CURRENT_LOCATION } from '../actionTypes'
+import { SET_PLACE, QUERY_CHANGED, UPDATE_CURRENT_LOCATION, FIND_PLACES } from '../actionTypes'
 
 const initialState = {
     selectedPlace: null,
     predictions: [],
-    currentLocation: null
+    currentLocation: null,
+    places: [],
 }
 
 const reducer = (state = initialState, action) => {
@@ -23,6 +24,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 currentLocation: action.payload
+            }
+        case FIND_PLACES:
+            return {
+                ...state,
+                places: action.payload
             }
         default:
             return state;

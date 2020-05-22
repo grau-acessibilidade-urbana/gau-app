@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import AutoComplete from '../../components/AutoComplete';
 import styles from './style';
 import * as googleApi from '../../api/google';
-import { setPlace, queryChanged, clearSelectedPlace, updateCurrentLocation } from '../../store/actions/places';
+import { setPlace, queryChanged, clearSelectedPlace, updateCurrentLocation, findPlaces } from '../../store/actions/places';
 import { connect } from 'react-redux';
 
 const MAP_REGION = {
@@ -46,8 +46,11 @@ class SearchPlaces extends Component {
         // analisar prevprops para não causar renderings desnecessários
         if (this.props.selectedPlace) {
             this.map.fitToCoordinates([this.props.selectedPlace.location], { animated: true });
-        } else if (this.props.currentLocation) {
+        } else if (this.props.places) {
             this.map.fitToCoordinates([this.props.currentLocation], { animated: false });
+        } else if (this.props.places) {
+            const coordinates = places.map(place => place.location);
+            this.map.fitToCoordinates([coordinates], { animated: true });
 
         }
     }
@@ -60,16 +63,6 @@ class SearchPlaces extends Component {
     onQueryChange = (text) => {
         this.setState({ query: text, });
         this.props.onQueryChange(text);
-    }
-
-    onSearch = async () => {
-        const places = await googleApi.findNearbyPlacesByText(this.props.currentLocation, this.state.query);
-        const coordinates = places.map(place => place.location);
-        this.setState({
-            places,
-            predictions: [],
-            selectedPlace: null,
-        }, this.map.fitToCoordinates(coordinates, { animated: true }));
     }
 
     onSelectPrediction = (prediction) => {
@@ -110,7 +103,7 @@ class SearchPlaces extends Component {
                             title={this.props.selectedPlace.name}
                             description={this.props.selectedPlace.address} />
                     }
-                    {this.state.places && this.state.places.map((place, i) => {
+                    {this.props.places && this.props.places.map((place, i) => {
                         return (
                             <Marker
                                 key={i}
@@ -130,7 +123,7 @@ class SearchPlaces extends Component {
                         containerStyle={styles.search}
                         inputStyle={styles.input}
                         onChangeText={this.onQueryChange}
-                        onSearch={this.onSearch}
+                        onSearch={() => this.props.findPlaces(this.props.currentLocation, this.state.query)}
                         query={this.state.query}
                         data={this.props.predictions}
                         renderItem={this.renderItem}
@@ -173,7 +166,8 @@ const mapStateToProps = ({ places }) => {
     return {
         selectedPlace: places.selectedPlace,
         predictions: places.predictions,
-        currentLocation: places.currentLocation
+        currentLocation: places.currentLocation,
+        places: places.places,
     }
 }
 
@@ -183,6 +177,7 @@ const mapDispatchToProps = dispatch => {
         onQueryChange: (query) => dispatch(queryChanged(query)),
         onClearSelectedPlace: () => dispatch(clearSelectedPlace()),
         onUpdateCurrentLocation: () => dispatch(updateCurrentLocation()),
+        onFindPlaces: (currentLocation, query) => dispatch(findPlaces(currentLocation, query)),
     }
 }
 
