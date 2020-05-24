@@ -4,7 +4,7 @@ const initialState = {
     selectedPlace: null,
     predictions: [],
     currentLocation: null,
-    places: [],
+    places: null,
 }
 
 const reducer = (state = initialState, action) => {
@@ -28,7 +28,8 @@ const reducer = (state = initialState, action) => {
         case FIND_PLACES:
             return {
                 ...state,
-                places: action.payload
+                places: action.payload,
+                predictions: []
             }
         default:
             return state;

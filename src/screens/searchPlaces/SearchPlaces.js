@@ -32,11 +32,10 @@ class SearchPlaces extends Component {
         if (this.props.selectedPlace) {
             this.map.fitToCoordinates([this.props.selectedPlace.location], { animated: true });
         } else if (this.props.places) {
+            const coordinates = this.props.places.map(place => place.location);
+            this.map.fitToCoordinates(coordinates, { animated: true });
+        } else if (this.props.currentLocation) {
             this.map.fitToCoordinates([this.props.currentLocation], { animated: false });
-        } else if (this.props.places) {
-            const coordinates = places.map(place => place.location);
-            this.map.fitToCoordinates([coordinates], { animated: true });
-
         }
     }
 
@@ -108,7 +107,7 @@ class SearchPlaces extends Component {
                         containerStyle={styles.search}
                         inputStyle={styles.input}
                         onChangeText={this.onQueryChange}
-                        onSearch={() => this.props.findPlaces(this.props.currentLocation, this.state.query)}
+                        onSearch={() => this.props.onFindPlaces(this.props.currentLocation, this.state.query)}
                         query={this.state.query}
                         data={this.props.predictions}
                         renderItem={this.renderItem}

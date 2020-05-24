@@ -17,6 +17,7 @@ export function findPlaces(currentLocation, query) {
     return async (dispatch) => {
         try {
             const payload = await googleApi.findNearbyPlacesByText(currentLocation, query);
+            console.log('payload: ' + JSON.stringify(payload));
             dispatch({ type: FIND_PLACES, payload });
         } catch (error) {
             dispatch({ type: FIND_PLACES, payload: error });
