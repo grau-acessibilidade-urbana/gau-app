@@ -12,6 +12,21 @@ import Profile from './screens/profile/Profile';
 import SearchPlaces from './screens/searchPlaces/SearchPlaces';
 import commonStyles from './shared/commonStyle';
 import PlaceView from './screens/placeView/placeView';
+import AuthenticationOptions from './screens/authenticationOptions/AuthenticationOptions';
+import Login from './screens/login/Login';
+import SignUp from './screens/signup/SignUp';
+
+const loginNavigator = createStackNavigator({
+    AuthOptions: {
+        screen: AuthenticationOptions
+    },
+    Login: {
+        screen: Login
+    },
+    SignUp: {
+        screen: SignUp
+    }
+})
 
 const stackNavigator = createStackNavigator({
     SearchPlaces: {
