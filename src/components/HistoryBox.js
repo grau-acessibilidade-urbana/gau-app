@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableHighlight} from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import commonStyles from '../shared/commonStyle';
 
@@ -17,9 +17,9 @@ class HistoryBox extends Component {
                         </View>
                     </View>
                     <Text style={styles.textDate}>{this.props.date}</Text>
-                    <TouchableOpacity style={styles.more}>
+                    <TouchableHighlight style={styles.more}>
                         <Text style={styles.textMore}>Ver mais</Text>
-                    </TouchableOpacity>        
+                    </TouchableHighlight>        
                 </View>
             </View>
         )
@@ -36,7 +36,15 @@ const styles = StyleSheet.create({
         padding: 10,
         position: 'relative',
         flexDirection: 'row',
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
+        elevation: 2,
     },
     placeImage: {
         width: '33%',

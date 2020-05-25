@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
         paddingLeft: 10
     },
     list: {
-        backgroundColor: "#f5f5f5"
+        backgroundColor: "#ebebeb",
+        paddingTop: 10
     }
 })
 
