@@ -1,36 +1,44 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { FlatList, StyleSheet, TextInput, TouchableWithoutFeedback, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const autoComplete = props => {
+class AutoComplete extends Component {
+    blur() {
+        this.inputRef.blur();
+    }
 
-    return (
-        <View>
-            <View style={props.containerStyle}>
-                <TextInput 
-                    placeholder='Digite sua pesquisa...' 
-                    style={props.inputStyle} 
-                    onChangeText={props.onChangeText}
-                    value={props.query}
-                />
-                <TouchableWithoutFeedback onPress={props.onSearch}>
-                    <Icon name='search' size={25} color='#3197b5'></Icon>
-                </TouchableWithoutFeedback>
+    render() {
+        return (
+            <View>
+                <View style={this.props.containerStyle}>
+                    <TextInput
+                        placeholder='Digite sua pesquisa...'
+                        style={this.props.inputStyle}
+                        onChangeText={this.props.onChangeText}
+                        value={this.props.query}
+                        ref={input => { this.inputRef = input }}
+                    />
+                    <TouchableWithoutFeedback onPress={this.props.onSearch}>
+                        <Icon name='search' size={25} color='#3197b5'></Icon>
+                    </TouchableWithoutFeedback>
+                </View>
+                {this.props.data && this.props.data.length > 0 && <View style={styles.list}>
+                    <FlatList
+                        data={this.props.data}
+                        renderItem={this.props.renderItem}
+                        keyExtractor={this.props.keyExtractor}
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        keyboardShouldPersistTaps='always'
+                    />
+                </View>}
             </View>
-            { props.data && props.data.length > 0 && <View style={styles.list}>
-                <FlatList 
-                    data={props.data}
-                    renderItem={props.renderItem}
-                    keyExtractor={props.keyExtractor}
-                    showsVerticalScrollIndicator={false}
-                    contentContainerStyle={{flexGrow: 1}}
-                />
-            </View> }
-        </View>
-    )
+        )
+
+    }
 }
 
-export default autoComplete;
+export default AutoComplete;
 
 const styles = StyleSheet.create({
     list: {
@@ -38,6 +46,6 @@ const styles = StyleSheet.create({
         height: 400,
         backgroundColor: '#FFF',
         padding: 15,
-      }
+    }
 })
 

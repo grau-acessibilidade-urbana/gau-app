@@ -84,6 +84,8 @@ target 'gau' do
   pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
 
 
+  pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
+
   target 'gauTests' do
     inherit! :complete
     # Pods for testing

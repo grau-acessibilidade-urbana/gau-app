@@ -5,7 +5,6 @@ import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
 import About from './screens/about/About';
-import AuthenticationOptions from './screens/authenticationOptions/AuthenticationOptions';
 import Help from './screens/help/Help';
 import Menu from './screens/menu/Menu';
 import Profile from './screens/profile/Profile';
@@ -26,7 +25,12 @@ const loginNavigator = createStackNavigator({
     SignUp: {
         screen: SignUp
     }
-})
+}, {
+    headerMode: 'none',
+    defaultNavigationOptions: {
+        ...TransitionPresets.SlideFromRightIOS,
+    }
+});
 
 const stackNavigator = createStackNavigator({
     SearchPlaces: {
@@ -47,10 +51,10 @@ const menuNavigator = createDrawerNavigator({
         screen: stackNavigator,
         navigationOptions: {
             title: 'Início',
-            drawerIcon: () => <Icon name="home" size={25} color={commonStyles.colors.primaryFontColor}/>,
+            drawerIcon: () => <Icon name="home" size={25} color={commonStyles.colors.primaryFontColor} />,
             headerStyle: {
                 backgroundColor: 'red',
-              },
+            },
             headerTintColor: 'aqua'
         }
     },
@@ -58,35 +62,35 @@ const menuNavigator = createDrawerNavigator({
         screen: Profile,
         navigationOptions: {
             title: 'Perfil',
-            drawerIcon: () => <Icon name="person" size={25} color={commonStyles.colors.primaryFontColor}/>
+            drawerIcon: () => <Icon name="person" size={25} color={commonStyles.colors.primaryFontColor} />
         }
     },
     History: {
         screen: Profile,
         navigationOptions: {
             title: 'Histórico',
-            drawerIcon: () => <Icon name="history" size={25} color={commonStyles.colors.primaryFontColor}/>
+            drawerIcon: () => <Icon name="history" size={25} color={commonStyles.colors.primaryFontColor} />
         }
     },
-    Help: { 
+    Help: {
         screen: Help,
         navigationOptions: {
             title: 'Ajuda',
-            drawerIcon: () => <Icon name="help" size={25} color={commonStyles.colors.primaryFontColor}/>
-        } 
+            drawerIcon: () => <Icon name="help" size={25} color={commonStyles.colors.primaryFontColor} />
+        }
     },
-    About: { 
+    About: {
         screen: About,
         navigationOptions: {
             title: 'Sobre',
-            drawerIcon: () => <Icon name="info" size={25} color={commonStyles.colors.primaryFontColor}/>
-        } 
+            drawerIcon: () => <Icon name="info" size={25} color={commonStyles.colors.primaryFontColor} />
+        }
     },
     Logout: {
         screen: AuthenticationOptions,
         navigationOptions: {
             title: "Sair",
-            drawerIcon: () => <Icon name="power-settings-new" size={25} color={commonStyles.colors.primaryFontColor}/>
+            drawerIcon: () => <Icon name="power-settings-new" size={25} color={commonStyles.colors.primaryFontColor} />
         }
     }
 }, {

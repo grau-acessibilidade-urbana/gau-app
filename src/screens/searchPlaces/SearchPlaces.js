@@ -50,6 +50,7 @@ class SearchPlaces extends Component {
     }
 
     onSelectPrediction = (prediction) => {
+        this.autocomplete.blur();
         this.setState({ query: prediction.description });
         this.props.onSelectPlace(this.props.currentLocation, prediction.id);
     }
@@ -103,7 +104,6 @@ class SearchPlaces extends Component {
                         <Icon name='menu' size={25} color='#FFF'></Icon>
                     </TouchableOpacity>
                     <AutoComplete
-                        ref={this.input}
                         containerStyle={styles.search}
                         inputStyle={styles.input}
                         onChangeText={this.onQueryChange}
@@ -112,6 +112,7 @@ class SearchPlaces extends Component {
                         data={this.props.predictions}
                         renderItem={this.renderItem}
                         keyExtractor={item => item.id}
+                        ref={autocomplete => { this.autocomplete = autocomplete }}
                     />
                 </Callout>
                 <Callout style={styles.gpsContainer}>
