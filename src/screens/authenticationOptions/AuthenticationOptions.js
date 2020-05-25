@@ -1,7 +1,9 @@
-import React, { Component } from 'react'
-import { View, Text } from 'react-native'
-import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin'
-import styles from './styles'
+import React, { Component } from 'react';
+import { View, Text, Image } from 'react-native';
+import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
+import styles from './styles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class AuthenticationOptions extends Component {
 
@@ -61,13 +63,22 @@ export default class AuthenticationOptions extends Component {
 
     render() {
         return (
-            <View>
-                <GoogleSigninButton
-                    style={styles.button}
-                    size={GoogleSigninButton.Size.Wide}
-                    color={GoogleSigninButton.Color.Light}
+            <View style={styles.container}>
+                <Image source={require('../../../assets/imgs/ilustracao-entrada.png')} style={styles.image} />
+                <TouchableOpacity style={[styles.button, styles.signinButton]}>
+                    <Icon name='person' size={40} color='#FFF' />
+                    <Text style={styles.signinText}>Entrar com email</Text>
+                </TouchableOpacity>
+                <TouchableOpacity 
+                    style={[styles.button, styles.signinGoogleButton]}
                     onPress={this.signIn}
-                    disabled={this.state.isSigninInProgress} />
+                    disabled={this.state.isSigninInProgress}>
+                    <Image source={require('../../../assets/imgs/google.png')} style={styles.imageGoogle} />
+                    <Text style={styles.signinGoogleText}>Entrar com Google</Text>
+                </TouchableOpacity>
+                <TouchableOpacity styles={[styles.button, styles.signupButton]}>
+                    <Text style={styles.signupText}>Ainda não tenho cadastro</Text>
+                </TouchableOpacity>
             </View>
         )
     }
