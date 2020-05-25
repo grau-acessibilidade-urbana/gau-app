@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, TouchableHighlight, FlatList} from 'react-native';
+import { View, Text, Image, TouchableOpacity, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import HistoryBox from '../../components/HistoryBox';
+import TabNavigator from '../../TabNavigator';
 import commonStyles from '../../shared/commonStyle';
 import styles from './style';
 
@@ -47,9 +48,9 @@ export default class Profile extends Component {
                 <View style={styles.contantUser}>
                     <View style={styles.photoContainer}>
                         <Image style={styles.photoUser} source={{uri: this.state.photoUser}}/>
-                        <TouchableHighlight style={styles.edit}>
+                        <TouchableOpacity style={styles.edit} activeOpacity={0.7}>
                             <Icon name="create" size={20} color='#fff'/>
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                     </View>
                     <Text style={styles.name}>{this.state.name}</Text>
                     <Text style={styles.email}>{this.state.email}</Text>
@@ -59,25 +60,27 @@ export default class Profile extends Component {
                         <Text style={styles.textRating}>{this.state.rating}</Text>
                     </View>
                 </View>
-
+{/* 
                 <View style={styles.containerTab}>
-                    <TouchableOpacity style={[styles.tab]}>
+                    <TouchableOpacity style={[styles.tab]}  onPress={() => this.props.navigation.navigate('TabProfile')}>
                         <Text style={styles.textTab}>Perfil</Text>
                     </TouchableOpacity>
                     
-                    <TouchableOpacity style={[styles.tab, styles.tabSelected]}>
+                    <TouchableOpacity style={[styles.tab, styles.tabSelected]} onPress={() => this.props.navigation.navigate('TabHistory')}>
                         <Text style={styles.textTab}>Histórico</Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
 
-                <FlatList
+                <TabNavigator />
+
+                {/* <FlatList
                     style={styles.list}
                     data={this.state.history}
                     keyExtractor={item => item.place}
                     renderItem={({ item, i }) =>
                         <HistoryBox key={i} {...item} />
                     }
-                />
+                /> */}
 
                 
             </View>
