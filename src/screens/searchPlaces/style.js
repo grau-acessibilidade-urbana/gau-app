@@ -23,6 +23,10 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         width: 50,
         height: 50,
+        shadowOffset: { width: 2, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 15,
+        elevation: 7
     },
     search: {
         flexDirection: 'row',
@@ -58,6 +62,63 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: commonStyle.colors.primaryColor,
         borderRadius: 25,
+        shadowOffset: { width: 2, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 15,
+        elevation: 7
+    },
+    placeDetailsContainer: {
+        height: '30%',
+        width: '100%',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        paddingHorizontal: 10,
+        paddingVertical: 15,
+        backgroundColor: '#FFF',
+        shadowColor: '#000',
+        shadowOffset: { width: 2, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 15,
+        elevation: 7,
+    },
+    placeDetails: {
+        flexDirection: 'row',
+        height: '80%',
+    },
+    placeDetailsHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 10
+    },
+    placeName: {
+        color: commonStyle.colors.primaryFontColor,
+        fontWeight: 'bold',
+        fontSize: 20
+    },
+    placeImage: {
+        height: '75%',
+        width: '35%',
+        marginRight: 10,
+    },
+    addressContainer: {
+        flexDirection: 'row'
+    },
+    placeDescription: {
+        height: '75%',
+        width: 240,
+        justifyContent: 'space-between'
+    },
+    placeAddressTitle: {
+        color: commonStyle.colors.primaryFontColor,
+        fontWeight: 'bold',
+        fontSize: 16
+    },
+    placeAddress: {
+        color: commonStyle.colors.secondFontColor,
+        fontWeight: 'normal',
+        fontSize: 16,
     },
     predictionContainer: {
         borderBottomColor: '#EEE',
@@ -68,6 +129,21 @@ const styles = StyleSheet.create({
     },
     primaryText: {
         fontSize: 18
+    },
+    currLocationPin: {
+        height: 50,
+        width: 50,
+        alignItems: 'center',
+        justifyContent : 'center',
+    },
+    pinImage: {
+        height: '100%',
+        width: '100%'
+    },
+    getDetails: {
+        textDecorationLine: 'underline',
+        color: commonStyle.colors.secondFontColor,
+        width: 150
     }
 })
 

@@ -5,8 +5,8 @@ export default {
         primaryFontColor: '#5D5D5D',
         secondFontColor: '#8B8B8B',
         FullStar: '#FFC107',
-        EmptyStar: '#D1D1D1'
-
+        EmptyStar: '#D1D1D1',
+        whiteTransparent: 'rgba(255, 255, 255, 0.65)',
     } 
 }
 

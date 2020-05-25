@@ -1,79 +1,64 @@
-import Geolocation from '@react-native-community/geolocation';
 import React, { Component } from 'react';
-import { Alert, Text, TouchableOpacity, View } from 'react-native';
-import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
+import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { connect } from 'react-redux';
 import AutoComplete from '../../components/AutoComplete';
+import { clearSelectedPlace, findPlaces, queryChanged, setPlace, updateCurrentLocation } from '../../store/actions/places';
 import styles from './style';
-import * as googleApi from '../../api/google';
+
+const MAP_REGION = {
+    latitude: 0.0,
+    longitude: 0.0,
+    latitudeDelta: 0.001,
+    longitudeDelta: 0.001
+}
 
 const initialState = {
-    region: {
-        latitude: 0.0,
-        longitude: 0.0,
-        latitudeDelta: 0.001,
-        longitudeDelta: 0.001
-    },
     query: '',
-    predictions: [],
-    showAutoComplete: false,
-    selectedPlace: null
 }
-export default class SearchPlaces extends Component {
+class SearchPlaces extends Component {
 
     state = {
-       ...initialState
+        ...initialState
     };
 
     componentDidMount() {
-        this.getCurrentLocation();
+        this.props.onUpdateCurrentLocation();
     }
 
-    getCurrentLocation = () => {
-        Geolocation.getCurrentPosition(position => {
-            this.setState({
-                region: {
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                    latitudeDelta: 0.001,
-                    longitudeDelta: 0.001
-                }
-            });
-        }, err => Alert.alert('Erro', err.toString()));
-    }
-
-    onQueryChange = async (text) => {
-        this.setState({ query: text, });
-        if (text && text.length > 0) {
-            const predictions = await googleApi.getPlacesPredictions(this.state.query);
-            this.setState(
-                {
-                    predictions,
-                    showAutoComplete: predictions && predictions.length > 0
-                });
-        } else {
-            this.setState({ showAutoComplete: false });
+    componentDidUpdate() {
+        // analisar prevprops para não causar renderings desnecessários
+        if (this.props.selectedPlace) {
+            this.map.fitToCoordinates([this.props.selectedPlace.location], { animated: true });
+        } else if (this.props.places) {
+            const coordinates = this.props.places.map(place => place.location);
+            this.map.fitToCoordinates(coordinates, { animated: true });
+        } else if (this.props.currentLocation) {
+            this.map.fitToCoordinates([this.props.currentLocation], { animated: false });
         }
     }
 
-    onSelectSuggestion = async (placeId) => {
-        const placeDetails = await googleApi.getPlaceDetailsById(placeId);
-        this.setState({
-            selectedPlace: placeDetails,
-            showAutoComplete: false,
-            region: {
-                ...initialState.region,
-                ...placeDetails.location
-            },
-            predictions: []
-        });
+    onClearSelection = () => {
+        this.setState({ query: null });
+        this.props.onClearSelectedPlace();
+    }
+
+    onQueryChange = (text) => {
+        this.setState({ query: text, });
+        this.props.onQueryChange(text);
+    }
+
+    onSelectPrediction = (prediction) => {
+        this.setState({ query: prediction.description });
+        this.props.onSelectPlace(this.props.currentLocation, prediction.id);
     }
 
     renderItem = ({ item }) => {
         return (
             <View style={styles.predictionContainer}>
                 <TouchableOpacity style={styles.predictionButton}
-                    onPress={() => this.onSelectSuggestion(item.id)}>
+                    onPress={() => this.onSelectPrediction(item)}>
                     <Text style={styles.primaryText}>{item.description}</Text>
                 </TouchableOpacity>
                 <View />
@@ -88,36 +73,96 @@ export default class SearchPlaces extends Component {
                     provider={PROVIDER_GOOGLE}
                     style={styles.map}
                     loadingEnabled={true}
-                    region={this.state.region}
-                    onRegionChange={this.onRegionChange}>
-                        {this.state.selectedPlace && 
-                            <Marker  coordinate={this.state.selectedPlace.location}
-                                title={this.state.selectedPlace.name}
-                                description={this.state.selectedPlace.address} />
-                        }
+                    initialRegion={MAP_REGION}
+                    ref={map => { this.map = map }}>
+                    {this.props.currentLocation && <Marker coordinate={this.props.currentLocation}
+                        title='Você está aqui!'
+                        description='Localização atual.'>
+                        <View style={styles.currLocationPin}>
+                            <Image style={styles.pinImage} source={require('../../../assets/imgs/wheelchair.png')} />
+                        </View>
+                    </Marker>}
+                    {this.props.selectedPlace &&
+                        <Marker coordinate={this.props.selectedPlace.location}
+                            title={this.props.selectedPlace.name}
+                            description={this.props.selectedPlace.address} />
+                    }
+                    {this.props.places && this.props.places.map((place, i) => {
+                        return (
+                            <Marker
+                                key={i}
+                                identifier={place.id}
+                                coordinate={place.location}
+                                title={place.name}
+                                onPress={() => this.props.onSelectPlace(this.props.currentLocation, place.id)} />
+                        )
+                    })}
                 </MapView>
                 <Callout style={styles.searchMenu}>
                     <TouchableOpacity style={styles.menuButton} onPress={() => this.props.navigation.openDrawer()}>
                         <Icon name='menu' size={25} color='#FFF'></Icon>
                     </TouchableOpacity>
                     <AutoComplete
+                        ref={this.input}
                         containerStyle={styles.search}
                         inputStyle={styles.input}
                         onChangeText={this.onQueryChange}
+                        onSearch={() => this.props.onFindPlaces(this.props.currentLocation, this.state.query)}
                         query={this.state.query}
-                        data={this.state.predictions}
+                        data={this.props.predictions}
                         renderItem={this.renderItem}
                         keyExtractor={item => item.id}
-                        visible={this.state.showAutoComplete}
                     />
                 </Callout>
                 <Callout style={styles.gpsContainer}>
-                    <TouchableOpacity style={styles.gpsButton} onPress={this.getCurrentLocation}>
+                    <TouchableOpacity style={styles.gpsButton} onPress={this.props.onUpdateCurrentLocation}>
                         <Icon name='gps-fixed' size={30} color='#FFF'></Icon>
                     </TouchableOpacity>
                 </Callout>
+
+                {this.props.selectedPlace &&
+                    <Callout style={styles.placeDetailsContainer}>
+                        <View style={styles.placeDetailsHeader}>
+                            <Text style={styles.placeName}>{this.props.selectedPlace.name}</Text>
+                            <TouchableOpacity onPress={this.onClearSelection}>
+                                <Icon name="close" size={20} color='#8B8B8B' />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.placeDetails}>
+                            <Image style={styles.placeImage} source={{ uri: this.props.selectedPlace.image }}></Image>
+                            <View style={styles.placeDescription}>
+                                <Text style={styles.placeAddressTitle}>Endereço:
+                                    <Text style={styles.placeAddress}> {this.props.selectedPlace.address}</Text>
+                                </Text>
+                                <Text style={styles.placeAddress}>{this.props.selectedPlace.distance} de distância</Text>
+                                <TouchableOpacity style={styles.getDetailsButton} onPress={() => this.props.navigation.navigate('PlaceView')}>
+                                    <Text style={styles.getDetails}>Ver mais detalhes</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Callout>}
             </View>
         )
     }
 }
 
+const mapStateToProps = ({ places }) => {
+    return {
+        selectedPlace: places.selectedPlace,
+        predictions: places.predictions,
+        currentLocation: places.currentLocation,
+        places: places.places,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onSelectPlace: (currentLocation, placeId) => dispatch(setPlace(currentLocation, placeId)),
+        onQueryChange: (query) => dispatch(queryChanged(query)),
+        onClearSelectedPlace: () => dispatch(clearSelectedPlace()),
+        onUpdateCurrentLocation: () => dispatch(updateCurrentLocation()),
+        onFindPlaces: (currentLocation, query) => dispatch(findPlaces(currentLocation, query)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPlaces);

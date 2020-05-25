@@ -1,17 +1,9 @@
-import React, { Component } from 'react'
-import {
-    View,
-    Text,
-    FlatList,
-    TouchableOpacity,
-    TextInput,
-    StyleSheet,
-    TouchableWithoutFeedback,
-    Dimensions
-} from 'react-native'
+import React from 'react';
+import { FlatList, StyleSheet, TextInput, TouchableWithoutFeedback, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const autoComplete = props => {
+
     return (
         <View>
             <View style={props.containerStyle}>
@@ -21,11 +13,11 @@ const autoComplete = props => {
                     onChangeText={props.onChangeText}
                     value={props.query}
                 />
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={props.onSearch}>
                     <Icon name='search' size={25} color='#3197b5'></Icon>
                 </TouchableWithoutFeedback>
             </View>
-            { props.visible && <View style={styles.list}>
+            { props.data && props.data.length > 0 && <View style={styles.list}>
                 <FlatList 
                     data={props.data}
                     renderItem={props.renderItem}

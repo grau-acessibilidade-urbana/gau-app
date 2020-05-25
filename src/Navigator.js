@@ -1,21 +1,53 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Dimensions } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
-import { Dimensions } from 'react-native';
-
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import commonStyles from './shared/commonStyle';
-
-import Menu from './screens/menu/Menu';
-import SearchPlaces from './screens/searchPlaces/SearchPlaces';
-import Profile from './screens/profile/Profile';
+import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
 import About from './screens/about/About';
 import AuthenticationOptions from './screens/authenticationOptions/AuthenticationOptions';
 import Help from './screens/help/Help';
+import Menu from './screens/menu/Menu';
+import Profile from './screens/profile/Profile';
+import SearchPlaces from './screens/searchPlaces/SearchPlaces';
+import commonStyles from './shared/commonStyle';
+import PlaceView from './screens/placeView/placeView';
+import AuthenticationOptions from './screens/authenticationOptions/AuthenticationOptions';
+import Login from './screens/login/Login';
+import SignUp from './screens/signup/SignUp';
 
+<<<<<<< HEAD
+=======
+const loginNavigator = createStackNavigator({
+    AuthOptions: {
+        screen: AuthenticationOptions
+    },
+    Login: {
+        screen: Login
+    },
+    SignUp: {
+        screen: SignUp
+    }
+})
+
+const stackNavigator = createStackNavigator({
+    SearchPlaces: {
+        screen: SearchPlaces
+    },
+    PlaceView: {
+        screen: PlaceView
+    }
+}, {
+    headerMode: 'none',
+    defaultNavigationOptions: {
+        ...TransitionPresets.SlideFromRightIOS,
+    }
+});
+
+>>>>>>> 62cf76da94f03e1cc22baabdc6a9bdb8fe13b135
 const menuNavigator = createDrawerNavigator({
     Home: {
-        screen: SearchPlaces,
+        screen: stackNavigator,
         navigationOptions: {
             title: 'Início',
             drawerIcon: () => <Icon name="home" size={25} color={commonStyles.colors.primaryFontColor}/>,
