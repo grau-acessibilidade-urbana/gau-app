@@ -61,7 +61,7 @@ const menuNavigator = createDrawerNavigator({
         }
     }
 }, {
-    initialRouteName: 'Home',
+    initialRouteName: 'Profile',
     contentComponent: Menu,
     drawerWidth: Dimensions.get('screen').width * 0.85,
     contentOptions: {
