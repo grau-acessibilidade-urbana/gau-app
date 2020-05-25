@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 import commonStyles from '../../shared/commonStyle';
 
 const styles = StyleSheet.create({
@@ -77,10 +77,6 @@ const styles = StyleSheet.create({
         fontSize: 19,
         paddingLeft: 10
     },
-    list: {
-        backgroundColor: "#ebebeb",
-        paddingTop: 10
-    }
 })
 
 export default styles

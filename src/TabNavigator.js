@@ -1,28 +1,10 @@
-import React, {Component} from 'react';
-import { Text, View } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import CommonStyle from './shared/commonStyle';
 
-class TabProfile extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Home!</Text>
-      </View>
-    );
-  }
-}
+import TabHistory from './screens/tabHistory/TabHistory';
+import TabProfile from './screens/tabProfile/TabProfile';
 
-class TabHistory extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Settings!</Text>
-      </View>
-    );
-  }
-}
 
 const TabNavigator = createMaterialTopTabNavigator({
   Perfil: TabProfile,
