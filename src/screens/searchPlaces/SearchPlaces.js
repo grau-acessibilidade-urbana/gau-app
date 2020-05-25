@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
@@ -28,7 +28,6 @@ class SearchPlaces extends Component {
     }
 
     componentDidUpdate() {
-        // analisar prevprops para não causar renderings desnecessários
         if (this.props.selectedPlace) {
             this.map.fitToCoordinates([this.props.selectedPlace.location], { animated: true });
         } else if (this.props.places) {
@@ -55,6 +54,12 @@ class SearchPlaces extends Component {
         this.props.onSelectPlace(this.props.currentLocation, prediction.id);
     }
 
+    fitToCurrentLocation() {
+        if (this.props && this.props.currentLocation) {
+            this.map.fitToCoordinates([this.props.currentLocation], { animated: false });
+        }
+    }
+
     renderItem = ({ item }) => {
         return (
             <View style={styles.predictionContainer}>
@@ -75,7 +80,8 @@ class SearchPlaces extends Component {
                     style={styles.map}
                     loadingEnabled={true}
                     initialRegion={MAP_REGION}
-                    ref={map => { this.map = map }}>
+                    ref={map => { this.map = map }}
+                    onLayout={this.fitToCurrentLocation}>
                     {this.props.currentLocation && <Marker coordinate={this.props.currentLocation}
                         title='Você está aqui!'
                         description='Localização atual.'>
@@ -123,24 +129,28 @@ class SearchPlaces extends Component {
 
                 {this.props.selectedPlace &&
                     <Callout style={styles.placeDetailsContainer}>
-                        <View style={styles.placeDetailsHeader}>
-                            <Text style={styles.placeName}>{this.props.selectedPlace.name}</Text>
-                            <TouchableOpacity onPress={this.onClearSelection}>
-                                <Icon name="close" size={20} color='#8B8B8B' />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.placeDetails}>
-                            <Image style={styles.placeImage} source={{ uri: this.props.selectedPlace.image }}></Image>
-                            <View style={styles.placeDescription}>
-                                <Text style={styles.placeAddressTitle}>Endereço:
-                                    <Text style={styles.placeAddress}> {this.props.selectedPlace.address}</Text>
-                                </Text>
-                                <Text style={styles.placeAddress}>{this.props.selectedPlace.distance} de distância</Text>
-                                <TouchableOpacity style={styles.getDetailsButton} onPress={() => this.props.navigation.navigate('PlaceView')}>
-                                    <Text style={styles.getDetails}>Ver mais detalhes</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
+                        {this.props.loadingDetails ?
+                            <ActivityIndicator size='large' /> :
+                            <View>
+                                <View style={styles.placeDetailsHeader}>
+                                    <Text style={styles.placeName}>{this.props.selectedPlace.name}</Text>
+                                    <TouchableOpacity onPress={this.onClearSelection}>
+                                        <Icon name="close" size={20} color='#8B8B8B' />
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={styles.placeDetails}>
+                                    <Image style={styles.placeImage} source={{ uri: this.props.selectedPlace.image }}></Image>
+                                    <View style={styles.placeDescription}>
+                                        <Text style={styles.placeAddressTitle}>Endereço:
+                                        <Text style={styles.placeAddress}> {this.props.selectedPlace.address}</Text>
+                                        </Text>
+                                        <Text style={styles.placeAddress}>{this.props.selectedPlace.distance} de distância</Text>
+                                        <TouchableOpacity style={styles.getDetailsButton} onPress={() => this.props.navigation.navigate('PlaceView')}>
+                                            <Text style={styles.getDetails}>Ver mais detalhes</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>}
                     </Callout>}
             </View>
         )
@@ -153,6 +163,7 @@ const mapStateToProps = ({ places }) => {
         predictions: places.predictions,
         currentLocation: places.currentLocation,
         places: places.places,
+        loadingDetails: places.loadingDetails,
     }
 }
 

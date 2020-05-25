@@ -1,19 +1,21 @@
-import { SET_PLACE, QUERY_CHANGED, UPDATE_CURRENT_LOCATION, FIND_PLACES } from '../actionTypes'
+import { SET_PLACE, QUERY_CHANGED, UPDATE_CURRENT_LOCATION, FIND_PLACES, LOADING_DETAILS } from '../actionTypes'
 
 const initialState = {
     selectedPlace: null,
     predictions: [],
     currentLocation: null,
     places: null,
+    loadingDetails: false,
 }
 
 const reducer = (state = initialState, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case SET_PLACE:
             return {
                 ...state,
                 selectedPlace: action.payload,
-                predictions: []
+                predictions: [],
+                loadingDetails: false,
             }
         case QUERY_CHANGED:
             return {
@@ -30,6 +32,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 places: action.payload,
                 predictions: []
+            }
+        case LOADING_DETAILS:
+            return {
+                ...state,
+                loadingDetails: true,
             }
         default:
             return state;

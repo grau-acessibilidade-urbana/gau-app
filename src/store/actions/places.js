@@ -1,10 +1,11 @@
 import Geolocation from '@react-native-community/geolocation';
-import { SET_PLACE, QUERY_CHANGED, UPDATE_CURRENT_LOCATION, FIND_PLACES } from '../actionTypes';
+import { SET_PLACE, QUERY_CHANGED, UPDATE_CURRENT_LOCATION, FIND_PLACES, LOADING_DETAILS } from '../actionTypes';
 import * as googleApi from '../../api/google';
 
 export function setPlace(currentLocation, placeId) {
     return async (dispatch) => {
         try {
+            dispatch({ type: LOADING_DETAILS })
             const payload = await googleApi.getPlaceDetailsById(currentLocation, placeId);
             dispatch({ type: SET_PLACE, payload });
         } catch (error) {
@@ -47,13 +48,14 @@ export function queryChanged(query) {
 export function updateCurrentLocation() {
     return (dispatch) => {
         Geolocation.getCurrentPosition(position => {
+            LOADING_DETAILS
             const payload = {
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
                 latitudeDelta: 0.02,
                 longitudeDelta: 0.02
             }
-            dispatch({ type: UPDATE_CURRENT_LOCATION, payload });            
+            dispatch({ type: UPDATE_CURRENT_LOCATION, payload });
         }, err => dispatch({ type: UPDATE_CURRENT_LOCATION, payload: err }));
     }
 }
