@@ -71,12 +71,15 @@ export default class Profile extends Component {
                 </View>
 
                 <FlatList
+                    style={styles.list}
                     data={this.state.history}
                     keyExtractor={item => item.place}
                     renderItem={({ item, i }) =>
                         <HistoryBox key={i} {...item} />
                     }
                 />
+
+                
             </View>
         )
     }

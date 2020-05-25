@@ -5,7 +5,6 @@ import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
 import About from './screens/about/About';
-import AuthenticationOptions from './screens/authenticationOptions/AuthenticationOptions';
 import Help from './screens/help/Help';
 import Menu from './screens/menu/Menu';
 import Profile from './screens/profile/Profile';
@@ -16,8 +15,6 @@ import AuthenticationOptions from './screens/authenticationOptions/Authenticatio
 import Login from './screens/login/Login';
 import SignUp from './screens/signup/SignUp';
 
-<<<<<<< HEAD
-=======
 const loginNavigator = createStackNavigator({
     AuthOptions: {
         screen: AuthenticationOptions
@@ -44,7 +41,6 @@ const stackNavigator = createStackNavigator({
     }
 });
 
->>>>>>> 62cf76da94f03e1cc22baabdc6a9bdb8fe13b135
 const menuNavigator = createDrawerNavigator({
     Home: {
         screen: stackNavigator,
@@ -93,7 +89,7 @@ const menuNavigator = createDrawerNavigator({
         }
     }
 }, {
-    initialRouteName: 'Profile',
+    initialRouteName: 'Home',
     contentComponent: Menu,
     drawerWidth: Dimensions.get('screen').width * 0.85,
     contentOptions: {

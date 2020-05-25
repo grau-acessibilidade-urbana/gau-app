@@ -76,6 +76,9 @@ const styles = StyleSheet.create({
     textTab: {
         fontSize: 19,
         paddingLeft: 10
+    },
+    list: {
+        backgroundColor: "#f5f5f5"
     }
 })
 
