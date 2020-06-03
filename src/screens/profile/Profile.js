@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import HistoryBox from '../../components/HistoryBox';
 import TabNavigator from '../../TabNavigator';
 import commonStyles from '../../shared/commonStyle';
+import Header from '../../components/Header';
 import styles from './style';
 
 export default class Profile extends Component {
@@ -18,6 +18,7 @@ export default class Profile extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <Header />
                 <View style={styles.contantUser}>
                     <View style={styles.photoContainer}>
                         <Image style={styles.photoUser} source={{uri: this.state.photoUser}}/>
