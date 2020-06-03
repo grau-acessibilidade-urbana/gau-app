@@ -18,7 +18,7 @@ export default class Profile extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Header />
+                <Header goBack={this.props.navigation.goBack}/>
                 <View style={styles.contantUser}>
                     <View style={styles.photoContainer}>
                         <Image style={styles.photoUser} source={{uri: this.state.photoUser}}/>
