@@ -26,11 +26,11 @@ export default class Login extends Component {
                         placeholderTextColor={commonStyle.colors.secondFontColor}
                         secureTextEntry={true} />
 
-                    <TouchableOpacity style={styles.forgotPassowrdButton}>
+                    <TouchableOpacity activeOpacity={0.5} style={styles.forgotPassowrdButton}>
                         <Text style={styles.forgotPassowrdText}>Esqueci a senha</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.signinButton}>
+                    <TouchableOpacity activeOpacity={0.5} style={styles.signinButton}>
                         <Text style={styles.signinText}>Entrar</Text>
                     </TouchableOpacity>
                 </View>
