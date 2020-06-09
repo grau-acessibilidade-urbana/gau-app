@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import commonStyle from '../shared/commonStyle';
-const {  width } = Dimensions.get('window'); 
+const { width } = Dimensions.get('window'); 
 
 
 
@@ -20,15 +20,17 @@ export default Header;
 
 const styles = StyleSheet.create({
   header: {
-    // zIndex: 1,
-    // position: 'absolute',
-    // left: 0,
-    // top: 0,
-    width: width,
+    width: "100%",
     height: 50,
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    zIndex: 1,
   },
-  headerLigth: { backgroundColor: commonStyle.colors.whiteTransparent },
-  headerDark: { backgroundColor: commonStyle.colors.primaryColor }
+  headerLigth: {
+    backgroundColor: commonStyle.colors.whiteTransparent,
+    position: 'absolute',
+    top: 0,
+    zIndex: 1,
+  },
+  headerDark: { backgroundColor: commonStyle.colors.primaryColor,  zIndex: 1}
 });
