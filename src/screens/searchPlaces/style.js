@@ -73,10 +73,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         left: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: 10,
-        paddingVertical: 15,
+        paddingHorizontal: 20,
+        paddingVertical: 25,
         backgroundColor: '#FFF',
         shadowColor: '#000',
         shadowOffset: { width: 2, height: 2 },
@@ -109,7 +107,7 @@ const styles = StyleSheet.create({
     },
     placeDescription: {
         height: '75%',
-        width: 240,
+        width: '65%',
         justifyContent: 'space-between'
     },
     placeAddressTitle: {

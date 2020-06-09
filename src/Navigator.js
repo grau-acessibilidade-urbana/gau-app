@@ -14,6 +14,7 @@ import PlaceView from './screens/placeView/placeView';
 import AuthenticationOptions from './screens/authenticationOptions/AuthenticationOptions';
 import Login from './screens/login/Login';
 import SignUp from './screens/signup/SignUp';
+import PlaceHistory from './screens/placeHistory/PlaceHistory';
 
 const loginNavigator = createStackNavigator({
     AuthOptions: {
@@ -38,7 +39,10 @@ const stackNavigator = createStackNavigator({
     },
     PlaceView: {
         screen: PlaceView
-    }
+    },
+    PlaceHistory: {
+        screen: PlaceHistory
+    },
 }, {
     headerMode: 'none',
     defaultNavigationOptions: {
