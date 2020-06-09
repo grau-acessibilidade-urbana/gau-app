@@ -17,7 +17,7 @@ const HistoryBox = props => {
                         </View>
                     </View>
                     <Text style={styles.textDate}>{props.date}</Text>
-                    <TouchableHighlight style={styles.more}>
+                    <TouchableHighlight style={styles.more} onPress={() => props.navigation.navigate('PlaceHistory')}>
                         <Text style={styles.textMore}>Ver mais</Text>
                     </TouchableHighlight>        
                 </View>
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     },
     containerStar: {
         flexDirection: 'row',
-        backgroundColor: '#FFEFC0',
+        backgroundColor: commonStyles.colors.backgroundStar,
         borderRadius: 5,
         margin: 5,
         paddingLeft: 5,
