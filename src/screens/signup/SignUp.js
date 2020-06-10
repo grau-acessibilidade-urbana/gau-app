@@ -18,14 +18,12 @@ const validationSchema = Yup.object().shape({
     password: Yup.string()
         .label('Senha')
         .required('Campo obrigatório')
-        .min(6, 'Deve ter pelo menos 6 caracteres')
+        .min(6, 'Deve ter pelo menos 6 caracteres'),
+    confirmPassword: Yup.string()
+        .label('Confirmar Senha')
+        .required('Campo obrigatório')
 });
 class SignUp extends Component {
-
-    state = {
-        confirmPassword: '',
-    }
-
     onSubmit = user => {
         this.props.onSignup(user);
     }
@@ -40,34 +38,35 @@ class SignUp extends Component {
                 <Text style={styles.title}>Cadastro</Text>
 
                 <Formik
-                    initialValues={{ ...this.state }}
+                    initialValues={{ name: '', email: '', password: '', confirmPassword: '' }}
                     validationSchema={validationSchema}
                     onSubmit={values => this.onSubmit(values)}>
-                    {({ handleChange, values, handleSubmit, errors }) => (
+                    {({ handleChange, values, handleSubmit, errors, touched, handleBlur }) => (
                         <View style={styles.fieldset}>
                             <Text style={styles.label} >Nome Completo</Text>
                             <TextInput style={styles.input} placeholder='Digite seu nome'
                                 placeholderTextColor={commonStyle.colors.secondFontColor} value={values.name}
-                                onChangeText={handleChange('name')} />
-                            {errors.name && <Text style={{ color: 'red' }}>{errors.name}</Text>}
+                                onChangeText={handleChange('name')} onBlur={handleBlur('name')} />
+                            {touched.name && errors.name && <Text style={{ color: 'red' }}>{errors.name}</Text>}
 
                             <Text style={styles.label} >Email</Text>
                             <TextInput style={styles.input} placeholder='Digite seu email'
                                 placeholderTextColor={commonStyle.colors.secondFontColor} value={values.email}
-                                onChangeText={handleChange('email')} />
-                            {errors.email && <Text style={{ color: 'red' }}>{errors.email}</Text>}
+                                onChangeText={handleChange('email')} onBlur={handleBlur('email')} />
+                            {touched.email && errors.email && <Text style={{ color: 'red' }}>{errors.email}</Text>}
 
                             <Text style={styles.label} >Senha</Text>
                             <TextInput style={styles.input} placeholder='Digite sua senha' secureTextEntry={true}
                                 placeholderTextColor={commonStyle.colors.secondFontColor} value={values.password}
-                                onChangeText={handleChange('password')} />
-                            {errors.password && <Text style={{ color: 'red' }}>{errors.password}</Text>}
+                                onChangeText={handleChange('password')} onBlur={handleBlur('password')} />
+                            {touched.password && errors.password && <Text style={{ color: 'red' }}>{errors.password}</Text>}
 
                             <Text style={styles.label} >Confirmar Senha</Text>
                             <TextInput style={styles.input} placeholder='Confirme a senha' secureTextEntry={true}
-                                placeholderTextColor={commonStyle.colors.secondFontColor} value={this.state.confirmPassword}
-                                onChangeText={(confirmPassword) => this.setState({ confirmPassword })} />
-                            {values.password !== this.state.confirmPassword && <Text style={{ color: 'red' }}>Senhas não correspondem</Text>}
+                                placeholderTextColor={commonStyle.colors.secondFontColor} value={values.confirmPassword}
+                                onChangeText={handleChange('confirmPassword')} onBlur={handleBlur('confirmPassword')} />
+                            {touched.confirmPassword && values.password !== values.confirmPassword &&
+                                <Text style={{ color: 'red' }}>Senhas não correspondem</Text>}
 
                             <TouchableOpacity
                                 onPress={handleSubmit}
