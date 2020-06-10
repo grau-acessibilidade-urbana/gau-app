@@ -10,7 +10,7 @@ const Header = ({ goBack, lightweight = false }) => {
   return (
     <View style={[styles.header, lightweight ? styles.headerLigth : styles.headerDark]}>
       <TouchableOpacity onPress={() => goBack()}>
-        <Icon name="chevron-left" size={40} color={lightweight ? '#000' : "#fff"} />
+        <Icon name="chevron-left" size={40} color={lightweight ? commonStyle.colors.primaryFontColor : "#fff"} />
       </TouchableOpacity>
     </View>
   )
@@ -25,6 +25,14 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     zIndex: 1,
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 1,
+    },
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
+    elevation: 2,
   },
   headerLigth: {
     backgroundColor: commonStyle.colors.whiteTransparent,
