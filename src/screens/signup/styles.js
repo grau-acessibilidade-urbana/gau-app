@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
     container: {
         height: height,
         width: width,
-        alignItems: 'center',
     },
     image: {
         height: 150,
@@ -23,6 +22,7 @@ const styles = StyleSheet.create({
     },
     fieldset: {
         marginTop: 20,
+        marginBottom: 20,
         width: width * 0.8,
     },
     label: {
@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginVertical: 5,
         fontSize: 20,
+        color: commonStyle.colors.primaryFontColor,
         paddingHorizontal: 10,
         paddingVertical: 5,
     },
