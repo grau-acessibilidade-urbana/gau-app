@@ -8,13 +8,14 @@ import About from './screens/about/About';
 import Help from './screens/help/Help';
 import Menu from './screens/menu/Menu';
 import Profile from './screens/profile/Profile';
+import History from './screens/history/History';
+import PlaceHistory from './screens/placeHistory/PlaceHistory';
 import SearchPlaces from './screens/searchPlaces/SearchPlaces';
 import commonStyles from './shared/commonStyle';
 import PlaceView from './screens/placeView/placeView';
 import AuthenticationOptions from './screens/authenticationOptions/AuthenticationOptions';
 import Login from './screens/login/Login';
 import SignUp from './screens/signup/SignUp';
-import PlaceHistory from './screens/placeHistory/PlaceHistory';
 
 const loginNavigator = createStackNavigator({
     AuthOptions: {
@@ -39,6 +40,17 @@ const stackNavigator = createStackNavigator({
     },
     PlaceView: {
         screen: PlaceView
+    },
+}, {
+    headerMode: 'none',
+    defaultNavigationOptions: {
+        ...TransitionPresets.SlideFromRightIOS,
+    }
+});
+
+const stackHistory = createStackNavigator({
+    History: {
+        screen: History
     },
     PlaceHistory: {
         screen: PlaceHistory
@@ -70,7 +82,7 @@ const menuNavigator = createDrawerNavigator({
         }
     },
     History: {
-        screen: Profile,
+        screen: stackHistory,
         navigationOptions: {
             title: 'Histórico',
             drawerIcon: () => <Icon name="history" size={25} color={commonStyles.colors.primaryFontColor} />

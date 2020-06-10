@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {FlatList, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet, View, Text} from 'react-native';
 import HistoryBox from '../../components/HistoryBox';
+import Header  from '../../components/Header';
+import commonStyle from '../../shared/commonStyle';
 
-
-export default class TabHistory extends Component {
+export default class History extends Component {
     state = {
         history: [
             {   
@@ -35,20 +36,26 @@ export default class TabHistory extends Component {
 
     render() {
       return (
-        <FlatList style={styles.list}
-            data={this.state.history}
-            keyExtractor={item => item.place}
-            renderItem={({ item, i }) =>
-                <HistoryBox key={i} {...item} />
-            }
-        />
+        <View style={styles.container}>
+            <Header goBack={this.props.navigation.goBack}/>
+            <FlatList style={styles.list}
+                data={this.state.history}
+                keyExtractor={item => item.place}
+                renderItem={({ item, i }) =>
+                    <HistoryBox key={i} {...item} navigation={this.props.navigation} />
+                }
+            />
+        </View>
       );
     }
   }
 
 const styles = StyleSheet.create({
-    list: {
+    container:  {
+        flex: 1,
         backgroundColor: "#ebebeb",
+    },  
+    list: {
         paddingTop: 10
     }
 })

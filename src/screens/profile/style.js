@@ -7,14 +7,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     contantUser: {
-        height: '45%',
+        // height: '35%',
         width: "100%",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        marginTop: 10,
+        marginBottom: 10
     },
     photoContainer: {
-        height: 160,
-        width: 160,
+        height: 100,
+        width: 100,
     },
     photoUser: {
         width: '100%',
@@ -77,6 +79,61 @@ const styles = StyleSheet.create({
         fontSize: 19,
         paddingLeft: 10
     },
+    containerForm: {
+        flex: 1
+    },
+    containerInput:{
+        paddingVertical: 7,
+        paddingHorizontal: 15
+    },
+    containerInputPassword: {
+        width: '73%'
+    },
+    label: {
+        color: commonStyles.colors.secondFontColor,
+        marginBottom: 5
+    },
+    input: {
+        color: commonStyles.colors.primaryFontColor,
+        borderWidth: 1,
+        borderColor: commonStyles.colors.thirdColor,
+        borderRadius: 5,
+        padding: 5,
+    },
+    containerEditPassword: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    editPassword:{
+        paddingTop: 15,
+        color: commonStyles.colors.secondFontColor,
+        textDecorationLine: 'underline',
+    },
+    containerBtn: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingBottom: 20
+
+    },
+    btnSave: {
+        paddingHorizontal: 20,
+        paddingVertical: 7,
+        margin: 15,
+        backgroundColor: commonStyles.colors.primaryColor,
+        borderRadius: 10
+    },
+    txtBtnSave: {
+        color: '#fff'
+    },  
+    btnCancel:{
+        margin: 15,
+        padding: 7,
+        
+    },
+    txtBtnCancel:{
+        color: commonStyles.colors.primaryColor,
+        textDecorationLine: 'underline'
+    }
 })
 
 export default styles
