@@ -52,7 +52,7 @@ const stackNavigator = createStackNavigator({
 
 const menuNavigator = createDrawerNavigator({
     Home: {
-        screen: SignUp,
+        screen: loginNavigator,
         navigationOptions: {
             title: 'Início',
             drawerIcon: () => <Icon name="home" size={25} color={commonStyles.colors.primaryFontColor} />,

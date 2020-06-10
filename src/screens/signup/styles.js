@@ -7,12 +7,18 @@ const styles = StyleSheet.create({
     container: {
         height: height,
         width: width,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
+    activity: {
+        height: height,
+        width: width,
+    },  
     image: {
         height: 150,
         width: 150,
         resizeMode: 'contain',
-        marginTop: 40,
+        marginTop: 20,
     },
     title: {
         marginTop: 10,
@@ -21,7 +27,6 @@ const styles = StyleSheet.create({
         color: commonStyle.colors.primaryColor,
     },
     fieldset: {
-        marginTop: 20,
         marginBottom: 20,
         width: width * 0.8,
     },

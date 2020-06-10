@@ -1,9 +1,11 @@
 import { combineReducers, createStore, compose, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-import placesReducer from './reducers/places'
+import placesReducer from './reducers/places';
+import usersReducer from './reducers/users';
 
 const reducers = combineReducers({
-    places: placesReducer
+    places: placesReducer,
+    users: usersReducer,
 });
 
 const storeConfig = () => {

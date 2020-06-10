@@ -69,14 +69,15 @@ export default class AuthenticationOptions extends Component {
                     <Icon name='person' size={40} color='#FFF' />
                     <Text style={styles.signinText}>Entrar com email</Text>
                 </TouchableOpacity>
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={[styles.button, styles.signinGoogleButton]}
                     onPress={this.signIn}
                     disabled={this.state.isSigninInProgress}>
                     <Image source={require('../../../assets/imgs/google.png')} style={styles.imageGoogle} />
                     <Text style={styles.signinGoogleText}>Entrar com Google</Text>
                 </TouchableOpacity>
-                <TouchableOpacity styles={[styles.button, styles.signupButton]}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')}
+                    styles={[styles.button, styles.signupButton]}>
                     <Text style={styles.signupText}>Ainda não tenho cadastro</Text>
                 </TouchableOpacity>
             </View>
