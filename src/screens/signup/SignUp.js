@@ -41,7 +41,7 @@ class SignUp extends Component {
             <ScrollView contentContainerStyle={styles.container}>
                 {this.props.isLoading ? <ActivityIndicator style={styles.activity} size='large' /> :
                     <View style={{alignItems: 'center'}}>
-                        <Header goBack={this.props.navigation.goBack} lightweight />
+                        <Header goBack={this.props.navigation.goBack} />
                         <Image
                             source={require('../../../assets/imgs/ilustracao-cadastro.png')}
                             style={styles.image} />
