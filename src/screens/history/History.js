@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, View, Text} from 'react-native';
 import HistoryBox from '../../components/HistoryBox';
 import Header  from '../../components/Header';
+import commonStyle from '../../shared/commonStyle';
 
 export default class History extends Component {
     state = {
@@ -51,10 +52,10 @@ export default class History extends Component {
 
 const styles = StyleSheet.create({
     container:  {
-        flex: 1
+        flex: 1,
+        backgroundColor: "#ebebeb",
     },  
     list: {
-        backgroundColor: "#ebebeb",
         paddingTop: 10
     }
 })

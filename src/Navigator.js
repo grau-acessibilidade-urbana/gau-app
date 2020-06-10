@@ -9,6 +9,7 @@ import Help from './screens/help/Help';
 import Menu from './screens/menu/Menu';
 import Profile from './screens/profile/Profile';
 import History from './screens/history/History';
+import PlaceHistory from './screens/placeHistory/PlaceHistory';
 import SearchPlaces from './screens/searchPlaces/SearchPlaces';
 import commonStyles from './shared/commonStyle';
 import PlaceView from './screens/placeView/placeView';
@@ -42,6 +43,20 @@ const stackNavigator = createStackNavigator({
     }
 });
 
+const stackHistory = createStackNavigator({
+    History: {
+        screen: History
+    },
+    PlaceHistory: {
+        screen: PlaceHistory
+    },
+}, {
+    headerMode: 'none',
+    defaultNavigationOptions: {
+        ...TransitionPresets.SlideFromRightIOS,
+    }
+});
+
 const menuNavigator = createDrawerNavigator({
     Home: {
         screen: stackNavigator,
@@ -62,7 +77,7 @@ const menuNavigator = createDrawerNavigator({
         }
     },
     History: {
-        screen: History,
+        screen: stackHistory,
         navigationOptions: {
             title: 'Histórico',
             drawerIcon: () => <Icon name="history" size={25} color={commonStyles.colors.primaryFontColor}/>

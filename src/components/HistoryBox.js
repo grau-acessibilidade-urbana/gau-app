@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     },
     placeImage: {
         width: '33%',
-        height: 100,
+        height: 90,
         marginRight: 7,
     },
     dataPlace: {

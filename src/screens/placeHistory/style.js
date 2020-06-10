@@ -7,9 +7,7 @@ const styles = StyleSheet.create({
     },
     image: {
         height: '35%',
-        backgroundColor: 'aqua',
         resizeMode: "cover",
-        zIndex: -10
     },
     details: {
         height: '70%',
