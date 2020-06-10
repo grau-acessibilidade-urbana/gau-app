@@ -35,6 +35,17 @@ const stackNavigator = createStackNavigator({
     PlaceView: {
         screen: PlaceView
     },
+}, {
+    headerMode: 'none',
+    defaultNavigationOptions: {
+        ...TransitionPresets.SlideFromRightIOS,
+    }
+});
+
+const stackHistory = createStackNavigator({
+    TabHistory: {
+        screen: Profile
+    },
     PlaceHistory: {
         screen: PlaceHistory
     },
@@ -58,14 +69,14 @@ const menuNavigator = createDrawerNavigator({
         }
     },
     Profile: {
-        screen: Profile,
+        screen: stackHistory,
         navigationOptions: {
             title: 'Perfil',
             drawerIcon: () => <Icon name="person" size={25} color={commonStyles.colors.primaryFontColor}/>
         }
     },
     History: {
-        screen: Profile,
+        screen: stackHistory,
         navigationOptions: {
             title: 'Histórico',
             drawerIcon: () => <Icon name="history" size={25} color={commonStyles.colors.primaryFontColor}/>

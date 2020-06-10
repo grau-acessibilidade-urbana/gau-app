@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
         backgroundColor: commonStyle.colors.primaryColor,
         flex: 1,
         margin: 10,
-        marginBottom: 20,
         padding: 10,
         borderRadius: 5
     },
@@ -60,6 +59,15 @@ const styles = StyleSheet.create({
         flex: 1,
         textAlign: "center",
         fontSize: 16
+    },
+    btnDelete: {
+        padding: 10,
+        flex: 1,
+        marginBottom: 20
+    },
+    textDelete: {
+        color: commonStyle.colors.primaryColor,
+        textDecorationLine: "underline"
     }
     
 })

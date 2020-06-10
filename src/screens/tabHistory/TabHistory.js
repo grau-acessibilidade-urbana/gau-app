@@ -39,7 +39,7 @@ export default class TabHistory extends Component {
             data={this.state.history}
             keyExtractor={item => item.place}
             renderItem={({ item, i }) =>
-                <HistoryBox key={i} {...item} />
+                <HistoryBox key={i} {...item} navigation={this.props.navigation} />
             }
         />
       );

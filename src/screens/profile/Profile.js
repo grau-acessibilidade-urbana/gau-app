@@ -15,6 +15,10 @@ export default class Profile extends Component {
         rating: 28,
     }
 
+    onNavigate = (route) => {
+        this.props.navigation.navigate(route);
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -35,7 +39,7 @@ export default class Profile extends Component {
                     </View>
                 </View>
 
-                <TabNavigator data={this.state.history}/>
+                <TabNavigator data='teste'/>
 
             </View>
         )
