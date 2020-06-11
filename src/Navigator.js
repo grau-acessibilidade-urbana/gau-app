@@ -64,7 +64,7 @@ const stackHistory = createStackNavigator({
 
 const menuNavigator = createDrawerNavigator({
     Home: {
-        screen: loginNavigator,
+        screen: stackNavigator,
         navigationOptions: {
             title: 'Início',
             drawerIcon: () => <Icon name="home" size={25} color={commonStyles.colors.primaryFontColor} />,
