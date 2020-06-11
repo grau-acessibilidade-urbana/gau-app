@@ -37,7 +37,7 @@ export default class History extends Component {
     render() {
       return (
         <View style={styles.container}>
-            <Header goBack={this.props.navigation.goBack}/>
+            <Header goBack={() => this.props.navigation.navigate('SearchPlaces')}/>
             <FlatList style={styles.list}
                 data={this.state.history}
                 keyExtractor={item => item.place}
