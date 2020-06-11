@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import commonStyle from '../shared/commonStyle';
-const {  width } = Dimensions.get('window'); 
+const { width } = Dimensions.get('window'); 
 
 
 
@@ -10,7 +10,7 @@ const Header = ({ goBack, lightweight = false }) => {
   return (
     <View style={[styles.header, lightweight ? styles.headerLigth : styles.headerDark]}>
       <TouchableOpacity onPress={() => goBack()}>
-        <Icon name="chevron-left" size={40} color={lightweight ? '#000' : "#fff"} />
+        <Icon name="chevron-left" size={40} color={lightweight ? commonStyle.colors.primaryFontColor : "#fff"} />
       </TouchableOpacity>
     </View>
   )
@@ -20,15 +20,25 @@ export default Header;
 
 const styles = StyleSheet.create({
   header: {
-    // zIndex: 1,
-    // position: 'absolute',
-    // left: 0,
-    // top: 0,
-    width: width,
+    width: "100%",
     height: 50,
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    zIndex: 1,
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 1,
+    },
+    shadowOpacity: 0.20,
+    shadowRadius: 1.41,
+    elevation: 2,
   },
-  headerLigth: { backgroundColor: commonStyle.colors.whiteTransparent },
-  headerDark: { backgroundColor: commonStyle.colors.primaryColor }
+  headerLigth: {
+    backgroundColor: commonStyle.colors.whiteTransparent,
+    position: 'absolute',
+    top: 0,
+    zIndex: 1,
+  },
+  headerDark: { backgroundColor: commonStyle.colors.primaryColor,  zIndex: 1}
 });
