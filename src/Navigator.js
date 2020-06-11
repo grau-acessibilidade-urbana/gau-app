@@ -6,6 +6,7 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
 import About from './screens/about/About';
 import Help from './screens/help/Help';
+import HelpDetails from './screens/helpDetails/HelpDetails';
 import Menu from './screens/menu/Menu';
 import Profile from './screens/profile/Profile';
 import History from './screens/history/History';
@@ -62,6 +63,20 @@ const stackHistory = createStackNavigator({
     }
 });
 
+const stackHelp = createStackNavigator({
+    Help: {
+        screen: Help
+    },
+    HelpDetails: {
+        screen: HelpDetails
+    },
+}, {
+    headerMode: 'none',
+    defaultNavigationOptions: {
+        ...TransitionPresets.SlideFromRightIOS,
+    }
+});
+
 const menuNavigator = createDrawerNavigator({
     Home: {
         screen: stackNavigator,
@@ -88,8 +103,8 @@ const menuNavigator = createDrawerNavigator({
             drawerIcon: () => <Icon name="history" size={25} color={commonStyles.colors.primaryFontColor} />
         }
     },
-    Help: {
-        screen: Help,
+    Help: { 
+        screen: stackHelp,
         navigationOptions: {
             title: 'Ajuda',
             drawerIcon: () => <Icon name="help" size={25} color={commonStyles.colors.primaryFontColor} />
