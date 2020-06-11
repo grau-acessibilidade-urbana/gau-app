@@ -65,7 +65,8 @@ export default class AuthenticationOptions extends Component {
         return (
             <View style={styles.container}>
                 <Image source={require('../../../assets/imgs/ilustracao-entrada.png')} style={styles.image} />
-                <TouchableOpacity style={[styles.button, styles.signinButton]}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}
+                    style={[styles.button, styles.signinButton]}>
                     <Icon name='person' size={40} color='#FFF' />
                     <Text style={styles.signinText}>Entrar com email</Text>
                 </TouchableOpacity>

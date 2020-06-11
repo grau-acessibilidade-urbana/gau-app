@@ -26,11 +26,11 @@ const validationSchema = Yup.object().shape({
 });
 class SignUp extends Component {
 
-    componentDidUpdate = prevProps => {
-        if (prevProps.isLoading && !this.props.isLoading) {
-            // this.props.navigation.navigate('');
+    componentDidUpdate = () => {
+        if (this.props.newUser) {
+            this.props.navigation.navigate('Login');
         }
-    } 
+    }
 
     onSubmit = user => {
         this.props.onSignup(user);
@@ -38,58 +38,78 @@ class SignUp extends Component {
 
     render() {
         return (
-            <ScrollView contentContainerStyle={styles.container}>
-                {this.props.isLoading ? <ActivityIndicator style={styles.activity} size='large' /> :
-                    <View style={{alignItems: 'center'}}>
-                        <Header goBack={this.props.navigation.goBack} />
-                        <Image
-                            source={require('../../../assets/imgs/ilustracao-cadastro.png')}
-                            style={styles.image} />
+            <View>
+                <Header goBack={this.props.navigation.goBack} />
+                <ScrollView contentContainerStyle={styles.container}>
+                    {this.props.isLoading ? <ActivityIndicator style={styles.activity} size='large' /> :
+                        <View style={{ alignItems: 'center' }}>
+                            <Image
+                                source={require('../../../assets/imgs/ilustracao-cadastro.png')}
+                                style={styles.image} />
 
-                        <Text style={styles.title}>Cadastro</Text>
+                            <Text style={styles.title}>Cadastro</Text>
 
-                        <Formik
-                            initialValues={{ name: '', email: '', password: '', confirmPassword: '' }}
-                            validationSchema={validationSchema}
-                            onSubmit={values => this.onSubmit(values)}>
-                            {({ handleChange, values, handleSubmit, errors, touched, handleBlur }) => (
-                                <View style={styles.fieldset}>
-                                    <Text style={styles.label} >Nome Completo</Text>
-                                    <TextInput style={styles.input} placeholder='Digite seu nome'
-                                        placeholderTextColor={commonStyle.colors.secondFontColor} value={values.name}
-                                        onChangeText={handleChange('name')} onBlur={handleBlur('name')} />
-                                    {touched.name && errors.name && <Text style={{ color: 'red' }}>{errors.name}</Text>}
+                            <Formik
+                                initialValues={{ name: '', email: '', password: '', confirmPassword: '' }}
+                                validationSchema={validationSchema}
+                                onSubmit={values => this.onSubmit(values)}>
+                                {({ handleChange, values, handleSubmit, errors, touched, handleBlur }) => (
+                                    <View style={styles.fieldset}>
+                                        <Text style={styles.label} >Nome Completo</Text>
+                                        <TextInput 
+                                            style={styles.input} 
+                                            placeholder='Digite seu nome'
+                                            placeholderTextColor={commonStyle.colors.secondFontColor} 
+                                            value={values.name}
+                                            onChangeText={handleChange('name')} 
+                                            onBlur={handleBlur('name')} />
+                                        {touched.name && errors.name && <Text style={{ color: 'red' }}>{errors.name}</Text>}
 
-                                    <Text style={styles.label} >Email</Text>
-                                    <TextInput style={styles.input} placeholder='Digite seu email'
-                                        placeholderTextColor={commonStyle.colors.secondFontColor} value={values.email}
-                                        onChangeText={handleChange('email')} onBlur={handleBlur('email')} />
-                                    {touched.email && errors.email && <Text style={{ color: 'red' }}>{errors.email}</Text>}
+                                        <Text style={styles.label} >Email</Text>
+                                        <TextInput 
+                                            style={styles.input} 
+                                            placeholder='Digite seu email'
+                                            placeholderTextColor={commonStyle.colors.secondFontColor} 
+                                            value={values.email}
+                                            onChangeText={handleChange('email')} 
+                                            onBlur={handleBlur('email')} />
+                                        {touched.email && errors.email && <Text style={{ color: 'red' }}>{errors.email}</Text>}
 
-                                    <Text style={styles.label} >Senha</Text>
-                                    <TextInput style={styles.input} placeholder='Digite sua senha' secureTextEntry={true}
-                                        placeholderTextColor={commonStyle.colors.secondFontColor} value={values.password}
-                                        onChangeText={handleChange('password')} onBlur={handleBlur('password')} />
-                                    {touched.password && errors.password && <Text style={{ color: 'red' }}>{errors.password}</Text>}
+                                        <Text style={styles.label} >Senha</Text>
+                                        <TextInput 
+                                            style={styles.input} 
+                                            placeholder='Digite sua senha' 
+                                            secureTextEntry={true}
+                                            placeholderTextColor={commonStyle.colors.secondFontColor} 
+                                            value={values.password}
+                                            onChangeText={handleChange('password')} 
+                                            onBlur={handleBlur('password')} />
+                                        {touched.password && errors.password && <Text style={{ color: 'red' }}>{errors.password}</Text>}
 
-                                    <Text style={styles.label} >Confirmar Senha</Text>
-                                    <TextInput style={styles.input} placeholder='Confirme a senha' secureTextEntry={true}
-                                        placeholderTextColor={commonStyle.colors.secondFontColor} value={values.confirmPassword}
-                                        onChangeText={handleChange('confirmPassword')} onBlur={handleBlur('confirmPassword')} />
-                                    {touched.confirmPassword && values.password !== values.confirmPassword &&
-                                        <Text style={{ color: 'red' }}>Senhas não correspondem</Text>}
+                                        <Text style={styles.label} >Confirmar Senha</Text>
+                                        <TextInput 
+                                            style={styles.input} 
+                                            placeholder='Confirme a senha' 
+                                            secureTextEntry={true}
+                                            placeholderTextColor={commonStyle.colors.secondFontColor} 
+                                            value={values.confirmPassword}
+                                            onChangeText={handleChange('confirmPassword')} 
+                                            onBlur={handleBlur('confirmPassword')} />
+                                        {touched.confirmPassword && values.password !== values.confirmPassword &&
+                                            <Text style={{ color: 'red' }}>Senhas não correspondem</Text>}
 
-                                    <TouchableOpacity
-                                        onPress={handleSubmit}
-                                        activeOpacity={0.5} style={styles.signupButton}>
-                                        <Text style={styles.signupText}>Cadastrar</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            )}
-                        </Formik>
-                    </View>
-                }
-            </ScrollView>
+                                        <TouchableOpacity
+                                            onPress={handleSubmit}
+                                            activeOpacity={0.5} style={styles.signupButton}>
+                                            <Text style={styles.signupText}>Cadastrar</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                )}
+                            </Formik>
+                        </View>
+                    }
+                </ScrollView>
+            </View>
         )
     }
 }
@@ -97,6 +117,7 @@ class SignUp extends Component {
 const mapStateToProps = ({ users }) => {
     return {
         isLoading: users.isLoading,
+        newUser: users.newUser,
     }
 }
 

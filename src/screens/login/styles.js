@@ -5,11 +5,16 @@ const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
-        alignItems: 'center',
         height: height,
         width: width,
     },
+    activity: {
+        height: height,
+        width: width,
+    },
+    image: {
+        marginTop: 40,
+    }, 
     title: {
         marginTop: 20,
         fontSize: 28,
@@ -17,7 +22,7 @@ const styles = StyleSheet.create({
         color: commonStyle.colors.primaryColor,
     },
     fieldset: {
-        marginTop: 20,
+        marginTop: 5,
         width: width * 0.8,
     },
     label: {
@@ -35,7 +40,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
     },
-    forgotPassowrdButton: {
+    forgotPassowordButton: {
         alignSelf: 'flex-end',
     },
     forgotPassowrdText: {
