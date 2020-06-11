@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
         height: 150,
         width: 150,
         resizeMode: 'contain',
-        marginTop: 20,
     },
     title: {
         marginTop: 10,
@@ -27,7 +26,7 @@ const styles = StyleSheet.create({
         color: commonStyle.colors.primaryColor,
     },
     fieldset: {
-        marginBottom: 20,
+        marginBottom: 50,
         width: width * 0.8,
     },
     label: {
