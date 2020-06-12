@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "274535529742",
+    "firebase_url": "https://grau-acessibilidade-urbana.firebaseio.com",
+    "project_id": "grau-acessibilidade-urbana",
+    "storage_bucket": "grau-acessibilidade-urbana.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274535529742:android:bc7d87cbb9be0911806b5f",
+        "android_client_info": {
+          "package_name": "com.gau"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "274535529742-ut8o0cb23tec8l5dq99kturm3sgkk9q8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gau",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "274535529742-jor0pqgm5390s1ef96a3kism5jkv4khr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQY0Rmp_-VLS7Oh2nKlTMP0mKuYIi8gQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "274535529742-jor0pqgm5390s1ef96a3kism5jkv4khr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

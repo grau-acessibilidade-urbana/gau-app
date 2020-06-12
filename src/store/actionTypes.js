@@ -1,4 +1,14 @@
+// PLACES ACTIONS
 export const SET_PLACE = 'SET_PLACE';
 export const FIND_PLACES = 'FIND_PLACES';
 export const QUERY_CHANGED = 'QUERY_CHANGED';
 export const UPDATE_CURRENT_LOCATION = 'UPDATE_CURRENT_LOCATION';
+export const LOADING_DETAILS = 'LOADING_DETAILS';
+
+// USERS ACTIONS
+export const SIGN_UP = 'SIGN_UP';
+export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
+export const SIGN_UP_ERROR = 'SIGN_UP_ERROR'
+export const SIGN_IN = "SIGN_IN";
+export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS';
+export const SIGN_IN_ERROR = 'SIGN_IN_ERROR';

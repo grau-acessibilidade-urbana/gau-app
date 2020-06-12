@@ -9,7 +9,6 @@ export default {
         EmptyStar: '#D1D1D1',
         backgroundStar: '#FFEFC0',
         whiteTransparent: 'rgba(255, 255, 255, 0.65)',
-
     } 
 }
 

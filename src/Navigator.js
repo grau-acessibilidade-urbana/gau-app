@@ -28,7 +28,12 @@ const loginNavigator = createStackNavigator({
     SignUp: {
         screen: SignUp
     }
-})
+}, {
+    headerMode: 'none',
+    defaultNavigationOptions: {
+        ...TransitionPresets.SlideFromRightIOS,
+    }
+});
 
 const stackNavigator = createStackNavigator({
     SearchPlaces: {
@@ -77,10 +82,10 @@ const menuNavigator = createDrawerNavigator({
         screen: stackNavigator,
         navigationOptions: {
             title: 'Início',
-            drawerIcon: () => <Icon name="home" size={25} color={commonStyles.colors.primaryFontColor}/>,
+            drawerIcon: () => <Icon name="home" size={25} color={commonStyles.colors.primaryFontColor} />,
             headerStyle: {
                 backgroundColor: 'red',
-              },
+            },
             headerTintColor: 'aqua'
         }
     },
@@ -88,35 +93,35 @@ const menuNavigator = createDrawerNavigator({
         screen: Profile,
         navigationOptions: {
             title: 'Perfil',
-            drawerIcon: () => <Icon name="person" size={25} color={commonStyles.colors.primaryFontColor}/>
+            drawerIcon: () => <Icon name="person" size={25} color={commonStyles.colors.primaryFontColor} />
         }
     },
     History: {
         screen: stackHistory,
         navigationOptions: {
             title: 'Histórico',
-            drawerIcon: () => <Icon name="history" size={25} color={commonStyles.colors.primaryFontColor}/>
+            drawerIcon: () => <Icon name="history" size={25} color={commonStyles.colors.primaryFontColor} />
         }
     },
     Help: { 
         screen: stackHelp,
         navigationOptions: {
             title: 'Ajuda',
-            drawerIcon: () => <Icon name="help" size={25} color={commonStyles.colors.primaryFontColor}/>
-        } 
+            drawerIcon: () => <Icon name="help" size={25} color={commonStyles.colors.primaryFontColor} />
+        }
     },
-    About: { 
+    About: {
         screen: About,
         navigationOptions: {
             title: 'Sobre',
-            drawerIcon: () => <Icon name="info" size={25} color={commonStyles.colors.primaryFontColor}/>
-        } 
+            drawerIcon: () => <Icon name="info" size={25} color={commonStyles.colors.primaryFontColor} />
+        }
     },
     Logout: {
         screen: AuthenticationOptions,
         navigationOptions: {
             title: "Sair",
-            drawerIcon: () => <Icon name="power-settings-new" size={25} color={commonStyles.colors.primaryFontColor}/>
+            drawerIcon: () => <Icon name="power-settings-new" size={25} color={commonStyles.colors.primaryFontColor} />
         }
     }
 }, {
