@@ -33,7 +33,7 @@ class Login extends Component {
     }
 
     componentDidUpdate() {
-        if (this.props.token) {
+        if (this.props.loggedUser) {
             this.props.navigation.navigate('Home');
         } else if (this.props.error) {
             ToastAndroid.showWithGravityAndOffset(
@@ -111,7 +111,7 @@ const mapStateToProps = ({ users }) => {
     return {
         newUser: users.newUser,
         isLoading: users.isLoading,
-        token: users.token,
+        loggedUser: users.loggedUser,
         error: users.error,
     }
 }

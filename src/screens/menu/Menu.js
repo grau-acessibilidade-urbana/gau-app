@@ -1,20 +1,33 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { DrawerItems } from 'react-navigation-drawer';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { DrawerItems } from 'react-navigation-drawer';
+import { connect } from 'react-redux';
+import styles from './style';
 
-import styles from  './style';
 
-export default class Menu extends Component {
+class Menu extends Component {
+
+    getLoggedUser = () => {
+        if (!this.props.loggedUser) {
+            return {
+                name: 'Anônimo',
+                email: '',
+                photo: require('../../../assets/imgs/person.png')
+            }
+        }
+        return this.props.loggedUser;
+    }
+
     render() {
         return (
             <View>
                 <View style={styles.menuProfile}>
-                    <Image style={styles.photoUser}  source={{uri:'https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80'}} />
+                    <Image style={styles.photoUser} source={this.getLoggedUser().photo} />
 
                     <View style={styles.userData}>
-                        <Text style={styles.userName}>Maria Joaquina</Text>
-                        <Text style={styles.userEmail}>mariajoaquina@hotmail.com</Text>
+                        <Text style={styles.userName}>{this.getLoggedUser().name}</Text>
+                        <Text style={styles.userEmail}>{this.getLoggedUser().email}</Text>
                     </View>
                     <TouchableOpacity style={styles.closeMenu} onPress={() => this.props.navigation.closeDrawer()}>
                         <Icon name='arrow-back' size={27} color='#FFF'></Icon>
@@ -26,3 +39,11 @@ export default class Menu extends Component {
         )
     }
 }
+
+const mapStateToProps = ({ users }) => {
+    return {
+        loggedUser: users.loggedUser,
+    }
+}
+
+export default connect(mapStateToProps)(Menu);

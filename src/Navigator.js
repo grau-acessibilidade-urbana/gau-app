@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
@@ -17,6 +17,7 @@ import PlaceView from './screens/placeView/placeView';
 import AuthenticationOptions from './screens/authenticationOptions/AuthenticationOptions';
 import Login from './screens/login/Login';
 import SignUp from './screens/signup/SignUp';
+import store from './store/storeConfig';
 
 const loginNavigator = createStackNavigator({
     AuthOptions: {
@@ -42,6 +43,9 @@ const stackNavigator = createStackNavigator({
     PlaceView: {
         screen: PlaceView
     },
+    Login: {
+        screen: loginNavigator
+    }
 }, {
     headerMode: 'none',
     defaultNavigationOptions: {
@@ -77,7 +81,7 @@ const stackHelp = createStackNavigator({
     }
 });
 
-const menuNavigator = createDrawerNavigator({
+const routesConfig = store().getState().users.loggedUser ? {
     Home: {
         screen: stackNavigator,
         navigationOptions: {
@@ -107,24 +111,61 @@ const menuNavigator = createDrawerNavigator({
         screen: stackHelp,
         navigationOptions: {
             title: 'Ajuda',
-            drawerIcon: () => <Icon name="help" size={25} color={commonStyles.colors.primaryFontColor} />
+            drawerIcon: () => <Icon name="help-circle" size={25} color={commonStyles.colors.primaryFontColor} />
         }
     },
     About: {
         screen: About,
         navigationOptions: {
             title: 'Sobre',
-            drawerIcon: () => <Icon name="info" size={25} color={commonStyles.colors.primaryFontColor} />
+            drawerIcon: () => <Icon name="information" size={25} color={commonStyles.colors.primaryFontColor} />
         }
     },
     Logout: {
-        screen: AuthenticationOptions,
+        screen: loginNavigator,
         navigationOptions: {
             title: "Sair",
             drawerIcon: () => <Icon name="power-settings-new" size={25} color={commonStyles.colors.primaryFontColor} />
+
         }
     }
-}, {
+} : {
+    Home: {
+        screen: stackNavigator,
+        navigationOptions: {
+            title: 'Início',
+            drawerIcon: () => <Icon name="home" size={25} color={commonStyles.colors.primaryFontColor} />,
+            headerStyle: {
+                backgroundColor: 'red',
+            },
+            headerTintColor: 'aqua'
+        }
+    },
+    Help: { 
+        screen: stackHelp,
+        navigationOptions: {
+            title: 'Ajuda',
+            drawerIcon: () => <Icon name="help-circle" size={25} color={commonStyles.colors.primaryFontColor} />
+        }
+    },
+    About: {
+        screen: About,
+        navigationOptions: {
+            title: 'Sobre',
+            drawerIcon: () => <Icon name="information" size={25} color={commonStyles.colors.primaryFontColor} />
+        }
+    },
+    Login: {
+        screen: loginNavigator,
+        navigationOptions: {
+            title: "Entrar",
+            drawerIcon: () => <Icon name="login" size={25} color={commonStyles.colors.primaryFontColor} />
+
+        }
+    }
+};
+
+const menuNavigator = createDrawerNavigator( routesConfig, {
     initialRouteName: 'Home',
     contentComponent: Menu,
     drawerWidth: Dimensions.get('screen').width * 0.85,
