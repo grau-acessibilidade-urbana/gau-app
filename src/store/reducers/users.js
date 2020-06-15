@@ -4,7 +4,10 @@ const initialState = {
     isLoading: false,
     error: false,
     newUser: null,
-    loggedUser: null,
+    loggedUser: {
+        name: 'Evelin',
+        email: 'eveh-ste@gmail.com',
+    },
     token: null,
 };
 
