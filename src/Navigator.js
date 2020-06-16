@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
@@ -42,9 +42,6 @@ const stackNavigator = createStackNavigator({
     },
     PlaceView: {
         screen: PlaceView
-    },
-    Login: {
-        screen: loginNavigator
     }
 }, {
     headerMode: 'none',
@@ -97,7 +94,7 @@ const routesConfig = store().getState().users.loggedUser ? {
         screen: Profile,
         navigationOptions: {
             title: 'Perfil',
-            drawerIcon: () => <Icon name="person" size={25} color={commonStyles.colors.primaryFontColor} />
+            drawerIcon: () => <Icon name="user-alt" size={25} color={commonStyles.colors.primaryFontColor} />
         }
     },
     History: {
@@ -111,21 +108,21 @@ const routesConfig = store().getState().users.loggedUser ? {
         screen: stackHelp,
         navigationOptions: {
             title: 'Ajuda',
-            drawerIcon: () => <Icon name="help-circle" size={25} color={commonStyles.colors.primaryFontColor} />
+            drawerIcon: () => <Icon name="question" size={25} color={commonStyles.colors.primaryFontColor} />
         }
     },
     About: {
         screen: About,
         navigationOptions: {
             title: 'Sobre',
-            drawerIcon: () => <Icon name="information" size={25} color={commonStyles.colors.primaryFontColor} />
+            drawerIcon: () => <Icon name="info-circle" size={25} color={commonStyles.colors.primaryFontColor} />
         }
     },
     Logout: {
         screen: loginNavigator,
         navigationOptions: {
             title: "Sair",
-            drawerIcon: () => <Icon name="power-settings-new" size={25} color={commonStyles.colors.primaryFontColor} />
+            drawerIcon: () => <Icon name="sign-out-alt" size={25} color={commonStyles.colors.primaryFontColor} />
 
         }
     }
@@ -145,21 +142,21 @@ const routesConfig = store().getState().users.loggedUser ? {
         screen: stackHelp,
         navigationOptions: {
             title: 'Ajuda',
-            drawerIcon: () => <Icon name="help-circle" size={25} color={commonStyles.colors.primaryFontColor} />
+            drawerIcon: () => <Icon name="question" size={25} color={commonStyles.colors.primaryFontColor} />
         }
     },
     About: {
         screen: About,
         navigationOptions: {
             title: 'Sobre',
-            drawerIcon: () => <Icon name="information" size={25} color={commonStyles.colors.primaryFontColor} />
+            drawerIcon: () => <Icon name="info-circle" size={25} color={commonStyles.colors.primaryFontColor} />
         }
     },
     Login: {
         screen: loginNavigator,
         navigationOptions: {
             title: "Entrar",
-            drawerIcon: () => <Icon name="login" size={25} color={commonStyles.colors.primaryFontColor} />
+            drawerIcon: () => <Icon name="sign-in-alt" size={25} color={commonStyles.colors.primaryFontColor} />
 
         }
     }

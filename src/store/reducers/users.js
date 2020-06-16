@@ -4,10 +4,7 @@ const initialState = {
     isLoading: false,
     error: false,
     newUser: null,
-    loggedUser: {
-        name: 'Evelin',
-        email: 'eveh-ste@gmail.com',
-    },
+    loggedUser: null,
     token: null,
 };
 
@@ -22,7 +19,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                newUser: user,
+                newUser: action.payload,
                 error: false,
             }
         case SIGN_UP_ERROR:
