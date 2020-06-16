@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput, TouchableWithoutFeedback} from 'react-native';
+import { Image, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import commonStyles from '../../shared/commonStyle';
 import Header from '../../components/Header';
 import styles from './style';
+import { connect } from 'react-redux';
 
-export default class Profile extends Component {
+class Profile extends Component {
 
     state ={
         name: 'Maria Joaquina',
@@ -29,8 +29,8 @@ export default class Profile extends Component {
                             <Icon name="create" size={20} color='#fff'/>
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.name}>{this.state.name}</Text>
-                    <Text style={styles.email}>{this.state.email}</Text>
+                    <Text style={styles.name}>{this.props.loggedUser.name}</Text>
+                    <Text style={styles.email}>{this.props.loggedUser.email}</Text>
                 </View>
 
                 <View style={styles.containerForm}>
@@ -62,7 +62,7 @@ export default class Profile extends Component {
                     </View>
 
                     <View style={styles.containerBtn}>
-                        <TouchableOpacity style={styles.btnSave} activeOpacity={0.7}>
+                        <TouchableOpacity onPress={this.props.onUpdateUser} style={styles.btnSave} activeOpacity={0.7}>
                         <Text style={styles.txtBtnSave}>Salvar</Text>
                         </TouchableOpacity>
 
@@ -75,3 +75,17 @@ export default class Profile extends Component {
         )
     }
 }
+
+const mapStateToProps = ({ users }) => {
+    return {
+        loggedUser: users.loggedUser
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onUpdateUser: user => dispatch(updateUser(user))
+    }
+}
+
+export default connect(mapStateToProps)(Profile);

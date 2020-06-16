@@ -26,6 +26,21 @@ export const addUser = user => {
     }
 }
 
+export const updateUser = user => {
+    return dispatch => {
+        // dispachar update user
+        axios.put(`/user/${user.id}`, user)
+            .then(res => {
+                if (res && res.data) {
+                    // dispachar update user success, passando como payload o user
+                } else {
+                    // dispachar erro
+                }
+            })
+            .catch(() => { /*dispachar erro */ });
+    }
+}
+
 export const login = login => {
     return dispatch => {
         dispatch({ type: SIGN_IN });
