@@ -17,7 +17,6 @@ import PlaceView from './screens/placeView/placeView';
 import AuthenticationOptions from './screens/authenticationOptions/AuthenticationOptions';
 import Login from './screens/login/Login';
 import SignUp from './screens/signup/SignUp';
-import store from './store/storeConfig';
 
 const loginNavigator = createStackNavigator({
     AuthOptions: {
@@ -30,6 +29,7 @@ const loginNavigator = createStackNavigator({
         screen: SignUp
     }
 }, {
+    initialRouteName: 'AuthOptions',
     headerMode: 'none',
     defaultNavigationOptions: {
         ...TransitionPresets.SlideFromRightIOS,
@@ -78,7 +78,7 @@ const stackHelp = createStackNavigator({
     }
 });
 
-const routesConfig = store().getState().users.loggedUser ? {
+const menuNavigatorLoggedUser = createDrawerNavigator({
     Home: {
         screen: stackNavigator,
         navigationOptions: {
@@ -126,7 +126,23 @@ const routesConfig = store().getState().users.loggedUser ? {
 
         }
     }
-} : {
+}, {
+    initialRouteName: 'Home',
+    contentComponent: Menu,
+    drawerWidth: Dimensions.get('screen').width * 0.85,
+    contentOptions: {
+        labelStyle: {
+            fontWeight: 'normal',
+            fontSize: 18
+        },
+        activeLabelStyles: {
+            color: commonStyles.colors.primaryFontColor,
+            fontWeight: 'bold'
+        }
+    }
+});
+
+const menuNavigator = createDrawerNavigator({
     Home: {
         screen: stackNavigator,
         navigationOptions: {
@@ -138,7 +154,7 @@ const routesConfig = store().getState().users.loggedUser ? {
             headerTintColor: 'aqua'
         }
     },
-    Help: { 
+    Help: {
         screen: stackHelp,
         navigationOptions: {
             title: 'Ajuda',
@@ -160,9 +176,7 @@ const routesConfig = store().getState().users.loggedUser ? {
 
         }
     }
-};
-
-const menuNavigator = createDrawerNavigator( routesConfig, {
+}, {
     initialRouteName: 'Home',
     contentComponent: Menu,
     drawerWidth: Dimensions.get('screen').width * 0.85,
@@ -178,4 +192,9 @@ const menuNavigator = createDrawerNavigator( routesConfig, {
     }
 });
 
-export default createAppContainer(menuNavigator);
+const NavigatorUser = createAppContainer(menuNavigatorLoggedUser);
+const Navigator = createAppContainer(menuNavigator);
+
+// export default createAppContainer(menuNavigator);
+
+export { Navigator, NavigatorUser };

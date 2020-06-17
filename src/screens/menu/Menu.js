@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { DrawerItems } from 'react-navigation-drawer';
+import { DrawerItems, DrawerNavigatorItems } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
 import styles from './style';
 
@@ -23,7 +23,7 @@ class Menu extends Component {
         return (
             <View>
                 <View style={styles.menuProfile}>
-                    <Image style={styles.photoUser} source={this.getLoggedUser().photo} />
+                    <Image style={styles.photoUser} source={this.getLoggedUser().photo || require('../../../assets/imgs/person.png')} />
 
                     <View style={styles.userData}>
                         <Text style={styles.userName}>{this.getLoggedUser().name}</Text>
@@ -33,7 +33,6 @@ class Menu extends Component {
                         <Icon name='arrow-back' size={27} color='#FFF'></Icon>
                     </TouchableOpacity>
                 </View>
-
                 <DrawerItems {...this.props}></DrawerItems>
             </View>
         )

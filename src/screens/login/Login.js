@@ -33,10 +33,7 @@ class Login extends Component {
     }
 
     componentDidUpdate() {
-        if (this.props.loggedUser) {
-            console.log('logado');
-            this.props.navigation.navigate('Home');
-        } else if (this.props.error) {
+        if (this.props.error) {
             ToastAndroid.showWithGravityAndOffset(
                 "Email ou senha inválidos.",
                 ToastAndroid.SHORT,
