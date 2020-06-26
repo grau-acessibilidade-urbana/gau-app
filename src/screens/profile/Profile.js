@@ -1,23 +1,41 @@
 import React, { Component } from 'react';
 import { Image, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Header from '../../components/Header';
 import styles from './style';
 import { connect } from 'react-redux';
 
+
+  
 class Profile extends Component {
 
     state = {
-        isOpen: false
+        isOpen: false,
+        photoUser: null,
     }
+
+    pickImage = () => {
+
+        ImagePicker.showImagePicker({
+            title: 'Escolha a imagem',
+            maxHeight: 100,
+            maxWidth: 100
+        }, res => {
+            this.setState({ photoUser: "data:image/jpeg;base64," + res.data })
+            console.log(this.state.photoUser)
+        })
+    }
+
+
     render() {
         return (
             <View style={styles.container}>
                 <Header goBack={this.props.navigation.goBack}/>
                 <View style={styles.contantUser}>
                     <View style={styles.photoContainer}>
-                        <Image style={styles.photoUser} source={{uri: this.props.loggedUser.photo}}/>
-                        <TouchableOpacity style={styles.edit} activeOpacity={0.7}>
+                        <Image style={styles.photoUser} source={{uri: this.state.photoUser}}/>
+                        <TouchableOpacity style={styles.edit} activeOpacity={0.7} onPress={this.pickImage}>
                             <Icon name="create" size={20} color='#fff'/>
                         </TouchableOpacity>
                     </View>
