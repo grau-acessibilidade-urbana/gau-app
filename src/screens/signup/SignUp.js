@@ -123,7 +123,7 @@ const mapStateToProps = ({ users }) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSignup: user => dispatch(addUser(user))
+        onSignup: user => dispatch(addUser(user)),
     };
 }
 

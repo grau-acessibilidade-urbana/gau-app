@@ -4,7 +4,11 @@ const initialState = {
     isLoading: false,
     error: false,
     newUser: null,
-    loggedUser: null,
+    loggedUser: {
+        name: 'Evelin Stefani',
+        email: 'eveh-ste@gmail.com',
+        photo: 'https://pbs.twimg.com/profile_images/1070081911190638592/mZVsh8K-_400x400.jpg'
+    },
     token: null,
 };
 

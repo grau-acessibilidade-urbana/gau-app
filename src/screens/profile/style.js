@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     contantUser: {
-        // height: '35%',
         width: "100%",
         justifyContent: "center",
         alignItems: "center",
@@ -30,8 +29,8 @@ const styles = StyleSheet.create({
         backgroundColor: commonStyles.colors.primaryColor,
         width: 36,
         height: 36,
-        bottom: 5,
-        right: 5,
+        bottom: -3,
+        right: -7,
         borderRadius: 18,
         justifyContent: 'center',
         alignItems: 'center',
@@ -40,44 +39,14 @@ const styles = StyleSheet.create({
     name:{
         fontSize: 18,
         padding: 5,
+        fontSize: 18,
         color: commonStyles.colors.primaryColor
     },
     email: {
         fontSize: 16,
         padding: 3,
+        fontSize: 18,
         color: commonStyles.colors.secondFontColor
-    },
-    rating: {
-        width: '18%',
-        height: 30,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 5,
-        borderWidth: 1,
-        borderRadius: 3,
-        borderColor: commonStyles.colors.secondFontColor
-    },
-    textRating: {
-        paddingLeft: 10,
-        color: commonStyles.colors.secondFontColor
-    },
-    containerTab: {
-        flexDirection: 'row',
-        width: '100%',
-    },
-    tab: {
-        width: '50%',
-        borderBottomWidth: 2,
-        borderColor: '#eee'
-    },
-    tabSelected: {
-        borderBottomWidth: 2,
-        borderColor: commonStyles.colors.primaryColor
-    },
-    textTab: {
-        fontSize: 19,
-        paddingLeft: 10
     },
     containerForm: {
         flex: 1
@@ -91,7 +60,8 @@ const styles = StyleSheet.create({
     },
     label: {
         color: commonStyles.colors.secondFontColor,
-        marginBottom: 5
+        marginBottom: 5,
+        fontSize: 18
     },
     input: {
         color: commonStyles.colors.primaryFontColor,
@@ -99,6 +69,11 @@ const styles = StyleSheet.create({
         borderColor: commonStyles.colors.thirdColor,
         borderRadius: 5,
         padding: 5,
+        fontSize: 18
+
+    },
+    inputDisabled:{
+        backgroundColor: "#f7f7f7"
     },
     containerEditPassword: {
         flexDirection: 'row',
@@ -108,6 +83,7 @@ const styles = StyleSheet.create({
         paddingTop: 15,
         color: commonStyles.colors.secondFontColor,
         textDecorationLine: 'underline',
+        fontSize: 18
     },
     containerBtn: {
         flexDirection: 'row',
@@ -123,7 +99,8 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     txtBtnSave: {
-        color: '#fff'
+        color: '#fff',
+        fontSize: 18
     },  
     btnCancel:{
         margin: 15,
@@ -132,7 +109,8 @@ const styles = StyleSheet.create({
     },
     txtBtnCancel:{
         color: commonStyles.colors.primaryColor,
-        textDecorationLine: 'underline'
+        textDecorationLine: 'underline',
+        fontSize: 18
     }
 })
 
