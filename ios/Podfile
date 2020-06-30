@@ -86,6 +86,8 @@ target 'gau' do
 
   pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
 
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
   target 'gauTests' do
     inherit! :complete
     # Pods for testing
