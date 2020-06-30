@@ -1,4 +1,4 @@
-import { SIGN_UP, SIGN_UP_ERROR, SIGN_UP_SUCCESS, SIGN_IN, SIGN_IN_SUCCESS, SIGN_IN_ERROR } from '../actionTypes';
+import { SIGN_UP, SIGN_UP_ERROR, SIGN_UP_SUCCESS, SIGN_IN, SIGN_IN_SUCCESS, SIGN_IN_ERROR, SIGN_OUT } from '../actionTypes';
 
 const initialState = {
     isLoading: false,
@@ -45,7 +45,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                error: true,
+                error: action.payload,
+            }
+        case SIGN_OUT:
+            return {
+                ...state,
+                loggedUser: null
             }
         default:
             return state;

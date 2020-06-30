@@ -5,18 +5,19 @@ import { createAppContainer } from 'react-navigation';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createStackNavigator, TransitionPresets } from 'react-navigation-stack';
 import About from './screens/about/About';
+import AuthenticationOptions from './screens/authenticationOptions/AuthenticationOptions';
 import Help from './screens/help/Help';
 import HelpDetails from './screens/helpDetails/HelpDetails';
-import Menu from './screens/menu/Menu';
-import Profile from './screens/profile/Profile';
 import History from './screens/history/History';
-import PlaceHistory from './screens/placeHistory/PlaceHistory';
-import SearchPlaces from './screens/searchPlaces/SearchPlaces';
-import commonStyles from './shared/commonStyle';
-import PlaceView from './screens/placeView/placeView';
-import AuthenticationOptions from './screens/authenticationOptions/AuthenticationOptions';
 import Login from './screens/login/Login';
+import Logout from './screens/Logout';
+import Menu from './screens/menu/Menu';
+import PlaceHistory from './screens/placeHistory/PlaceHistory';
+import PlaceView from './screens/placeView/placeView';
+import Profile from './screens/profile/Profile';
+import SearchPlaces from './screens/searchPlaces/SearchPlaces';
 import SignUp from './screens/signup/SignUp';
+import commonStyles from './shared/commonStyle';
 
 const loginNavigator = createStackNavigator({
     AuthOptions: {
@@ -36,7 +37,7 @@ const loginNavigator = createStackNavigator({
     }
 });
 
-const stackNavigator = createStackNavigator({
+const homeStackNavigator = createStackNavigator({
     SearchPlaces: {
         screen: SearchPlaces
     },
@@ -80,7 +81,7 @@ const stackHelp = createStackNavigator({
 
 const menuNavigatorLoggedUser = createDrawerNavigator({
     Home: {
-        screen: stackNavigator,
+        screen: homeStackNavigator,
         navigationOptions: {
             title: 'Início',
             drawerIcon: () => <Icon name="home" size={25} color={commonStyles.colors.primaryFontColor} />,
@@ -104,7 +105,7 @@ const menuNavigatorLoggedUser = createDrawerNavigator({
             drawerIcon: () => <Icon name="history" size={25} color={commonStyles.colors.primaryFontColor} />
         }
     },
-    Help: { 
+    Help: {
         screen: stackHelp,
         navigationOptions: {
             title: 'Ajuda',
@@ -119,11 +120,10 @@ const menuNavigatorLoggedUser = createDrawerNavigator({
         }
     },
     Logout: {
-        screen: loginNavigator,
+        screen: Logout,
         navigationOptions: {
             title: "Sair",
-            drawerIcon: () => <Icon name="sign-out-alt" size={25} color={commonStyles.colors.primaryFontColor} />
-
+            drawerIcon: () => <Icon name="sign-out-alt" size={25} color={commonStyles.colors.primaryFontColor} />,
         }
     }
 }, {
@@ -144,7 +144,7 @@ const menuNavigatorLoggedUser = createDrawerNavigator({
 
 const menuNavigator = createDrawerNavigator({
     Home: {
-        screen: stackNavigator,
+        screen: homeStackNavigator,
         navigationOptions: {
             title: 'Início',
             drawerIcon: () => <Icon name="home" size={25} color={commonStyles.colors.primaryFontColor} />,
@@ -192,9 +192,5 @@ const menuNavigator = createDrawerNavigator({
     }
 });
 
-const NavigatorUser = createAppContainer(menuNavigatorLoggedUser);
-const Navigator = createAppContainer(menuNavigator);
-
-// export default createAppContainer(menuNavigator);
-
-export { Navigator, NavigatorUser };
+export const NavigatorUser = createAppContainer(menuNavigatorLoggedUser);
+export const Navigator = createAppContainer(menuNavigator);

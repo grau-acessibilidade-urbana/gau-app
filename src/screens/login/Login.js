@@ -41,6 +41,8 @@ class Login extends Component {
                 25,
                 50
             );
+
+            console.log('err' + JSON.stringify(this.props.error))
         }
     }
 

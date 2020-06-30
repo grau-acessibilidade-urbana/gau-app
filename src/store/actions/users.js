@@ -6,15 +6,18 @@ import {
     SIGN_IN,
     SIGN_IN_SUCCESS,
     SIGN_IN_ERROR,
+    SIGN_OUT,
 } from '../actionTypes';
 
 
-axios.defaults.baseURL = 'http://10.0.2.2:3000';
+const config = {
+    baseURL: 'http://10.0.2.2:3000'
+}
 
 export const addUser = user => {
     return dispatch => {
         dispatch({ type: SIGN_UP });
-        axios.post(`/user`, user)
+        axios.post(`/user`, user, config)
             .catch(error => dispatch({ type: SIGN_UP_ERROR }))
             .then(res => {
                 if (res && res.data) {
@@ -29,7 +32,7 @@ export const addUser = user => {
 export const updateUser = user => {
     return dispatch => {
         // dispachar update user
-        axios.put(`/user/${user.id}`, user)
+        axios.put(`/user/${user.id}`, user, config)
             .then(res => {
                 if (res && res.data) {
                     // dispachar update user success, passando como payload o user
@@ -47,8 +50,8 @@ export const login = login => {
         axios.post(`/auth/login`, {
             username: login.email,
             password: login.password,
-        })
-            .catch(error => dispatch({ type: SIGN_IN_ERROR }))
+        }, config)
+            .catch(error => dispatch({ type: SIGN_IN_ERROR, payload: error }))
             .then(res => {
                 if (res && res.data) {
                     console.log('usuario logado: ' + JSON.stringify(res.data));
@@ -57,5 +60,11 @@ export const login = login => {
                     dispatch({ type: SIGN_IN_ERROR });
                 }
             })
+    }
+}
+
+export const logout = () => {
+    return dispatch => {
+        dispatch({ type: SIGN_OUT })
     }
 }
