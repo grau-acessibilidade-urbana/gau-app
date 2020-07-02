@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { DrawerItems, DrawerNavigatorItems } from 'react-navigation-drawer';
+import { DrawerItems } from 'react-navigation-drawer';
 import { connect } from 'react-redux';
 import styles from './style';
 

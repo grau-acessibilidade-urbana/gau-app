@@ -1,11 +1,22 @@
-import { SIGN_UP, SIGN_UP_ERROR, SIGN_UP_SUCCESS, SIGN_IN, SIGN_IN_SUCCESS, SIGN_IN_ERROR, SIGN_OUT } from '../actionTypes';
+import { 
+    SIGN_UP, 
+    SIGN_UP_ERROR, 
+    SIGN_UP_SUCCESS, 
+    SIGN_IN, 
+    SIGN_IN_SUCCESS, 
+    SIGN_IN_ERROR, 
+    SIGN_OUT,
+    UPDATE_USER,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_ERROR
+ } from '../actionTypes';
 
 const initialState = {
     isLoading: false,
     error: false,
     newUser: null,
     loggedUser: null,
-    token: null,
+    token: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -51,6 +62,23 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loggedUser: null
+            }
+        case UPDATE_USER:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case UPDATE_USER_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                loggedUser: action.payload
+            }
+        case UPDATE_USER_ERROR:
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload
             }
         default:
             return state;
