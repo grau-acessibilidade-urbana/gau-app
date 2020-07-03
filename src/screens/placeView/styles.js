@@ -36,6 +36,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     color: commonStyle.colors.secondFontColor,
     fontSize: 16,
+    paddingLeft: 5
+  },
+  txtReviewNumberContainer: {
+    flexDirection: 'row',
+    color: commonStyle.colors.secondFontColor,
+    fontSize: 16
   },
   text: {
     color: commonStyle.colors.primaryFontColor,

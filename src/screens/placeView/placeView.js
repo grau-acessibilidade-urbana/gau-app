@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, TouchableWithoutFeedback, Image, Text, FlatList, ScrollView, TextInput} from 'react-native';
+import { Rating } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Header from '../../components/Header';
 import commonStyle from '../../shared/commonStyle';
@@ -57,10 +58,10 @@ export default class PlaceView extends Component {
   }
 
   render(){
-    let stars = ["#D1D1D1", "#D1D1D1", "#D1D1D1", "#D1D1D1", "#D1D1D1"];
-    for(let i=0; i<= this.state.rating-1; i++){
-      stars[i] = "#FFC107";
-    }
+    // let stars = ["#D1D1D1", "#D1D1D1", "#D1D1D1", "#D1D1D1", "#D1D1D1"];
+    // for(let i=0; i<= this.state.rating-1; i++){
+    //   stars[i] = "#FFC107";
+    // }
     
     return (
       <View style={styles.containerView}>
@@ -77,15 +78,11 @@ export default class PlaceView extends Component {
               <View style={styles.detailLocalContainer}>
                 <Text style={styles.detailLocalContainer_title}>{this.state.nameLocal} </Text>
                 <View style={styles.reviewContainer}>
-                  <Text style={styles.txtReviewContainer}> {this.state.rating} </Text>
+                  <Text style={styles.txtReviewNumberContainer}> {this.state.rating} </Text>
                   <View style={{ flexDirection: 'row' }}>
-                    {stars.map((item, i) => {
-                      return (
-                        <Icon name="star" size={20} key={i} color={item} />
-                      )})
-                    }
+                    <Rating imageSize={20} readonly startingValue={this.state.rating}/>
                   </View>
-                  <Text style={styles.txtReviewContainer}>( {this.state.review} Avaliações)</Text>
+                  <Text style={styles.txtReviewContainer}> ({this.state.review} Avaliações)</Text>
                 </View>
                 <View>
                   <Text style={styles.text}>Rua Marechal Deodoro da Fonseca, 132 - Centro, São Roque - SP, 18130-070 -
