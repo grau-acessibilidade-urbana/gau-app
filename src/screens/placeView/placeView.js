@@ -1,21 +1,18 @@
-import React from 'react';
-import { View, TouchableOpacity, Image, Text } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import React, { Component } from 'react';
+import { View, TouchableOpacity, TouchableWithoutFeedback, Image, Text, FlatList, ScrollView, TextInput} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
 import Header from '../../components/Header';
 import commonStyle from '../../shared/commonStyle';
 import ComentaryBox from '../../components/ComentaryBox';
-
 import placementImage from './placementImage';
 import styles from './styles';
 
 const comentaries = [
   {
     id: 1,
-    name: 'Vanessa',
+    name: 'Vanessaa',
     image: 'https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083379_960_720.jpg',
-    classification: 4,
+    classification: 2,
     text: 'É importante questionar o quanto a execução dos pontos do programa acarreta um processo de reformulação e modernização das novas proposições.',
     likes: 2,
     date: '24/02/2020',
@@ -51,61 +48,73 @@ const comentaries = [
 
 ];
 
-const PlaceView = ({ ...props }) => {
-  return (
-    <View>
-      <Header goBack={props.navigation.goBack} lightweight />
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.placeContainer}>
-            <View style={styles.imageContainer}>
-              <Image style={styles.imageLocation}
-                source={{ uri: placementImage }} />
-              <TouchableOpacity style={styles.rateLocationButton}>
-                <Text style={styles.rateLocationText}>Avaliar local</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.detailLocalContainer}>
-              <Text style={styles.detailLocalContainer_title}>Fatec São Roque</Text>
-              <View style={styles.reviewContainer}>
-                <Text style={styles.reviewContainer}>4.0</Text>
-                <View style={{ flexDirection: 'row' }}>
-                  {
-                    [...Array(Number(4)).keys()]
-                      .fill('goldenStar').map((s, i) => <Icon
-                        name="star"
-                        size={20}
-                        key={i}
-                        color={
-                          commonStyle.colors.FullStar
-                        }
-                      />)
-                  }
-                  {
-                    [...Array(Number(5 - 4)).keys()].map((e,i) => <Icon
-                      name="star"
-                      key={i * Math.random()}
-                      size={20}
-                      color={commonStyle.colors.EmptyStar}
-                    />)
-                  }
+export default class PlaceView extends Component {
+
+  state = {
+    nameLocal: "FATEC São Roque",
+    rating: 3,
+    review: 10
+  }
+
+  render(){
+    let stars = ["#D1D1D1", "#D1D1D1", "#D1D1D1", "#D1D1D1", "#D1D1D1"];
+    for(let i=0; i<= this.state.rating-1; i++){
+      stars[i] = "#FFC107";
+    }
+    
+    return (
+      <View style={styles.containerView}>
+        <Header goBack={this.props.navigation.goBack} lightweight />
+        <ScrollView>
+          <View style={styles.container}>
+            <View style={styles.placeContainer}>
+              <View style={styles.imageContainer}>
+                <Image style={styles.imageLocation} source={{ uri: placementImage }} />
+                <TouchableOpacity style={styles.rateLocationButton} activeOpacity={0.8}>
+                  <Text style={styles.rateLocationText}>Avaliar local</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.detailLocalContainer}>
+                <Text style={styles.detailLocalContainer_title}>{this.state.nameLocal} </Text>
+                <View style={styles.reviewContainer}>
+                  <Text style={styles.txtReviewContainer}> {this.state.rating} </Text>
+                  <View style={{ flexDirection: 'row' }}>
+                    {stars.map((item, i) => {
+                      return (
+                        <Icon name="star" size={20} key={i} color={item} />
+                      )})
+                    }
+                  </View>
+                  <Text style={styles.txtReviewContainer}>( {this.state.review} Avaliações)</Text>
                 </View>
-                <Text style={styles.reviewContainer}>(10 Avaliações)</Text>
-              </View>
-              <View>
-                <Text style={styles.text}>Rua Marechal Deodoro da Fonseca, 132 - Centro, São Roque - SP, 18130-070 - <Text>Ver no mapa</Text></Text>
-              </View>
-              <View>
-                {
-                  comentaries.map(comentary => <ComentaryBox key={comentary.id} {...comentary} />)
-                }
+                <View>
+                  <Text style={styles.text}>Rua Marechal Deodoro da Fonseca, 132 - Centro, São Roque - SP, 18130-070 -
+                    <TouchableWithoutFeedback>
+                        <Text style={styles.textMaps}>Ver no mapa</Text>
+                    </TouchableWithoutFeedback>
+                  </Text>
+                </View>
+                <View style={styles.containerComentaries}>
+                  <FlatList
+                    data={comentaries}
+                    keyExtractor={item => item.id}
+                    renderItem={({item}) =>
+                      <ComentaryBox key={item.id} {...item} />
+                    }
+                />
+                </View>
               </View>
             </View>
           </View>
+        </ScrollView>
+  
+        <View style={styles.containerInputResponse}>
+          <TextInput style={styles.inputResponse} placeholder={"Digite sua resposta"} />
+          <TouchableOpacity activeOpacity={0.5} style={styles.btnResponse}>
+            <Icon name="send" size={30} color={ commonStyle.colors.primaryColor } />
+          </TouchableOpacity>
         </View>
-      </ScrollView>
-    </View>
-  )
-};
-
-export default PlaceView;
+      </View>
+    )
+  }
+}

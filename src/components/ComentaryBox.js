@@ -1,37 +1,18 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, FlatList, TouchableOpacity} from 'react-native';
 import commonStyle from '../shared/commonStyle';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const ComentaryBox = ({ name, text, classification, date, likes = 0, image, responses, hideClassification = false }) => {
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.comentaryBox}>
         <View style={{ flex: 1, paddingRight: 5 }}>
-          <Image
-            source={{
-              uri: image
-            }}
-            style={{
-              alignSelf: 'center',
-              width: 55,
-              height: 55,
-              resizeMode: 'cover',
-              borderRadius: 30,
-              borderWidth: 3,
-              borderColor: commonStyle.colors.primaryColor
-            }}
-          />
-
+          <Image source={{ uri: image }} style={styles.imageUser} />
           {!hideClassification && (
             <View style={[styles.iconWithTex, styles.classificationBox]}>
-              <Icon
-                name="star"
-                size={20}
-                color={
-                  commonStyle.colors.FullStar
-                }
-              /><Text style={commonStyle.colors.primaryFontColor}>
+              <Icon name="star" size={20} color={ commonStyle.colors.FullStar }/>
+              <Text style={commonStyle.colors.primaryFontColor}>
                 {Number(classification).toFixed(1)}
               </Text>
             </View>)}
@@ -42,29 +23,15 @@ const ComentaryBox = ({ name, text, classification, date, likes = 0, image, resp
           <View style={styles.comentaryBoxFooter}>
             <Text style={styles.secondaryText}>{date}</Text>
             <View style={styles.iconWithTex}>
-              <Icon
-                name="chat-bubble-outline"
-                size={18}
-                color={
-                  commonStyle.colors.primaryColor
-                }
-              />
-              <Text style={styles.principalColorText}>
-                Responder
-            </Text>
+              <Icon name="chat-bubble-outline" size={18} color={ commonStyle.colors.primaryColor }/>
+              <TouchableOpacity activeOpacity={0.7}>
+                <Text style={styles.principalColorText}> Responder </Text>
+              </TouchableOpacity>
             </View>
-            <View style={styles.iconWithTex}>
-              <Icon
-                name="thumb-up"
-                size={18}
-                color={
-                  commonStyle.colors.primaryColor
-                }
-              />
-              <Text style={styles.primaryText}>
-                {likes}
-              </Text>
-            </View>
+            <TouchableOpacity style={styles.iconWithTex} activeOpacity={0.5}>
+              <Icon name="thumb-up" size={18} color={ commonStyle.colors.primaryColor } />
+              <Text style={styles.primaryText}> {likes} </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -72,19 +39,19 @@ const ComentaryBox = ({ name, text, classification, date, likes = 0, image, resp
         responses && (
           <View style={{ width: '85%', alignSelf: 'flex-end' }}>
             {
-              responses
-                .map(response =>
-                  <ComentaryBox
-                    style={{ width: '90%', justifyContent: 'flex-end' }}
-                    key={response.id}
-                    {...response}
-                    hideClassification
-                  />
-                )
+              <FlatList
+                data={responses}
+                keyExtractor={item => item.id}
+                renderItem={({item}) =>
+                  <ComentaryBox style={styles.comentaryBoxResponse} key={item.id} {...item} hideClassification />
+                }
+              />
             }
           </View>
         )
       }
+    
+    
 
     </View>
   );
@@ -93,8 +60,27 @@ const ComentaryBox = ({ name, text, classification, date, likes = 0, image, resp
 export default ComentaryBox;
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 5,
+    marginBottom: 5,
+    padding: 7,
+    backgroundColor: "#fcfcfc"
+  },  
   comentaryBox: {
     flexDirection: 'row',
+  },
+  comentaryBoxResponse: {
+    width: '90%',
+    justifyContent: 'flex-end',
+  },
+  imageUser: {
+    alignSelf: 'center',
+    width: 55,
+    height: 55,
+    resizeMode: 'cover',
+    borderRadius: 30,
+    borderWidth: 3,
+    borderColor: commonStyle.colors.primaryColor
   },
   comentaryName: {
     fontSize: 18,
@@ -106,7 +92,8 @@ const styles = StyleSheet.create({
   },
   comentaryBoxFooter: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginTop: 5
   },
   iconWithTex: {
     flexDirection: 'row',
@@ -127,6 +114,7 @@ const styles = StyleSheet.create({
   classificationBox: {
     backgroundColor: '#FFF6DA',
     width: 55,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginTop: 5
   }
 });

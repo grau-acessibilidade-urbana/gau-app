@@ -2,14 +2,16 @@ import { StyleSheet, Dimensions } from 'react-native';
 import commonStyle from "../../shared/commonStyle";
 const { height, width } = Dimensions.get('window');
 const styles = StyleSheet.create({
+  containerView: {
+    backgroundColor: "#fff",
+  },
   container: {
     flex: 1,
-  },
-  placeContainer: {
-    height: height,
+    marginBottom: 15
   },
   imageContainer: {
     flex: 1,
+    height: 250
   },
   imageLocation: {
     height: '100%',
@@ -22,9 +24,15 @@ const styles = StyleSheet.create({
   detailLocalContainer_title: {
     fontSize: 22,
     color: commonStyle.colors.primaryColor,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   reviewContainer: {
+    flexDirection: 'row',
+    color: commonStyle.colors.secondFontColor,
+    fontSize: 16,
+    padding: 5
+  },
+  txtReviewContainer: {
     flexDirection: 'row',
     color: commonStyle.colors.secondFontColor,
     fontSize: 16,
@@ -33,6 +41,16 @@ const styles = StyleSheet.create({
     color: commonStyle.colors.primaryFontColor,
     fontSize: 18,
   },
+  btnMaps: {
+    margin: 5
+  },
+  textMaps: {
+    textDecorationLine: "underline",
+    color: commonStyle.colors.primaryColor,
+  },
+  containerComentaries:{
+    marginTop: 15,
+  },  
   rateLocationButton: {
     position: 'absolute',
     borderRadius: 5,
@@ -43,10 +61,32 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingHorizontal: 15
   },
-  rateLocationText:
-  {
+  rateLocationText: {
     color: "#fff",
     fontSize: 16
+  },
+  containerInputResponse: {
+    flexDirection: "row",
+    backgroundColor: "#f4f4f4",
+    position: "absolute",
+    alignItems: "center",
+    width: width,
+    // height: 55,
+    bottom: 0
+  }, 
+  inputResponse: {
+    flex: 1,
+    height: "80%",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    marginLeft: 5,
+    borderWidth: 2,
+    padding: 10,
+    fontSize: 16,
+    borderColor: "#e3e3e3"
+  },
+  btnResponse: {
+    padding: 10
   }
 
 });
