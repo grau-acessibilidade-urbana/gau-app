@@ -1,11 +1,17 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import commonStyles from '../../shared/commonStyle';
+
+const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff'
     },
+    activity: {
+        height: height,
+        width: width,
+    },  
     contantUser: {
         width: "100%",
         justifyContent: "center",

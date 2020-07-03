@@ -7,11 +7,15 @@ import {
     SIGN_IN_SUCCESS,
     SIGN_IN_ERROR,
     SIGN_OUT,
+    UPDATE_USER,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_ERROR
 } from '../actionTypes';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 const config = {
-    baseURL: 'http://10.0.2.2:3000'
+    baseURL: 'http://10.0.2.2:3000',
 }
 
 export const addUser = user => {
@@ -30,31 +34,39 @@ export const addUser = user => {
 }
 
 export const updateUser = user => {
-    return dispatch => {
-        // dispachar update user
-        axios.put(`/user/${user.id}`, user, config)
+    return async dispatch => {
+        dispatch({ type: UPDATE_USER });
+        const token = await AsyncStorage.getItem('token');
+        axios.put(`/user/${user.id}`, user, {
+            ...config,
+            headers: {
+                'Authorization': `Bearer ${token}`
+              }
+        })
+            .catch(error => {
+                dispatch({ type: UPDATE_USER_ERROR, payload: error })
+            })
             .then(res => {
                 if (res && res.data) {
-                    // dispachar update user success, passando como payload o user
+                    dispatch({ type: UPDATE_USER_SUCCESS, payload: res.data });
                 } else {
-                    // dispachar erro
+                    dispatch({ type: UPDATE_USER_ERROR });
                 }
-            })
-            .catch(() => { /*dispachar erro */ });
+            });
     }
 }
 
 export const login = login => {
-    return dispatch => {
+    return async dispatch => {
         dispatch({ type: SIGN_IN });
         axios.post(`/auth/login`, {
             username: login.email,
             password: login.password,
         }, config)
             .catch(error => dispatch({ type: SIGN_IN_ERROR, payload: error }))
-            .then(res => {
+            .then(async res => {
                 if (res && res.data) {
-                    console.log('usuario logado: ' + JSON.stringify(res.data));
+                    await AsyncStorage.setItem('token', res.data.token);
                     dispatch({ type: SIGN_IN_SUCCESS, payload: res.data });
                 } else {
                     dispatch({ type: SIGN_IN_ERROR });
