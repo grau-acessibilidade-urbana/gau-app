@@ -13,7 +13,7 @@ class Menu extends Component {
             return {
                 name: 'Anônimo',
                 email: '',
-                photo: require('../../../assets/imgs/person.png')
+                photo: ''
             }
         }
         return this.props.loggedUser;
@@ -23,7 +23,7 @@ class Menu extends Component {
         return (
             <View>
                 <View style={styles.menuProfile}>
-                    <Image style={styles.photoUser} source={this.getLoggedUser().photo || require('../../../assets/imgs/person.png')} />
+                    <Image style={styles.photoUser} source={this.getLoggedUser().photo ? {uri: this.getLoggedUser().photo} : require('../../../assets/imgs/person.png')} />
 
                     <View style={styles.userData}>
                         <Text style={styles.userName}>{this.getLoggedUser().name}</Text>

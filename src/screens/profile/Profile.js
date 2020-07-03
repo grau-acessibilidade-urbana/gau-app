@@ -96,7 +96,7 @@ class Profile extends Component {
                 <View style={styles.container}>
                     <View style={styles.contantUser}>
                         <View style={styles.photoContainer}>
-                            <Image style={styles.photoUser} source={{ uri: this.props.loggedUser.photo }} />
+                            <Image style={styles.photoUser} source={{ uri: this.state.photoUser || this.props.loggedUser.photo }} />
                             <TouchableOpacity style={styles.edit} activeOpacity={0.7} onPress={this.pickImage}>
                                 <Icon name="create" size={20} color='#fff' />
                             </TouchableOpacity>
