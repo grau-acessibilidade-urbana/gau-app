@@ -24,7 +24,9 @@ class SearchPlaces extends Component {
     };
 
     componentDidMount() {
-        this.props.onUpdateCurrentLocation();
+        setTimeout(() => {
+            this.props.onUpdateCurrentLocation();
+        }, 200);
     }
 
     componentDidUpdate() {
@@ -54,12 +56,6 @@ class SearchPlaces extends Component {
         this.props.onSelectPlace(this.props.currentLocation, prediction.id);
     }
 
-    fitToCurrentLocation() {
-        if (this.props && this.props.currentLocation) {
-            this.map.fitToCoordinates([this.props.currentLocation], { animated: false });
-        }
-    }
-
     renderItem = ({ item }) => {
         return (
             <View style={styles.predictionContainer}>
@@ -80,8 +76,7 @@ class SearchPlaces extends Component {
                     style={styles.map}
                     loadingEnabled={true}
                     initialRegion={MAP_REGION}
-                    ref={map => { this.map = map }}
-                    onLayout={this.fitToCurrentLocation}>
+                    ref={map => { this.map = map }}>
                     {this.props.currentLocation && <Marker coordinate={this.props.currentLocation}
                         title='Você está aqui!'
                         description='Localização atual.'>

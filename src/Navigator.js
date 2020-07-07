@@ -13,7 +13,7 @@ import Login from './screens/login/Login';
 import Logout from './screens/Logout';
 import Menu from './screens/menu/Menu';
 import PlaceHistory from './screens/placeHistory/PlaceHistory';
-import PlaceView from './screens/placeView/placeView';
+import PlaceView from './screens/placeView/PlaceView';
 import Profile from './screens/profile/Profile';
 import SearchPlaces from './screens/searchPlaces/SearchPlaces';
 import SignUp from './screens/signup/SignUp';

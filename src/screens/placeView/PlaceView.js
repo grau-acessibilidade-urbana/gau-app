@@ -7,6 +7,7 @@ import commonStyle from '../../shared/commonStyle';
 import ComentaryBox from '../../components/ComentaryBox';
 import placementImage from './placementImage';
 import styles from './styles';
+import { connect } from 'react-redux';
 
 const comentaries = [
   {
@@ -49,7 +50,7 @@ const comentaries = [
 
 ];
 
-export default class PlaceView extends Component {
+class PlaceView extends Component {
 
   state = {
     nameLocal: "FATEC São Roque",
@@ -57,12 +58,7 @@ export default class PlaceView extends Component {
     review: 10
   }
 
-  render(){
-    // let stars = ["#D1D1D1", "#D1D1D1", "#D1D1D1", "#D1D1D1", "#D1D1D1"];
-    // for(let i=0; i<= this.state.rating-1; i++){
-    //   stars[i] = "#FFC107";
-    // }
-    
+  render(){  
     return (
       <View style={styles.containerView}>
         <Header goBack={this.props.navigation.goBack} lightweight />
@@ -115,3 +111,12 @@ export default class PlaceView extends Component {
     )
   }
 }
+
+const mapStateToProps = ({ places }) => {
+  return {
+      selectedPlace: places.selectedPlace,
+      currentLocation: places.currentLocation
+  }
+}
+
+export default connect(mapStateToProps)(PlaceView);
