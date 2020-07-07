@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, TouchableWithoutFeedback, Image, Text, FlatList, ScrollView, TextInput} from 'react-native';
+import { FlatList, Image, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { Rating } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import Header from '../../components/Header';
-import commonStyle from '../../shared/commonStyle';
+import { connect } from 'react-redux';
 import ComentaryBox from '../../components/ComentaryBox';
+import Header from '../../components/Header';
 import placementImage from './placementImage';
 import styles from './styles';
-import { connect } from 'react-redux';
 
 const comentaries = [
   {
@@ -58,7 +56,11 @@ class PlaceView extends Component {
     review: 10
   }
 
-  render(){  
+  componentDidMount() {
+    console.log('local selecionado: ' + JSON.stringify(this.props.selectedPlace));
+  }
+
+  render() {
     return (
       <View style={styles.containerView}>
         <Header goBack={this.props.navigation.goBack} lightweight />
@@ -66,24 +68,24 @@ class PlaceView extends Component {
           <View style={styles.container}>
             <View style={styles.placeContainer}>
               <View style={styles.imageContainer}>
-                <Image style={styles.imageLocation} source={{ uri: placementImage }} />
+                <Image style={styles.imageLocation} source={{ uri: this.props.selectedPlace.image }} />
                 <TouchableOpacity style={styles.rateLocationButton} activeOpacity={0.8}>
                   <Text style={styles.rateLocationText}>Avaliar local</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.detailLocalContainer}>
-                <Text style={styles.detailLocalContainer_title}>{this.state.nameLocal} </Text>
+                <Text style={styles.detailLocalContainer_title}>{this.props.selectedPlace.name}</Text>
                 <View style={styles.reviewContainer}>
                   <Text style={styles.txtReviewNumberContainer}> {this.state.rating} </Text>
                   <View style={{ flexDirection: 'row' }}>
-                    <Rating imageSize={20} readonly startingValue={this.state.rating}/>
+                    <Rating imageSize={20} readonly startingValue={this.state.rating} />
                   </View>
                   <Text style={styles.txtReviewContainer}> ({this.state.review} Avaliações)</Text>
                 </View>
                 <View>
-                  <Text style={styles.text}>Rua Marechal Deodoro da Fonseca, 132 - Centro, São Roque - SP, 18130-070 -
+                  <Text style={styles.text}>{this.props.selectedPlace.address + ' '} 
                     <TouchableWithoutFeedback>
-                        <Text style={styles.textMaps}>Ver no mapa</Text>
+                      <Text style={styles.textMaps}>Ver no mapa</Text>
                     </TouchableWithoutFeedback>
                   </Text>
                 </View>
@@ -91,22 +93,22 @@ class PlaceView extends Component {
                   <FlatList
                     data={comentaries}
                     keyExtractor={item => item.id}
-                    renderItem={({item}) =>
+                    renderItem={({ item }) =>
                       <ComentaryBox key={item.id} {...item} />
                     }
-                />
+                  />
                 </View>
               </View>
             </View>
           </View>
         </ScrollView>
-  
-        <View style={styles.containerInputResponse}>
+
+        {/* <View style={styles.containerInputResponse}>
           <TextInput style={styles.inputResponse} placeholder={"Digite sua resposta"} />
           <TouchableOpacity activeOpacity={0.5} style={styles.btnResponse}>
             <Icon name="send" size={30} color={ commonStyle.colors.primaryColor } />
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     )
   }
@@ -114,8 +116,8 @@ class PlaceView extends Component {
 
 const mapStateToProps = ({ places }) => {
   return {
-      selectedPlace: places.selectedPlace,
-      currentLocation: places.currentLocation
+    selectedPlace: places.selectedPlace,
+    currentLocation: places.currentLocation
   }
 }
 
