@@ -42,7 +42,7 @@ class Login extends Component {
                 50
             );
 
-            console.log('err' + JSON.stringify(this.props.error))
+            console.error('err' + JSON.stringify(this.props.error))
         }
     }
 

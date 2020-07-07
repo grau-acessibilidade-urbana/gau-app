@@ -41,7 +41,7 @@ export const updateUser = user => {
             ...config,
             headers: {
                 'Authorization': `Bearer ${token}`
-              }
+            }
         })
             .catch(error => {
                 dispatch({ type: UPDATE_USER_ERROR, payload: error })
@@ -63,6 +63,22 @@ export const login = login => {
             username: login.email,
             password: login.password,
         }, config)
+            .catch(error => dispatch({ type: SIGN_IN_ERROR, payload: error }))
+            .then(async res => {
+                if (res && res.data) {
+                    await AsyncStorage.setItem('token', res.data.token);
+                    dispatch({ type: SIGN_IN_SUCCESS, payload: res.data });
+                } else {
+                    dispatch({ type: SIGN_IN_ERROR });
+                }
+            })
+    }
+}
+
+export const loginGoogle = idToken => {
+    return async dispatch => {
+        dispatch({ type: SIGN_IN });
+        axios.post(`/auth/login/${idToken}`, null, config)
             .catch(error => dispatch({ type: SIGN_IN_ERROR, payload: error }))
             .then(async res => {
                 if (res && res.data) {

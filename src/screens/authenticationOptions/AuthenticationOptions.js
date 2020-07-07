@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
-import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
-import styles from './styles';
+import { Image, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { GoogleSignin, statusCodes } from 'react-native-google-signin';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import styles from './styles';
+import { connect } from 'react-redux';
+import { loginGoogle } from '../../store/actions/users';
 
-export default class AuthenticationOptions extends Component {
+class AuthenticationOptions extends Component {
 
     state = {
         userInfo: null,
@@ -23,6 +25,20 @@ export default class AuthenticationOptions extends Component {
             forceConsentPrompt: true,
             accountName: ''
         })
+    }
+
+    componentDidUpdate() {
+        if (this.props.error) {
+            ToastAndroid.showWithGravityAndOffset(
+                "Não foi autenticar com o google.",
+                ToastAndroid.SHORT,
+                ToastAndroid.TOP,
+                25,
+                50
+            );
+
+            console.error('err' + JSON.stringify(this.props.error))
+        }
     }
 
     signInSilently = async () => {
@@ -43,11 +59,9 @@ export default class AuthenticationOptions extends Component {
             this.setState({ isSigninInProgress: true })
             await GoogleSignin.hasPlayServices();
             const userInfo = await GoogleSignin.signIn();
-            console.log('userInfo: ' + JSON.stringify(userInfo));
-            this.setState({ userInfo: userInfo, loggedIn: true });
-            this.setState({ isSigninInProgress: false });
+            this.props.onSignin(userInfo.idToken);
         } catch (error) {
-            console.log(JSON.stringify(error));
+            console.error(JSON.stringify(error));
         }
     }
 
@@ -55,7 +69,6 @@ export default class AuthenticationOptions extends Component {
         try {
             await GoogleSignin.revokeAccess();
             await GoogleSignin.signOut();
-            this.setState({ user: null, loggedIn: false });
         } catch (error) {
             console.log(JSON.stringify(error));
         }
@@ -85,3 +98,20 @@ export default class AuthenticationOptions extends Component {
         )
     }
 }
+
+const mapStateToProps = ({ users }) => {
+    return {
+        isLoading: users.isLoading,
+        loggedUser: users.loggedUser,
+        error: users.error,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onSignin: idToken => dispatch(loginGoogle(idToken))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthenticationOptions);
+
