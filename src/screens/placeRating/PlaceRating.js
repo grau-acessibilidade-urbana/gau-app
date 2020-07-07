@@ -1,20 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import {ProgressStep, ProgressSteps} from 'react-native-progress-steps';
+import {AirbnbRating } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import commonStyle from '../../shared/commonStyle';
 import styles from './style';
-
-
-let starts = [];
-
-for (let i=0 ; i<5 ; i++){
-    starts.push(
-        <TouchableOpacity key={i} onPress={this.clickStars}>
-            <Icon name='star-border' size={50} color={commonStyle.colors.primaryColor}></Icon>
-        </TouchableOpacity>
-    )
-}
 
 const options = [
     {
@@ -32,6 +22,10 @@ const options = [
 ]
 
 export default class PlaceRating extends Component {
+    ratingCompleted(rating) {
+        console.log("------------------------------------------")
+        console.log("Rating is: " + rating);
+    }
 
     state = {
         value: null,
@@ -98,9 +92,8 @@ export default class PlaceRating extends Component {
                         <View>
                             <Text style={styles.label}>Um cadeirante consegue se deslocar ou manobrar sua cadeira de rodas no local?</Text>
                             <View style={styles.containerBtn}>
-                                {starts}
+                                <AirbnbRating reviews={["Impossível", "Difícil", "Talvez", "Consegue", "Perfeitamente"]} count={5} defaultRating={0} size={30} onFinishRating={this.ratingCompleted}/>
                             </View>
-
                         </View>
                     </ProgressStep>
 

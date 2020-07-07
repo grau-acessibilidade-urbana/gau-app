@@ -3,7 +3,8 @@ import commonStyles from '../../shared/commonStyle';
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: "#fff"
     },
     content: {
         justifyContent: "center",
