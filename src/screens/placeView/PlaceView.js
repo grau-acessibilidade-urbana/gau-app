@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { FlatList, Image, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { FlatList, Image, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View, ActivityIndicator } from 'react-native';
 import { Rating } from 'react-native-elements';
 import { connect } from 'react-redux';
 import ComentaryBox from '../../components/ComentaryBox';
 import Header from '../../components/Header';
-import placementImage from './placementImage';
 import styles from './styles';
+import { findPlaceWithRating } from '../../store/actions/places';
 
 const comentaries = [
   {
@@ -57,7 +57,15 @@ class PlaceView extends Component {
   }
 
   componentDidMount() {
-    console.log('local selecionado: ' + JSON.stringify(this.props.selectedPlace));
+    this.props.onFindPlaceWithRating(this.props.selectedPlace.id);
+  }
+
+  ratePlace = () => {
+    if (this.props.loggedUser) {
+      this.props.navigation.navigate('PlaceRating');
+    } else {
+      this.props.navigation.navigate('Login');
+    }
   }
 
   render() {
@@ -65,11 +73,15 @@ class PlaceView extends Component {
       <View style={styles.containerView}>
         <Header goBack={this.props.navigation.goBack} lightweight />
         <ScrollView>
+          {this.props.isLoading ? <ActivityIndicator style={styles.activity} size='large' /> : 
           <View style={styles.container}>
             <View style={styles.placeContainer}>
               <View style={styles.imageContainer}>
                 <Image style={styles.imageLocation} source={{ uri: this.props.selectedPlace.image }} />
-                <TouchableOpacity style={styles.rateLocationButton} activeOpacity={0.8}>
+                <TouchableOpacity 
+                  style={styles.rateLocationButton} 
+                  activeOpacity={0.8}
+                  onPress={this.ratePlace}>
                   <Text style={styles.rateLocationText}>Avaliar local</Text>
                 </TouchableOpacity>
               </View>
@@ -84,7 +96,7 @@ class PlaceView extends Component {
                 </View>
                 <View>
                   <Text style={styles.text}>{this.props.selectedPlace.address + ' '} 
-                    <TouchableWithoutFeedback>
+                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('SearchPlaces')}>
                       <Text style={styles.textMaps}>Ver no mapa</Text>
                     </TouchableWithoutFeedback>
                   </Text>
@@ -101,6 +113,7 @@ class PlaceView extends Component {
               </View>
             </View>
           </View>
+          }
         </ScrollView>
 
         {/* <View style={styles.containerInputResponse}>
@@ -114,11 +127,20 @@ class PlaceView extends Component {
   }
 }
 
-const mapStateToProps = ({ places }) => {
+const mapStateToProps = ({ places, users }) => {
   return {
     selectedPlace: places.selectedPlace,
-    currentLocation: places.currentLocation
+    currentLocation: places.currentLocation,
+    loggedUser: users.loggedUser,
+    isLoading: places.loadingRating,
+    placeRating: places.placeRating,
   }
 }
 
-export default connect(mapStateToProps)(PlaceView);
+const mapDispatchToProps = dispatch => {
+  return {
+    onFindPlaceWithRating: placeId => dispatch(findPlaceWithRating(placeId))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceView);

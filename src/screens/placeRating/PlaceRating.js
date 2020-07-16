@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import {ProgressStep, ProgressSteps} from 'react-native-progress-steps';
-import {AirbnbRating } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { AirbnbRating } from 'react-native-elements';
+import { ProgressStep, ProgressSteps } from 'react-native-progress-steps';
 import commonStyle from '../../shared/commonStyle';
 import styles from './style';
 

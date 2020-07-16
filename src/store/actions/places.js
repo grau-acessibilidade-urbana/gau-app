@@ -1,6 +1,11 @@
 import Geolocation from '@react-native-community/geolocation';
-import { SET_PLACE, QUERY_CHANGED, UPDATE_CURRENT_LOCATION, FIND_PLACES, LOADING_DETAILS } from '../actionTypes';
+import { SET_PLACE, QUERY_CHANGED, UPDATE_CURRENT_LOCATION, FIND_PLACES, LOADING_DETAILS, FIND_PLACE_RATING, FIND_PLACE_RATING_ERROR, FIND_PLACE_RATING_SUCCESS } from '../actionTypes';
 import * as googleApi from '../../api/google';
+import axios from 'axios';
+
+const config = {
+    baseURL: 'http://10.0.2.2:3000',
+}
 
 export function setPlace(currentLocation, placeId) {
     return async (dispatch) => {
@@ -57,6 +62,29 @@ export function updateCurrentLocation() {
             }
             dispatch({ type: UPDATE_CURRENT_LOCATION, payload });
         }, err => dispatch({ type: UPDATE_CURRENT_LOCATION, payload: err }));
+    }
+}
+
+export function findPlaceWithRating(placeId) {
+    return async dispatch => {
+        dispatch({ type: FIND_PLACE_RATING });
+        const token = await AsyncStorage.getItem('token');
+        axios.get(`/place/${placeId}`, {
+            ...config,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .catch(error => {
+                dispatch({ type: FIND_PLACE_RATING_ERROR, payload: error });
+            })
+            .then(res => {
+                if (res && res.data) {
+                    dispatch({ type: FIND_PLACE_RATING_SUCCESS, payload: res.data });
+                } else {
+                    dispatch({ type: FIND_PLACE_RATING_ERROR });
+                }
+            });
     }
 }
 

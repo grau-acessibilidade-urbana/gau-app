@@ -9,6 +9,10 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: 15
   },
+  activity: {
+    height: height,
+    width: width,
+  },
   imageContainer: {
     flex: 1,
     height: 250

@@ -18,6 +18,7 @@ import Profile from './screens/profile/Profile';
 import SearchPlaces from './screens/searchPlaces/SearchPlaces';
 import SignUp from './screens/signup/SignUp';
 import commonStyles from './shared/commonStyle';
+import PlaceRating from './screens/placeRating/PlaceRating';
 
 const loginNavigator = createStackNavigator({
     AuthOptions: {
@@ -43,6 +44,9 @@ const homeStackNavigator = createStackNavigator({
     },
     PlaceView: {
         screen: PlaceView
+    },
+    PlaceRating: {
+        screen: PlaceRating
     }
 }, {
     headerMode: 'none',
