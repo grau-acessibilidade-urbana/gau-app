@@ -1,11 +1,11 @@
+
 import React, { Component } from 'react';
-import { FlatList, Image, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View, ActivityIndicator } from 'react-native';
+import { ActivityIndicator, FlatList, Image, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { Rating } from 'react-native-elements';
 import { connect } from 'react-redux';
 import ComentaryBox from '../../components/ComentaryBox';
 import Header from '../../components/Header';
 import styles from './styles';
-import { findPlaceWithRating } from '../../store/actions/places';
 
 const comentaries = [
   {
@@ -51,13 +51,7 @@ const comentaries = [
 class PlaceView extends Component {
 
   state = {
-    nameLocal: "FATEC São Roque",
-    rating: 3,
     review: 10
-  }
-
-  componentDidMount() {
-    this.props.onFindPlaceWithRating(this.props.selectedPlace.id);
   }
 
   ratePlace = () => {
@@ -68,51 +62,58 @@ class PlaceView extends Component {
     }
   }
 
+  componentDidMount() {
+    console.log('comments: ' + JSON.stringify(this.props.selectedPlace.comments));
+  }
+
   render() {
     return (
       <View style={styles.containerView}>
         <Header goBack={this.props.navigation.goBack} lightweight />
         <ScrollView>
-          {this.props.isLoading ? <ActivityIndicator style={styles.activity} size='large' /> : 
-          <View style={styles.container}>
-            <View style={styles.placeContainer}>
-              <View style={styles.imageContainer}>
-                <Image style={styles.imageLocation} source={{ uri: this.props.selectedPlace.image }} />
-                <TouchableOpacity 
-                  style={styles.rateLocationButton} 
-                  activeOpacity={0.8}
-                  onPress={this.ratePlace}>
-                  <Text style={styles.rateLocationText}>Avaliar local</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.detailLocalContainer}>
-                <Text style={styles.detailLocalContainer_title}>{this.props.selectedPlace.name}</Text>
-                <View style={styles.reviewContainer}>
-                  <Text style={styles.txtReviewNumberContainer}> {this.state.rating} </Text>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Rating imageSize={20} readonly startingValue={this.state.rating} />
+          {this.props.isLoading ? <ActivityIndicator style={styles.activity} size='large' /> :
+            <View style={styles.container}>
+              <View style={styles.placeContainer}>
+                <View style={styles.imageContainer}>
+                  <Image style={styles.imageLocation} source={{ uri: this.props.selectedPlace.image }} />
+                  <TouchableOpacity
+                    style={styles.rateLocationButton}
+                    activeOpacity={0.8}
+                    onPress={this.ratePlace}>
+                    <Text style={styles.rateLocationText}>Avaliar local</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.detailLocalContainer}>
+                  <Text style={styles.detailLocalContainer_title}>{this.props.selectedPlace.name}</Text>
+                  <View style={styles.reviewContainer}>
+                    <Text style={styles.txtReviewNumberContainer}> {this.props.selectedPlace.averageScore ? this.props.selectedPlace.averageScore.toFixed(1) : 0} </Text>
+                    <View style={{ flexDirection: 'row' }}>
+                      <Rating imageSize={20} readonly startingValue={this.props.selectedPlace.averageScore || 0} />
+                    </View>
+                    <Text style={styles.txtReviewContainer}> ({this.state.review} Avaliações)</Text>
                   </View>
-                  <Text style={styles.txtReviewContainer}> ({this.state.review} Avaliações)</Text>
-                </View>
-                <View>
-                  <Text style={styles.text}>{this.props.selectedPlace.address + ' '} 
-                    <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('SearchPlaces')}>
-                      <Text style={styles.textMaps}>Ver no mapa</Text>
-                    </TouchableWithoutFeedback>
-                  </Text>
-                </View>
-                <View style={styles.containerComentaries}>
-                  <FlatList
-                    data={comentaries}
-                    keyExtractor={item => item.id}
-                    renderItem={({ item }) =>
-                      <ComentaryBox key={item.id} {...item} />
-                    }
-                  />
+                  <View>
+                    <Text style={styles.text}>{this.props.selectedPlace.address + ' '}
+                      <TouchableWithoutFeedback onPress={() => this.props.navigation.navigate('SearchPlaces')}>
+                        <Text style={styles.textMaps}>Ver no mapa</Text>
+                      </TouchableWithoutFeedback>
+                    </Text>
+                  </View>
+                  {/* O local ainda não possui avaliação, seja o primeiro a avaliar */}
+                  <View style={styles.containerComentaries}>
+                    {this.props.selectedPlace.comments && this.props.selectedPlace.comments.length > 0 ? 
+                    <FlatList
+                      data={this.props.selectedPlace.comments}
+                      keyExtractor={item => item._id}
+                      renderItem={({ item }) => <ComentaryBox key={item._id} {...item} />}
+                    /> : 
+                    <View>
+                      <Text style={styles.noRatingsText}>O local ainda não possui avaliação, seja o primeiro a avaliar</Text>
+                    </View>}
+                  </View>
                 </View>
               </View>
             </View>
-          </View>
           }
         </ScrollView>
 
@@ -133,14 +134,7 @@ const mapStateToProps = ({ places, users }) => {
     currentLocation: places.currentLocation,
     loggedUser: users.loggedUser,
     isLoading: places.loadingRating,
-    placeRating: places.placeRating,
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onFindPlaceWithRating: placeId => dispatch(findPlaceWithRating(placeId))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlaceView);
+export default connect(mapStateToProps)(PlaceView);

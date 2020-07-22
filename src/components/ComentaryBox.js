@@ -3,12 +3,12 @@ import { View, StyleSheet, Text, Image, FlatList, TouchableOpacity} from 'react-
 import commonStyle from '../shared/commonStyle';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const ComentaryBox = ({ name, text, classification, date, likes = 0, image, responses, hideClassification = false }) => {
+const ComentaryBox = ({ author, content, classification = 0, date = '21/07/2020', likes = 0, responses, hideClassification = false }) => {
   return (
     <View style={styles.container}>
       <View style={styles.comentaryBox}>
         <View style={{ flex: 1, paddingRight: 5 }}>
-          <Image source={{ uri: image }} style={styles.imageUser} />
+          <Image source={{ uri: author.photo }} style={styles.imageUser} />
           {!hideClassification && (
             <View style={[styles.iconWithTex, styles.classificationBox]}>
               <Icon name="star" size={20} color={ commonStyle.colors.FullStar }/>
@@ -18,8 +18,8 @@ const ComentaryBox = ({ name, text, classification, date, likes = 0, image, resp
             </View>)}
         </View>
         <View style={{ flex: 5 }}>
-          <Text style={styles.comentaryName}>{name}</Text>
-          <Text style={styles.comentaryText}>{text}</Text>
+          <Text style={styles.comentaryName}>{author.name}</Text>
+          <Text style={styles.comentaryText}>{content}</Text>
           <View style={styles.comentaryBoxFooter}>
             <Text style={styles.secondaryText}>{date}</Text>
             <View style={styles.iconWithTex}>
@@ -36,14 +36,14 @@ const ComentaryBox = ({ name, text, classification, date, likes = 0, image, resp
         </View>
       </View>
       {
-        responses && (
+        responses && responses.length > 0 && (
           <View style={{ width: '85%', alignSelf: 'flex-end' }}>
             {
               <FlatList
                 data={responses}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item._id}
                 renderItem={({item}) =>
-                  <ComentaryBox style={styles.comentaryBoxResponse} key={item.id} {...item} hideClassification />
+                  <ComentaryBox style={styles.comentaryBoxResponse} key={item._id} {...item} hideClassification />
                 }
               />
             }

@@ -1,7 +1,7 @@
 import Geolocation from '@react-native-community/geolocation';
-import { SET_PLACE, QUERY_CHANGED, UPDATE_CURRENT_LOCATION, FIND_PLACES, LOADING_DETAILS, FIND_PLACE_RATING, FIND_PLACE_RATING_ERROR, FIND_PLACE_RATING_SUCCESS } from '../actionTypes';
-import * as googleApi from '../../api/google';
 import axios from 'axios';
+import * as googleApi from '../../api/google';
+import { FIND_PLACES, LOADING_DETAILS, QUERY_CHANGED, SET_PLACE, UPDATE_CURRENT_LOCATION } from '../actionTypes';
 
 const config = {
     baseURL: 'http://10.0.2.2:3000',
@@ -12,7 +12,22 @@ export function setPlace(currentLocation, placeId) {
         try {
             dispatch({ type: LOADING_DETAILS })
             const payload = await googleApi.getPlaceDetailsById(currentLocation, placeId);
-            dispatch({ type: SET_PLACE, payload });
+            if (payload) {
+                axios.get(`/place/${placeId}`, config)
+                    .catch(error => {
+                        dispatch({ type: SET_PLACE, payload: error });
+                    })
+                    .then(res => {
+                        if (res && res.data) {
+                            payload._id = res.data._id;
+                            payload.comments = res.data.comments;
+                            payload.averageScore = res.data.averageScore;
+                        }
+                        dispatch({ type: SET_PLACE, payload });
+                    });
+            } else {
+                dispatch({ type: SET_PLACE, payload });
+            }
         } catch (error) {
             dispatch({ type: SET_PLACE, payload: error });
         }
@@ -62,29 +77,6 @@ export function updateCurrentLocation() {
             }
             dispatch({ type: UPDATE_CURRENT_LOCATION, payload });
         }, err => dispatch({ type: UPDATE_CURRENT_LOCATION, payload: err }));
-    }
-}
-
-export function findPlaceWithRating(placeId) {
-    return async dispatch => {
-        dispatch({ type: FIND_PLACE_RATING });
-        const token = await AsyncStorage.getItem('token');
-        axios.get(`/place/${placeId}`, {
-            ...config,
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .catch(error => {
-                dispatch({ type: FIND_PLACE_RATING_ERROR, payload: error });
-            })
-            .then(res => {
-                if (res && res.data) {
-                    dispatch({ type: FIND_PLACE_RATING_SUCCESS, payload: res.data });
-                } else {
-                    dispatch({ type: FIND_PLACE_RATING_ERROR });
-                }
-            });
     }
 }
 

@@ -4,6 +4,7 @@ const { height, width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   containerView: {
     backgroundColor: "#fff",
+    height: height,
   },
   container: {
     flex: 1,
@@ -97,6 +98,11 @@ const styles = StyleSheet.create({
   },
   btnResponse: {
     padding: 10
+  },
+  noRatingsText: {
+    fontSize: 18,
+    color: commonStyle.colors.secondFontColor,
+    textAlign: 'center',
   }
 
 });
