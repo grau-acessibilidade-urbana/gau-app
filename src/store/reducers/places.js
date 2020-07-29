@@ -1,7 +1,8 @@
-import { FIND_PLACES, LOADING_DETAILS, QUERY_CHANGED, SET_PLACE, UPDATE_CURRENT_LOCATION } from '../actionTypes'
+import { FIND_PLACES, LOADING_DETAILS, QUERY_CHANGED, SET_PLACE, UPDATE_CURRENT_LOCATION, LIKE_COMMENT, LIKE_COMMENT_ERROR } from '../actionTypes'
 
 const initialState = {
     selectedPlace: null,
+    comments: [],
     predictions: [],
     currentLocation: null,
     places: null,
@@ -16,6 +17,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 selectedPlace: action.payload,
+                comments: action.payload ? action.payload.comments : [],
                 predictions: [],
                 loadingDetails: false,
             }
@@ -40,6 +42,22 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loadingDetails: true,
             }
+        case LIKE_COMMENT:
+            return Object.assign({}, state, {
+                comments: state.comments
+                    .map(comment => {
+                        if (comment._id === action.payload) {
+                            comment.likes++;
+                        } else if (comment.responses) {
+                            comment.responses.forEach(response => {
+                                if (response._id === action.payload) {
+                                    response.likes++;
+                                }
+                            });
+                        }
+                        return comment;
+                    })
+            })
         default:
             return state;
     }

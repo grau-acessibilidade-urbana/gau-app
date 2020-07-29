@@ -6,47 +6,7 @@ import { connect } from 'react-redux';
 import ComentaryBox from '../../components/ComentaryBox';
 import Header from '../../components/Header';
 import styles from './styles';
-
-const comentaries = [
-  {
-    id: 1,
-    name: 'Vanessaa',
-    image: 'https://cdn.pixabay.com/photo/2018/01/15/07/51/woman-3083379_960_720.jpg',
-    classification: 2,
-    text: 'É importante questionar o quanto a execução dos pontos do programa acarreta um processo de reformulação e modernização das novas proposições.',
-    likes: 2,
-    date: '24/02/2020',
-    responses: [
-      {
-        id: 2,
-        name: 'Thiago',
-        text: 'É importante questionar o quanto a execução dos pontos do programa.',
-        date: '27/02/2020',
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: 'Julia',
-    classification: 5,
-    text: 'lorem ipsum',
-    responses: [
-      {
-        id: 1,
-        name: 'Thiago',
-        text: 'É importante questionar o quanto a execução dos pontos do programa.',
-        date: '27/02/2020',
-      },
-      {
-        id: 2,
-        name: 'Bruno',
-        text: 'É importante questionar o quanto a execução dos pontos do programa.',
-        date: '27/02/2020',
-      }
-    ]
-  }
-
-];
+import { likeComment } from '../../store/actions/places';
 
 class PlaceView extends Component {
 
@@ -63,7 +23,6 @@ class PlaceView extends Component {
   }
 
   componentDidMount() {
-    console.log('comments: ' + JSON.stringify(this.props.selectedPlace.comments));
   }
 
   render() {
@@ -101,15 +60,20 @@ class PlaceView extends Component {
                   </View>
                   {/* O local ainda não possui avaliação, seja o primeiro a avaliar */}
                   <View style={styles.containerComentaries}>
-                    {this.props.selectedPlace.comments && this.props.selectedPlace.comments.length > 0 ? 
-                    <FlatList
-                      data={this.props.selectedPlace.comments}
-                      keyExtractor={item => item._id}
-                      renderItem={({ item }) => <ComentaryBox key={item._id} {...item} />}
-                    /> : 
-                    <View>
-                      <Text style={styles.noRatingsText}>O local ainda não possui avaliação, seja o primeiro a avaliar</Text>
-                    </View>}
+                    {this.props.comments && this.props.comments.length > 0 ?
+                      <FlatList
+                        data={this.props.comments}
+                        keyExtractor={item => item._id}
+                        renderItem={({ item }) =>
+                          <ComentaryBox
+                            key={item._id}
+                            onLike={(commentId) => {
+                              this.props.onLikeComment(this.props.selectedPlace._id, commentId)}}
+                            {...item} />}
+                      /> :
+                      <View>
+                        <Text style={styles.noRatingsText}>O local ainda não possui avaliação, seja o primeiro a avaliar</Text>
+                      </View>}
                   </View>
                 </View>
               </View>
@@ -131,10 +95,17 @@ class PlaceView extends Component {
 const mapStateToProps = ({ places, users }) => {
   return {
     selectedPlace: places.selectedPlace,
+    comments: places.comments,
     currentLocation: places.currentLocation,
     loggedUser: users.loggedUser,
     isLoading: places.loadingRating,
   }
 }
 
-export default connect(mapStateToProps)(PlaceView);
+const mapDispatchToProps = dispatch => {
+  return {
+    onLikeComment: (placeId, commentId) => dispatch(likeComment(placeId, commentId))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceView);
