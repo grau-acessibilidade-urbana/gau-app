@@ -22,8 +22,8 @@ export function setPlace(currentLocation, placeId) {
                         if (res && res.data) {
                             payload._id = res.data._id;
                             payload.comments = res.data.comments;
-                            console.log('payload.comments: ' + JSON.stringify(payload.comments));
                             payload.averageScore = res.data.averageScore;
+                            payload.reviewers = res.data.reviewers;
                         }
                         dispatch({ type: SET_PLACE, payload });
                     });

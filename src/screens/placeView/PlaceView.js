@@ -49,7 +49,7 @@ class PlaceView extends Component {
                     <View style={{ flexDirection: 'row' }}>
                       <Rating imageSize={20} readonly startingValue={this.props.selectedPlace.averageScore || 0} />
                     </View>
-                    <Text style={styles.txtReviewContainer}> ({this.state.review} Avaliações)</Text>
+                    <Text style={styles.txtReviewContainer}> ({this.props.selectedPlace.reviewers || 0} Avaliações)</Text>
                   </View>
                   <View>
                     <Text style={styles.text}>{this.props.selectedPlace.address + ' '}
