@@ -13,8 +13,9 @@ const ComentaryBox = (
     likes = 0,
     responses,
     hideClassification = false,
-    hideAnswerButton = false,
-    onLike
+    hideReplyButton = false,
+    onLike,
+    onReply
   }
 ) => {
   return (
@@ -35,9 +36,11 @@ const ComentaryBox = (
           <Text style={styles.comentaryText}>{content}</Text>
           <View style={styles.comentaryBoxFooter}>
             <Text style={styles.secondaryText}>{date}</Text>
-            {!hideAnswerButton && <View style={styles.iconWithTex}>
+            {!hideReplyButton && <View style={styles.iconWithTex}>
               <Icon name="chat-bubble-outline" size={18} color={commonStyle.colors.primaryColor} />
-              <TouchableOpacity activeOpacity={0.7}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => onReply(_id)}>
                 <Text style={styles.principalColorText}> Responder </Text>
               </TouchableOpacity>
             </View>}
@@ -59,13 +62,13 @@ const ComentaryBox = (
                 data={responses}
                 keyExtractor={item => item._id}
                 renderItem={({ item }) =>
-                  <ComentaryBox 
-                    style={styles.comentaryBoxResponse} 
-                    key={item._id} 
-                    {...item} 
+                  <ComentaryBox
+                    style={styles.comentaryBoxResponse}
+                    key={item._id}
+                    {...item}
                     onLike={(commentId) => onLike(commentId)}
                     hideClassification={true}
-                    hideAnswerButton={true} />
+                    hideReplyButton={true} />
                 }
               />
             }

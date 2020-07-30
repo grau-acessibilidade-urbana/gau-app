@@ -1,17 +1,20 @@
 
 import React, { Component } from 'react';
-import { ActivityIndicator, FlatList, Image, ScrollView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { ActivityIndicator, FlatList, Image, ScrollView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { Rating } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
 import ComentaryBox from '../../components/ComentaryBox';
 import Header from '../../components/Header';
+import commonStyle from '../../shared/commonStyle';
+import { likeComment, replyComment } from '../../store/actions/places';
 import styles from './styles';
-import { likeComment } from '../../store/actions/places';
 
 class PlaceView extends Component {
 
   state = {
-    review: 10
+    selectedCommentId: null,
+    response: null,
   }
 
   ratePlace = () => {
@@ -22,7 +25,14 @@ class PlaceView extends Component {
     }
   }
 
-  componentDidMount() {
+  onReplySend = () => {
+    this.props.onReplyComment(
+      this.props.selectedPlace._id,
+      this.state.selectedCommentId,
+      {
+        content: this.state.response
+      });
+    this.setState({ selectedCommentId: null });
   }
 
   render() {
@@ -68,7 +78,11 @@ class PlaceView extends Component {
                           <ComentaryBox
                             key={item._id}
                             onLike={(commentId) => {
-                              this.props.onLikeComment(this.props.selectedPlace._id, commentId)}}
+                              this.props.onLikeComment(this.props.selectedPlace._id, commentId)
+                            }}
+                            onReply={(commentId) => {
+                              this.setState({ selectedCommentId: commentId });
+                            }}
                             {...item} />}
                       /> :
                       <View>
@@ -81,12 +95,20 @@ class PlaceView extends Component {
           }
         </ScrollView>
 
-        {/* <View style={styles.containerInputResponse}>
-          <TextInput style={styles.inputResponse} placeholder={"Digite sua resposta"} />
-          <TouchableOpacity activeOpacity={0.5} style={styles.btnResponse}>
-            <Icon name="send" size={30} color={ commonStyle.colors.primaryColor } />
+        {this.state.selectedCommentId && <View style={styles.containerInputResponse}>
+          <TextInput
+            autoFocus={true}
+            style={styles.inputResponse}
+            placeholder={"Digite sua resposta"}
+            value={this.state.response}
+            onChangeText={value => this.setState({ response: value })} />
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={styles.btnResponse}
+            onPress={this.onReplySend}>
+            <Icon name="send" size={30} color={commonStyle.colors.primaryColor} />
           </TouchableOpacity>
-        </View> */}
+        </View>}
       </View>
     )
   }
@@ -104,7 +126,8 @@ const mapStateToProps = ({ places, users }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLikeComment: (placeId, commentId) => dispatch(likeComment(placeId, commentId))
+    onLikeComment: (placeId, commentId) => dispatch(likeComment(placeId, commentId)),
+    onReplyComment: (placeId, commentId, response) => dispatch(replyComment(placeId, commentId, response))
   }
 }
 

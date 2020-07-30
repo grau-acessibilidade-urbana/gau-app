@@ -1,7 +1,7 @@
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
 import * as googleApi from '../../api/google';
-import { FIND_PLACES, LOADING_DETAILS, QUERY_CHANGED, SET_PLACE, UPDATE_CURRENT_LOCATION, LIKE_COMMENT_ERROR, LIKE_COMMENT } from '../actionTypes';
+import { FIND_PLACES, LOADING_DETAILS, QUERY_CHANGED, SET_PLACE, UPDATE_CURRENT_LOCATION, LIKE_COMMENT_ERROR, LIKE_COMMENT, REPLY_COMMENT_ERROR, REPLY_COMMENT } from '../actionTypes';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const config = {
@@ -91,10 +91,33 @@ export function likeComment(placeId, commentId) {
             }
         })
             .catch(error => {
-                dispatch({ type: LIKE_COMMENT_ERROR, payload: error })
+                dispatch({ type: LIKE_COMMENT_ERROR, payload: error });
             })
             .then(() => {
-                dispatch({ type: LIKE_COMMENT, payload: commentId })
+                dispatch({ type: LIKE_COMMENT, payload: commentId });
+            })
+    }
+}
+
+export function replyComment(placeId, commentId, responseComment) {
+    return async (dispatch) => {
+        const token = await AsyncStorage.getItem('token');
+        axios.post(`/place/${placeId}/comments/${commentId}/reply`, responseComment, {
+            ...config,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .catch(error => {
+                dispatch({ type: REPLY_COMMENT_ERROR, payload: error });
+            })
+            .then((res) => {
+                if (res && res.data) {
+                    console.log('res.data: ' + JSON.stringify(res.data));
+                    dispatch({ type: REPLY_COMMENT, payload: res.data });
+                } else {
+                    dispatch({ type: REPLY_COMMENT_ERROR });
+                }
             })
     }
 }

@@ -82,8 +82,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignItems: "center",
     width: width,
-    // height: 55,
-    bottom: 0
+    bottom: 30
   }, 
   inputResponse: {
     flex: 1,

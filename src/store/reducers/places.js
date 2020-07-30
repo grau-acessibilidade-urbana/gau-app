@@ -1,4 +1,4 @@
-import { FIND_PLACES, LOADING_DETAILS, QUERY_CHANGED, SET_PLACE, UPDATE_CURRENT_LOCATION, LIKE_COMMENT, LIKE_COMMENT_ERROR } from '../actionTypes'
+import { FIND_PLACES, LOADING_DETAILS, QUERY_CHANGED, SET_PLACE, UPDATE_CURRENT_LOCATION, LIKE_COMMENT, LIKE_COMMENT_ERROR, REPLY_COMMENT } from '../actionTypes'
 
 const initialState = {
     selectedPlace: null,
@@ -54,6 +54,16 @@ const reducer = (state = initialState, action) => {
                                     response.likes++;
                                 }
                             });
+                        }
+                        return comment;
+                    })
+            })
+        case REPLY_COMMENT:
+            return Object.assign({}, state, {
+                comments: state.comments
+                    .map(comment => {
+                        if (comment._id === action.payload._id) {
+                            return action.payload;
                         }
                         return comment;
                     })
