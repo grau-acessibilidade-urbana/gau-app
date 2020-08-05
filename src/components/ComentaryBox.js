@@ -1,23 +1,28 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, FlatList, TouchableOpacity } from 'react-native';
-import commonStyle from '../shared/commonStyle';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import commonStyle from '../shared/commonStyle';
 
-const ComentaryBox = (
-  {
-    _id,
-    author,
-    content,
-    classification = 0,
-    date = '21/07/2020',
-    likes = 0,
-    responses,
-    hideClassification = false,
-    hideReplyButton = false,
-    onLike,
-    onReply
-  }
-) => {
+const ComentaryBox = ({
+  _id,
+  author,
+  content,
+  classification = 0,
+  date = '21/07/2020',
+  likes = 0,
+  responses,
+  hideClassification = false,
+  hideReplyButton = false,
+  onLike,
+  onReply,
+}) => {
   return (
     <View style={styles.container}>
       <View style={styles.comentaryBox}>
@@ -29,58 +34,65 @@ const ComentaryBox = (
               <Text style={commonStyle.colors.primaryFontColor}>
                 {Number(classification).toFixed(1)}
               </Text>
-            </View>)}
+            </View>
+          )}
         </View>
         <View style={{ flex: 5 }}>
           <Text style={styles.comentaryName}>{author.name}</Text>
           <Text style={styles.comentaryText}>{content}</Text>
           <View style={styles.comentaryBoxFooter}>
             <Text style={styles.secondaryText}>{date}</Text>
-            {!hideReplyButton && <View style={styles.iconWithTex}>
-              <Icon name="chat-bubble-outline" size={18} color={commonStyle.colors.primaryColor} />
-              <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => onReply(_id)}>
-                <Text style={styles.principalColorText}> Responder </Text>
-              </TouchableOpacity>
-            </View>}
+            {!hideReplyButton && (
+              <View style={styles.iconWithTex}>
+                <Icon
+                  name="chat-bubble-outline"
+                  size={18}
+                  color={commonStyle.colors.primaryColor}
+                />
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress={() => onReply(_id)}
+                >
+                  <Text style={styles.principalColorText}> Responder </Text>
+                </TouchableOpacity>
+              </View>
+            )}
             <TouchableOpacity
               style={styles.iconWithTex}
               activeOpacity={0.5}
-              onPress={() => onLike(_id)}>
-              <Icon name="thumb-up" size={18} color={commonStyle.colors.primaryColor} />
+              onPress={() => onLike(_id)}
+            >
+              <Icon
+                name="thumb-up"
+                size={18}
+                color={commonStyle.colors.primaryColor}
+              />
               <Text style={styles.primaryText}> {likes} </Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
-      {
-        responses && responses.length > 0 && (
-          <View style={{ width: '85%', alignSelf: 'flex-end' }}>
-            {
-              <FlatList
-                data={responses}
-                keyExtractor={item => item._id}
-                renderItem={({ item }) =>
-                  <ComentaryBox
-                    style={styles.comentaryBoxResponse}
-                    key={item._id}
-                    {...item}
-                    onLike={(commentId) => onLike(commentId)}
-                    hideClassification={true}
-                    hideReplyButton={true} />
-                }
+      {responses && responses.length > 0 && (
+        <View style={{ width: '85%', alignSelf: 'flex-end' }}>
+          <FlatList
+            data={responses}
+            keyExtractor={(item) => item._id}
+            renderItem={({ item }) => (
+              <ComentaryBox
+                style={styles.comentaryBoxResponse}
+                key={item._id}
+                {...item}
+                onLike={(commentId) => onLike(commentId)}
+                hideClassification
+                hideReplyButton
               />
-            }
-          </View>
-        )
-      }
-
-
-
+            )}
+          />
+        </View>
+      )}
     </View>
   );
-}
+};
 
 export default ComentaryBox;
 
@@ -89,7 +101,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
     padding: 7,
-    backgroundColor: "#fcfcfc"
+    backgroundColor: '#fcfcfc',
   },
   comentaryBox: {
     flexDirection: 'row',
@@ -105,7 +117,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     borderRadius: 30,
     borderWidth: 3,
-    borderColor: commonStyle.colors.primaryColor
+    borderColor: commonStyle.colors.primaryColor,
   },
   comentaryName: {
     fontSize: 18,
@@ -118,20 +130,20 @@ const styles = StyleSheet.create({
   comentaryBoxFooter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 5
+    marginTop: 5,
   },
   iconWithTex: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   primaryText: {
     color: commonStyle.colors.primaryFontColor,
-    paddingLeft: 5
+    paddingLeft: 5,
   },
   principalColorText: {
     color: commonStyle.colors.primaryColor,
-    paddingLeft: 5
+    paddingLeft: 5,
   },
   secondaryText: {
     color: commonStyle.colors.secondFontColor,
@@ -140,6 +152,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF6DA',
     width: 55,
     alignSelf: 'center',
-    marginTop: 5
-  }
+    marginTop: 5,
+  },
 });

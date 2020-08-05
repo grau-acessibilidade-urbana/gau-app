@@ -1,16 +1,16 @@
 export default {
-    colors: {
-        primaryColor: '#3197b5',
-        secondColor: '#CAE4EC',
-        thirdColor: '#c2c2c2',
-        primaryFontColor: '#5D5D5D',
-        secondFontColor: '#8B8B8B',
-        FullStar: '#FFC107',
-        EmptyStar: '#D1D1D1',
-        backgroundStar: '#FFEFC0',
-        whiteTransparent: 'rgba(255, 255, 255, 0.65)',
-    } 
-}
+  colors: {
+    primaryColor: '#3197b5',
+    secondColor: '#CAE4EC',
+    thirdColor: '#c2c2c2',
+    primaryFontColor: '#5D5D5D',
+    secondFontColor: '#8B8B8B',
+    FullStar: '#FFC107',
+    EmptyStar: '#D1D1D1',
+    backgroundStar: '#FFEFC0',
+    whiteTransparent: 'rgba(255, 255, 255, 0.65)',
+  },
+};
 
 // PALETA DE CORES DO APP
 // primaryColor = Cor principal do aplicativo (Azul)
