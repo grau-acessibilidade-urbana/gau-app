@@ -2,34 +2,42 @@ import React, { Component } from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { AirbnbRating } from 'react-native-elements';
 import { ProgressStep, ProgressSteps } from 'react-native-progress-steps';
+import { connect } from 'react-redux';
 import commonStyle from '../../shared/commonStyle';
+import { ratePlace } from '../../store/actions/places';
 import styles from './style';
 
 const options = [
   {
-    key: 'nao',
+    key: 'NO',
     text: 'Não',
   },
   {
-    key: 'sim',
+    key: 'YES',
     text: 'Sim',
   },
   {
-    key: 'naosei',
+    key: 'DONT_KNOW',
     text: 'Não sei',
   },
 ];
 
-export default class PlaceRating extends Component {
+class PlaceRating extends Component {
   state = {
-    text: null,
+    comment: null,
+    question1: null,
+    question2: null,
+    question3: null,
+    question4: null,
+    question5: null,
   };
 
-  // eslint-disable-next-line class-methods-use-this
-  ratingCompleted(rating) {
-    console.log('------------------------------------------');
-    console.log('Rating is: ' + rating);
-  }
+  onSubmit = () => {
+    this.props.onRatePlace({
+      ...this.state,
+      placeId: this.props.selectedPlace.id,
+    });
+  };
 
   render() {
     return (
@@ -58,7 +66,11 @@ export default class PlaceRating extends Component {
               <View style={styles.containerBtn}>
                 {options.map((item) => {
                   return (
-                    <TouchableOpacity key={item.key} style={styles.btnOptions}>
+                    <TouchableOpacity
+                      key={item.key}
+                      style={styles.btnOptions}
+                      onPress={() => this.setState({ question1: item.key })}
+                    >
                       <Text style={styles.txtBtnOption}>{item.text}</Text>
                     </TouchableOpacity>
                   );
@@ -74,7 +86,11 @@ export default class PlaceRating extends Component {
               <View style={styles.containerBtn}>
                 {options.map((item) => {
                   return (
-                    <TouchableOpacity key={item.key} style={styles.btnOptions}>
+                    <TouchableOpacity
+                      key={item.key}
+                      style={styles.btnOptions}
+                      onPress={() => this.setState({ question2: item.key })}
+                    >
                       <Text style={styles.txtBtnOption}>{item.text}</Text>
                     </TouchableOpacity>
                   );
@@ -98,7 +114,11 @@ export default class PlaceRating extends Component {
               <View style={styles.containerBtn}>
                 {options.map((item) => {
                   return (
-                    <TouchableOpacity key={item.key} style={styles.btnOptions}>
+                    <TouchableOpacity
+                      key={item.key}
+                      style={styles.btnOptions}
+                      onPress={() => this.setState({ question3: item.key })}
+                    >
                       <Text style={styles.txtBtnOption}>{item.text}</Text>
                     </TouchableOpacity>
                   );
@@ -123,7 +143,9 @@ export default class PlaceRating extends Component {
                   count={5}
                   defaultRating={0}
                   size={30}
-                  onFinishRating={this.ratingCompleted}
+                  onFinishRating={(rating) =>
+                    this.setState({ question4: rating })
+                  }
                 />
               </View>
             </View>
@@ -135,6 +157,7 @@ export default class PlaceRating extends Component {
             previousBtnTextStyle={styles.btnSteps}
             finishBtnText="Concluir"
             finishBtnTextStyle={styles.btnSteps}
+            onSubmit={this.onSubmit}
           >
             <View>
               <Text style={styles.label}>
@@ -144,7 +167,11 @@ export default class PlaceRating extends Component {
               <View style={styles.containerBtn}>
                 {options.map((item) => {
                   return (
-                    <TouchableOpacity key={item.key} style={styles.btnOptions}>
+                    <TouchableOpacity
+                      key={item.key}
+                      style={styles.btnOptions}
+                      onPress={() => this.setState({ question5: item.key })}
+                    >
                       <Text style={styles.txtBtnOption}>{item.text}</Text>
                     </TouchableOpacity>
                   );
@@ -158,8 +185,8 @@ export default class PlaceRating extends Component {
               <TextInput
                 style={styles.input}
                 numberOfLines={4}
-                onChangeText={(text) => this.setState({ text })}
-                value={this.state.text}
+                onChangeText={(comment) => this.setState({ comment })}
+                value={this.state.comment}
                 placeholder="Digite seu comentário aqui..."
               />
             </View>
@@ -169,3 +196,17 @@ export default class PlaceRating extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ places }) => {
+  return {
+    selectedPlace: places.selectedPlace,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onRatePlace: (placeRating) => dispatch(ratePlace(placeRating)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceRating);

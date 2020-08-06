@@ -12,6 +12,9 @@ import {
   LIKE_COMMENT,
   REPLY_COMMENT_ERROR,
   REPLY_COMMENT,
+  RATE_PLACE_ERROR,
+  RATE_PLACE,
+  RATE_PLACE_SUCCESS,
 } from '../actionTypes';
 
 const config = {
@@ -138,6 +141,26 @@ export function replyComment(placeId, commentId, responseComment) {
         } else {
           dispatch({ type: REPLY_COMMENT_ERROR });
         }
+      });
+  };
+}
+
+export function ratePlace(placeRating) {
+  return async (dispatch) => {
+    dispatch({ type: RATE_PLACE });
+    const token = await AsyncStorage.getItem('token');
+    axios
+      .post(``, placeRating, {
+        ...config,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((error) => {
+        dispatch({ type: RATE_PLACE_ERROR, payload: error });
+      })
+      .then(() => {
+        dispatch({ type: RATE_PLACE_SUCCESS });
       });
   };
 }

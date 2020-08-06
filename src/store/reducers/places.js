@@ -6,6 +6,8 @@ import {
   UPDATE_CURRENT_LOCATION,
   LIKE_COMMENT,
   REPLY_COMMENT,
+  RATE_PLACE,
+  RATE_PLACE_SUCCESS,
 } from '../actionTypes';
 
 const initialState = {
@@ -17,6 +19,7 @@ const initialState = {
   loadingDetails: false,
   loadingRating: false,
   placeRating: null,
+  submittingRating: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -75,6 +78,16 @@ const reducer = (state = initialState, action) => {
           }
           return comment;
         }),
+      };
+    case RATE_PLACE:
+      return {
+        ...state,
+        submittingRating: true,
+      };
+    case RATE_PLACE_SUCCESS:
+      return {
+        ...state,
+        submittingRating: false,
       };
     default:
       return state;
