@@ -15,6 +15,7 @@ import {
   RATE_PLACE_ERROR,
   RATE_PLACE,
   RATE_PLACE_SUCCESS,
+  FIND_PLACE_RATINGS,
 } from '../actionTypes';
 
 const config = {
@@ -29,27 +30,28 @@ export function setPlace(currentLocation, placeId) {
         currentLocation,
         placeId
       );
+      dispatch({ type: SET_PLACE, payload });
       if (payload) {
-        axios
-          .get(`/place/${placeId}`, config)
-          .catch((error) => {
-            dispatch({ type: SET_PLACE, payload: error });
-          })
-          .then((res) => {
-            if (res && res.data) {
-              payload._id = res.data._id;
-              payload.comments = res.data.comments;
-              payload.averageScore = res.data.averageScore;
-              payload.reviewers = res.data.reviewers;
-            }
-            dispatch({ type: SET_PLACE, payload });
-          });
-      } else {
-        dispatch({ type: SET_PLACE, payload });
+        dispatch(findPlaceRatings(placeId));
       }
     } catch (error) {
       dispatch({ type: SET_PLACE, payload: error });
     }
+  };
+}
+
+export function findPlaceRatings(placeId) {
+  return async (dispatch) => {
+    axios
+      .get(`/place/${placeId}`, config)
+      .catch((error) => {
+        console.error(error);
+      })
+      .then((res) => {
+        if (res && res.data) {
+          dispatch({ type: FIND_PLACE_RATINGS, payload: res.data });
+        }
+      });
   };
 }
 
@@ -149,8 +151,9 @@ export function ratePlace(placeRating) {
   return async (dispatch) => {
     dispatch({ type: RATE_PLACE });
     const token = await AsyncStorage.getItem('token');
+    console.log('chamei');
     axios
-      .post(``, placeRating, {
+      .post(`/place/rate`, placeRating, {
         ...config,
         headers: {
           Authorization: `Bearer ${token}`,
@@ -160,6 +163,7 @@ export function ratePlace(placeRating) {
         dispatch({ type: RATE_PLACE_ERROR, payload: error });
       })
       .then(() => {
+        dispatch(findPlaceRatings(placeRating.placeId));
         dispatch({ type: RATE_PLACE_SUCCESS });
       });
   };

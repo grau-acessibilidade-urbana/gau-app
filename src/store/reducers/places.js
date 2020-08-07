@@ -8,6 +8,7 @@ import {
   REPLY_COMMENT,
   RATE_PLACE,
   RATE_PLACE_SUCCESS,
+  FIND_PLACE_RATINGS,
 } from '../actionTypes';
 
 const initialState = {
@@ -88,6 +89,18 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         submittingRating: false,
+      };
+    case FIND_PLACE_RATINGS:
+      console.log('comments: ' + JSON.stringify(action.payload.comments));
+      return {
+        ...state,
+        selectedPlace: {
+          ...state.selectedPlace,
+          _id: action.payload_id,
+          averageScore: action.payload.averageScore,
+          reviewers: action.payload.reviewers,
+        },
+        comments: action.payload.comments,
       };
     default:
       return state;

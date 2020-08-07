@@ -1,10 +1,16 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import commonStyles from '../../shared/commonStyle';
+
+const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  activity: {
+    height,
+    width,
   },
   content: {
     justifyContent: 'center',
@@ -37,6 +43,16 @@ const styles = StyleSheet.create({
     borderColor: commonStyles.colors.primaryColor,
     borderRadius: 5,
   },
+  btnOptionsActive: {
+    width: 100,
+    height: 40,
+    margin: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+    backgroundColor: commonStyles.colors.primaryColor,
+    color: '#FFFFFF',
+  },
   checkedBtnOptions: {
     width: 100,
     height: 40,
@@ -51,6 +67,10 @@ const styles = StyleSheet.create({
   },
   txtBtnOption: {
     color: commonStyles.colors.primaryColor,
+    fontSize: 19,
+  },
+  txtBtnOptionActive: {
+    color: '#FFF',
     fontSize: 19,
   },
   containerInput: {
