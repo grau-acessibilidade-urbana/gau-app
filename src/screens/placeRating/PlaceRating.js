@@ -12,28 +12,13 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import commonStyle from '../../shared/commonStyle';
 import { ratePlace } from '../../store/actions/places';
+import {
+  optionsQuestion1,
+  optionsQuestion2,
+  optionsQuestion3,
+  optionsQuestion5,
+} from './options';
 import styles from './style';
-
-const options = [
-  {
-    key: 'NO',
-    text: 'Não',
-    buttonStyle: styles.btnOptions,
-    textStyle: styles.txtBtnOption,
-  },
-  {
-    key: 'YES',
-    text: 'Sim',
-    buttonStyle: styles.btnOptions,
-    textStyle: styles.txtBtnOption,
-  },
-  {
-    key: 'DONT_KNOW',
-    text: 'Não sei',
-    buttonStyle: styles.btnOptions,
-    textStyle: styles.txtBtnOption,
-  },
-];
 
 class PlaceRating extends Component {
   state = {
@@ -98,13 +83,13 @@ class PlaceRating extends Component {
                   qualquer pessoa?
                 </Text>
                 <View style={styles.containerBtn}>
-                  {_.clone(options).map((item) => {
+                  {optionsQuestion1.map((item) => {
                     return (
                       <TouchableOpacity
                         key={item.key}
                         style={item.buttonStyle}
                         onPress={() => {
-                          this.setOption(item, options);
+                          this.setOption(item, optionsQuestion1);
                           this.setState({ question1: item.key });
                         }}
                       >
@@ -121,13 +106,13 @@ class PlaceRating extends Component {
                   buracos ou elevações?
                 </Text>
                 <View style={styles.containerBtn}>
-                  {_.clone(options).map((item) => {
+                  {optionsQuestion2.map((item) => {
                     return (
                       <TouchableOpacity
                         key={item.key}
                         style={item.buttonStyle}
                         onPress={() => {
-                          this.setOption(item, options);
+                          this.setOption(item, optionsQuestion2);
                           this.setState({ question2: item.key });
                         }}
                       >
@@ -152,13 +137,13 @@ class PlaceRating extends Component {
                   barras de apoio?
                 </Text>
                 <View style={styles.containerBtn}>
-                  {_.clone(options).map((item) => {
+                  {optionsQuestion3.map((item) => {
                     return (
                       <TouchableOpacity
                         key={item.key}
                         style={item.buttonStyle}
                         onPress={() => {
-                          this.setOption(item, options);
+                          this.setOption(item, optionsQuestion3);
                           this.setState({ question3: item.key });
                         }}
                       >
@@ -208,13 +193,13 @@ class PlaceRating extends Component {
                   deficiência?
                 </Text>
                 <View style={styles.containerBtn}>
-                  {_.clone(options).map((item) => {
+                  {optionsQuestion5.map((item) => {
                     return (
                       <TouchableOpacity
                         key={item.key}
                         style={item.buttonStyle}
                         onPress={() => {
-                          this.setOption(item, options);
+                          this.setOption(item, optionsQuestion5);
                           this.setState({ question5: item.key });
                         }}
                       >
