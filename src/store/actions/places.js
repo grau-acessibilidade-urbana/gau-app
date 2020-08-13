@@ -16,6 +16,9 @@ import {
   RATE_PLACE,
   RATE_PLACE_SUCCESS,
   FIND_PLACE_RATINGS,
+  FIND_USER_RATINGS,
+  FIND_USER_RATINGS_ERROR,
+  FIND_USER_RATINGS_SUCCESS,
 } from '../actionTypes';
 
 const config = {
@@ -151,7 +154,6 @@ export function ratePlace(placeRating) {
   return async (dispatch) => {
     dispatch({ type: RATE_PLACE });
     const token = await AsyncStorage.getItem('token');
-    console.log('chamei');
     axios
       .post(`/place/rate`, placeRating, {
         ...config,
@@ -165,6 +167,30 @@ export function ratePlace(placeRating) {
       .then(() => {
         dispatch(findPlaceRatings(placeRating.placeId));
         dispatch({ type: RATE_PLACE_SUCCESS });
+      });
+  };
+}
+
+export function findUserRatings() {
+  return async (dispatch) => {
+    dispatch({ type: FIND_USER_RATINGS });
+    const token = await AsyncStorage.getItem('token');
+    axios
+      .get(`/place/user/ratings`, {
+        ...config,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((error) => {
+        dispatch({ type: FIND_USER_RATINGS_ERROR, payload: error });
+      })
+      .then((res) => {
+        if (res && res.data) {
+          dispatch({ type: FIND_USER_RATINGS_SUCCESS, payload: res.data });
+        } else {
+          dispatch({ type: FIND_USER_RATINGS_ERROR });
+        }
       });
   };
 }

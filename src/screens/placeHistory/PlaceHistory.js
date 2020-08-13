@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { connect } from 'react-redux';
 import commonStyle from '../../shared/commonStyle';
 import styles from './style';
 import Header from '../../components/Header';
 
-export default class PlaceHistory extends Component {
+class PlaceHistory extends Component {
   state = {
     title: 'Fatec São Roque',
     rating: '4.0',
@@ -44,3 +45,5 @@ export default class PlaceHistory extends Component {
     );
   }
 }
+
+export default connect()(PlaceHistory);

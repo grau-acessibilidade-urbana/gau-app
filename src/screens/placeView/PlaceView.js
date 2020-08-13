@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  ToastAndroid,
 } from 'react-native';
 import { Rating } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';

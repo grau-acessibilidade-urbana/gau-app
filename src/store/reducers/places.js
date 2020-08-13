@@ -1,14 +1,16 @@
 import {
   FIND_PLACES,
+  FIND_PLACE_RATINGS,
+  LIKE_COMMENT,
   LOADING_DETAILS,
   QUERY_CHANGED,
-  SET_PLACE,
-  UPDATE_CURRENT_LOCATION,
-  LIKE_COMMENT,
-  REPLY_COMMENT,
   RATE_PLACE,
   RATE_PLACE_SUCCESS,
-  FIND_PLACE_RATINGS,
+  REPLY_COMMENT,
+  SET_PLACE,
+  UPDATE_CURRENT_LOCATION,
+  FIND_USER_RATINGS,
+  FIND_USER_RATINGS_SUCCESS,
 } from '../actionTypes';
 
 const initialState = {
@@ -21,6 +23,8 @@ const initialState = {
   loadingRating: false,
   placeRating: null,
   submittingRating: null,
+  loadingUserRatings: false,
+  userRatings: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -91,7 +95,6 @@ const reducer = (state = initialState, action) => {
         submittingRating: false,
       };
     case FIND_PLACE_RATINGS:
-      console.log('comments: ' + JSON.stringify(action.payload.comments));
       return {
         ...state,
         selectedPlace: {
@@ -101,6 +104,17 @@ const reducer = (state = initialState, action) => {
           reviewers: action.payload.reviewers,
         },
         comments: action.payload.comments,
+      };
+    case FIND_USER_RATINGS:
+      return {
+        ...state,
+        loadingUserRatings: true,
+      };
+    case FIND_USER_RATINGS_SUCCESS:
+      return {
+        ...state,
+        loadingUserRatings: false,
+        userRatings: action.payload,
       };
     default:
       return state;

@@ -5,7 +5,6 @@ import { logout } from '../store/actions/users';
 
 class Logout extends Component {
   componentDidMount() {
-    this.props.navigation.navigate('About');
     this.props.onSignout();
   }
 
