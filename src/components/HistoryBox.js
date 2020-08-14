@@ -1,43 +1,40 @@
-import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableHighlight,
-} from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import commonStyles from '../shared/commonStyle';
 
-export default class HistoryBox extends Component {
-  render() {
-    return (
-      <View style={styles.containerHistory}>
-        <Image style={styles.placeImage} source={{ uri: this.props.photo }} />
-        <View style={styles.dataPlace}>
-          <View style={styles.titleBox}>
-            <Text style={styles.textTitle}>{this.props.place}</Text>
-            <View style={styles.containerStar}>
-              <Icon
-                name="star"
-                size={25}
-                color={commonStyles.colors.FullStar}
-              />
-              <Text style={styles.textStar}>{this.props.rating}</Text>
-            </View>
+const HistoryBox = ({
+  _id,
+  placeImage,
+  placeName,
+  score,
+  date,
+  onShowDetails,
+}) => {
+  return (
+    <View style={styles.containerHistory}>
+      <Image style={styles.placeImage} source={{ uri: placeImage }} />
+      <View style={styles.dataPlace}>
+        <View style={styles.titleBox}>
+          <Text style={styles.textTitle}>{placeName}</Text>
+          <View style={styles.containerStar}>
+            <Icon name="star" size={25} color={commonStyles.colors.FullStar} />
+            <Text style={styles.textStar}>{score}</Text>
           </View>
-          <Text style={styles.textDate}>{this.props.date}</Text>
-          <TouchableHighlight
-            style={styles.more}
-            onPress={() => this.props.navigation.navigate('PlaceHistory')}
-          >
-            <Text style={styles.textMore}>Ver mais</Text>
-          </TouchableHighlight>
         </View>
+        <Text style={styles.textDate}>{date}</Text>
+        <TouchableOpacity
+          style={styles.more}
+          onPress={() => onShowDetails(_id)}
+        >
+          <Text style={styles.textMore}>Ver mais</Text>
+        </TouchableOpacity>
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
+
+export default HistoryBox;
 
 const styles = StyleSheet.create({
   containerHistory: {

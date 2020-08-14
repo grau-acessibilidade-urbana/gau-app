@@ -11,6 +11,7 @@ import {
   UPDATE_CURRENT_LOCATION,
   FIND_USER_RATINGS,
   FIND_USER_RATINGS_SUCCESS,
+  SET_USER_RATING,
 } from '../actionTypes';
 
 const initialState = {
@@ -25,6 +26,7 @@ const initialState = {
   submittingRating: null,
   loadingUserRatings: false,
   userRatings: [],
+  selectedUserRating: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -111,10 +113,16 @@ const reducer = (state = initialState, action) => {
         loadingUserRatings: true,
       };
     case FIND_USER_RATINGS_SUCCESS:
+      console.log('action: ' + JSON.stringify(action.payload));
       return {
         ...state,
         loadingUserRatings: false,
         userRatings: action.payload,
+      };
+    case SET_USER_RATING:
+      return {
+        ...state,
+        selectedUserRating: action.payload,
       };
     default:
       return state;

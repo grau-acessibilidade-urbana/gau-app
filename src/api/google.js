@@ -63,10 +63,9 @@ export function getPlaceDetailsById(currentLocation, id) {
           latitude: result.geometry.location.lat,
           longitude: result.geometry.location.lng,
         };
-        const distance = await getDistanceBetweenPlaces(
-          currentLocation,
-          location
-        );
+        const distance = currentLocation
+          ? await getDistanceBetweenPlaces(currentLocation, location)
+          : 0;
         return {
           id: result.place_id,
           name: result.name,

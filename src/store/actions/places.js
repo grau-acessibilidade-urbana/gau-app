@@ -19,6 +19,7 @@ import {
   FIND_USER_RATINGS,
   FIND_USER_RATINGS_ERROR,
   FIND_USER_RATINGS_SUCCESS,
+  SET_USER_RATING,
 } from '../actionTypes';
 
 const config = {
@@ -185,12 +186,30 @@ export function findUserRatings() {
       .catch((error) => {
         dispatch({ type: FIND_USER_RATINGS_ERROR, payload: error });
       })
-      .then((res) => {
+      .then(async (res) => {
         if (res && res.data) {
-          dispatch({ type: FIND_USER_RATINGS_SUCCESS, payload: res.data });
+          const userRatingsPromises = res.data.map(async (userRating) => {
+            const placeDetails = await googleApi.getPlaceDetailsById(
+              null,
+              userRating.placeId
+            );
+            return {
+              ...userRating,
+              placeName: placeDetails.name,
+              placeImage: placeDetails.image,
+            };
+          });
+          const userRatings = await Promise.all(userRatingsPromises);
+          dispatch({ type: FIND_USER_RATINGS_SUCCESS, payload: userRatings });
         } else {
           dispatch({ type: FIND_USER_RATINGS_ERROR });
         }
       });
   };
+}
+
+export function setUserRating(userRating) {
+  return (dispatch) => {
+    dispatch({ type: SET_USER_RATING, payload: userRating });
+  }
 }
