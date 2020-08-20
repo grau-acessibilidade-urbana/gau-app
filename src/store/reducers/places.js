@@ -12,6 +12,12 @@ import {
   FIND_USER_RATINGS,
   FIND_USER_RATINGS_SUCCESS,
   SET_USER_RATING,
+  SET_ANSWER1,
+  SET_ANSWER2,
+  SET_ANSWER3,
+  SET_ANSWER4,
+  SET_ANSWER5,
+  SET_COMMENT,
 } from '../actionTypes';
 
 const initialState = {
@@ -22,7 +28,12 @@ const initialState = {
   places: null,
   loadingDetails: false,
   loadingRating: false,
-  placeRating: null,
+  comment: null,
+  question1: null,
+  question2: null,
+  question3: null,
+  question4: 0,
+  question5: null,
   submittingRating: null,
   loadingUserRatings: false,
   userRatings: [],
@@ -123,6 +134,42 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         selectedUserRating: action.payload,
+        question1: action.payload.question1,
+        question2: action.payload.question2,
+        question3: action.payload.question3,
+        question4: action.payload.question4,
+        question5: action.payload.question5,
+        comment: action.payload.comment ? action.payload.comment.content : null,
+      };
+    case SET_ANSWER1:
+      return {
+        ...state,
+        question1: action.payload,
+      };
+    case SET_ANSWER2:
+      return {
+        ...state,
+        question2: action.payload,
+      };
+    case SET_ANSWER3:
+      return {
+        ...state,
+        question3: action.payload,
+      };
+    case SET_ANSWER4:
+      return {
+        ...state,
+        question4: action.payload,
+      };
+    case SET_ANSWER5:
+      return {
+        ...state,
+        question5: action.payload,
+      };
+    case SET_COMMENT:
+      return {
+        ...state,
+        comment: action.payload,
       };
     default:
       return state;

@@ -72,6 +72,9 @@ const stackHistory = createStackNavigator(
     PlaceHistory: {
       screen: PlaceHistory,
     },
+    PlaceRating: {
+      screen: PlaceRating,
+    },
   },
   {
     headerMode: 'none',

@@ -9,9 +9,16 @@ import {
 import { AirbnbRating } from 'react-native-elements';
 import { ProgressStep, ProgressSteps } from 'react-native-progress-steps';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 import commonStyle from '../../shared/commonStyle';
-import { ratePlace } from '../../store/actions/places';
+import {
+  ratePlace,
+  setAnswer5,
+  setAnswer1,
+  setAnswer2,
+  setAnswer3,
+  setAnswer4,
+  setComment,
+} from '../../store/actions/places';
 import {
   optionsQuestion1,
   optionsQuestion2,
@@ -21,36 +28,15 @@ import {
 import styles from './style';
 
 class PlaceRating extends Component {
-  state = {
-    comment: null,
-    question1: null,
-    question2: null,
-    question3: null,
-    question4: null,
-    question5: null,
-  };
-
   componentDidUpdate = (prevProps) => {
     if (prevProps.submittingRating && !this.props.submittingRating) {
       this.props.navigation.navigate('PlaceView');
     }
   };
 
-  setOption = (selectedOption, optionsList) => {
-    selectedOption.buttonStyle = styles.btnOptionsActive;
-    selectedOption.textStyle = styles.txtBtnOptionActive;
-
-    optionsList.forEach((option) => {
-      if (selectedOption.key !== option.key) {
-        option.buttonStyle = styles.btnOptions;
-        option.textStyle = styles.txtBtnOption;
-      }
-    });
-  };
-
   onSubmit = () => {
     this.props.onRatePlace({
-      ...this.state,
+      ...this.props,
       placeId: this.props.selectedPlace.id,
     });
   };
@@ -87,13 +73,24 @@ class PlaceRating extends Component {
                     return (
                       <TouchableOpacity
                         key={item.key}
-                        style={item.buttonStyle}
+                        style={
+                          this.props.question1 === item.key
+                            ? styles.btnOptionsActive
+                            : styles.btnOptions
+                        }
                         onPress={() => {
-                          this.setOption(item, optionsQuestion1);
-                          this.setState({ question1: item.key });
+                          this.props.onSetAnswer1(item.key);
                         }}
                       >
-                        <Text style={item.textStyle}>{item.text}</Text>
+                        <Text
+                          style={
+                            this.props.question1 === item.key
+                              ? styles.txtBtnOptionActive
+                              : styles.txtBtnOption
+                          }
+                        >
+                          {item.text}
+                        </Text>
                       </TouchableOpacity>
                     );
                   })}
@@ -110,13 +107,24 @@ class PlaceRating extends Component {
                     return (
                       <TouchableOpacity
                         key={item.key}
-                        style={item.buttonStyle}
+                        style={
+                          this.props.question2 === item.key
+                            ? styles.btnOptionsActive
+                            : styles.btnOptions
+                        }
                         onPress={() => {
-                          this.setOption(item, optionsQuestion2);
-                          this.setState({ question2: item.key });
+                          this.props.onSetAnswer2(item.key);
                         }}
                       >
-                        <Text style={item.textStyle}>{item.text}</Text>
+                        <Text
+                          style={
+                            this.props.question2 === item.key
+                              ? styles.txtBtnOptionActive
+                              : styles.txtBtnOption
+                          }
+                        >
+                          {item.text}
+                        </Text>
                       </TouchableOpacity>
                     );
                   })}
@@ -141,13 +149,24 @@ class PlaceRating extends Component {
                     return (
                       <TouchableOpacity
                         key={item.key}
-                        style={item.buttonStyle}
+                        style={
+                          this.props.question3 === item.key
+                            ? styles.btnOptionsActive
+                            : styles.btnOptions
+                        }
                         onPress={() => {
-                          this.setOption(item, optionsQuestion3);
-                          this.setState({ question3: item.key });
+                          this.props.onSetAnswer3(item.key);
                         }}
                       >
-                        <Text style={item.textStyle}>{item.text}</Text>
+                        <Text
+                          style={
+                            this.props.question3 === item.key
+                              ? styles.txtBtnOptionActive
+                              : styles.txtBtnOption
+                          }
+                        >
+                          {item.text}
+                        </Text>
                       </TouchableOpacity>
                     );
                   })}
@@ -169,11 +188,11 @@ class PlaceRating extends Component {
                       'Perfeitamente',
                     ]}
                     count={5}
-                    defaultRating={0}
+                    defaultRating={this.props.question4}
                     size={30}
-                    onFinishRating={(rating) =>
-                      this.setState({ question4: rating })
-                    }
+                    onFinishRating={(rating) => {
+                      this.props.onSetAnswer4(rating);
+                    }}
                   />
                 </View>
               </View>
@@ -197,13 +216,24 @@ class PlaceRating extends Component {
                     return (
                       <TouchableOpacity
                         key={item.key}
-                        style={item.buttonStyle}
+                        style={
+                          this.props.question5 === item.key
+                            ? styles.btnOptionsActive
+                            : styles.btnOptions
+                        }
                         onPress={() => {
-                          this.setOption(item, optionsQuestion5);
-                          this.setState({ question5: item.key });
+                          this.props.onSetAnswer5(item.key);
                         }}
                       >
-                        <Text style={item.textStyle}>{item.text}</Text>
+                        <Text
+                          style={
+                            this.props.question5 === item.key
+                              ? styles.txtBtnOptionActive
+                              : styles.txtBtnOption
+                          }
+                        >
+                          {item.text}
+                        </Text>
                       </TouchableOpacity>
                     );
                   })}
@@ -216,8 +246,8 @@ class PlaceRating extends Component {
                 <TextInput
                   style={styles.input}
                   numberOfLines={4}
-                  onChangeText={(comment) => this.setState({ comment })}
-                  value={this.state.comment}
+                  onChangeText={(comment) => this.props.onSetComment(comment)}
+                  value={this.props.comment}
                   placeholder="Digite seu comentário aqui..."
                 />
               </View>
@@ -233,11 +263,23 @@ const mapStateToProps = ({ places }) => {
   return {
     selectedPlace: places.selectedPlace,
     submittingRating: places.submittingRating,
+    question1: places.question1,
+    question2: places.question2,
+    question3: places.question3,
+    question4: places.question4,
+    question5: places.question5,
+    comment: places.comment,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    onSetAnswer1: (answer) => dispatch(setAnswer1(answer)),
+    onSetAnswer2: (answer) => dispatch(setAnswer2(answer)),
+    onSetAnswer3: (answer) => dispatch(setAnswer3(answer)),
+    onSetAnswer4: (answer) => dispatch(setAnswer4(answer)),
+    onSetAnswer5: (answer) => dispatch(setAnswer5(answer)),
+    onSetComment: (comment) => dispatch(setComment(comment)),
     onRatePlace: (placeRating) => dispatch(ratePlace(placeRating)),
   };
 };

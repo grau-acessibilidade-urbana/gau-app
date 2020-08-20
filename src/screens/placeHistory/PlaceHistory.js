@@ -32,7 +32,11 @@ class PlaceHistory extends Component {
             {' '}
             {this.props.selectedUserRating.comment.content}{' '}
           </Text>
-          <TouchableOpacity style={styles.btnEdit} activeOpacity={0.7}>
+          <TouchableOpacity
+            style={styles.btnEdit}
+            activeOpacity={0.7}
+            onPress={() => this.props.navigation.navigate('PlaceRating')}
+          >
             <Text style={styles.textEdit}>Editar avalição</Text>
           </TouchableOpacity>
 

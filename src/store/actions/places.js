@@ -20,6 +20,13 @@ import {
   FIND_USER_RATINGS_ERROR,
   FIND_USER_RATINGS_SUCCESS,
   SET_USER_RATING,
+  SET_ANSWERS,
+  SET_ANSWER1,
+  SET_ANSWER2,
+  SET_ANSWER3,
+  SET_ANSWER4,
+  SET_ANSWER5,
+  SET_COMMENT,
 } from '../actionTypes';
 
 const config = {
@@ -169,6 +176,42 @@ export function ratePlace(placeRating) {
         dispatch(findPlaceRatings(placeRating.placeId));
         dispatch({ type: RATE_PLACE_SUCCESS });
       });
+  };
+}
+
+export function setAnswer1(answer) {
+  return (dispatch) => {
+    dispatch({ type: SET_ANSWER1, payload: answer });
+  };
+}
+
+export function setAnswer2(answer) {
+  return (dispatch) => {
+    dispatch({ type: SET_ANSWER2, payload: answer });
+  };
+}
+
+export function setAnswer3(answer) {
+  return (dispatch) => {
+    dispatch({ type: SET_ANSWER3, payload: answer });
+  };
+}
+
+export function setAnswer4(answer) {
+  return (dispatch) => {
+    dispatch({ type: SET_ANSWER4, payload: answer });
+  };
+}
+
+export function setAnswer5(answer) {
+  return (dispatch) => {
+    dispatch({ type: SET_ANSWER5, payload: answer });
+  };
+}
+
+export function setComment(comment) {
+  return (dispatch) => {
+    dispatch({ type: SET_COMMENT, payload: comment });
   };
 }
 
