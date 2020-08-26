@@ -18,6 +18,7 @@ import {
   setAnswer3,
   setAnswer4,
   setComment,
+  updatePlaceRating,
 } from '../../store/actions/places';
 import {
   optionsQuestion1,
@@ -30,15 +31,26 @@ import styles from './style';
 class PlaceRating extends Component {
   componentDidUpdate = (prevProps) => {
     if (prevProps.submittingRating && !this.props.submittingRating) {
-      this.props.navigation.navigate('PlaceView');
+      if (prevProps.editMode) {
+        this.props.navigation.navigate('History');
+      } else {
+        this.props.navigation.navigate('PlaceView');
+      }
     }
   };
 
   onSubmit = () => {
-    this.props.onRatePlace({
-      ...this.props,
-      placeId: this.props.selectedPlace.id,
-    });
+    if (this.props.editMode) {
+      this.props.onUpdatePlaceRating({
+        ...this.props,
+        placeId: this.props.selectedUserRating.placeId,
+      });
+    } else {
+      this.props.onRatePlace({
+        ...this.props,
+        placeId: this.props.selectedPlace.id,
+      });
+    }
   };
 
   render() {
@@ -263,12 +275,14 @@ const mapStateToProps = ({ places }) => {
   return {
     selectedPlace: places.selectedPlace,
     submittingRating: places.submittingRating,
+    selectedUserRating: places.selectedUserRating,
     question1: places.question1,
     question2: places.question2,
     question3: places.question3,
     question4: places.question4,
     question5: places.question5,
     comment: places.comment,
+    editMode: places.editMode,
   };
 };
 
@@ -281,6 +295,8 @@ const mapDispatchToProps = (dispatch) => {
     onSetAnswer5: (answer) => dispatch(setAnswer5(answer)),
     onSetComment: (comment) => dispatch(setComment(comment)),
     onRatePlace: (placeRating) => dispatch(ratePlace(placeRating)),
+    onUpdatePlaceRating: (placeRating) =>
+      dispatch(updatePlaceRating(placeRating)),
   };
 };
 

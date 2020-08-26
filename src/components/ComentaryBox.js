@@ -13,7 +13,7 @@ import commonStyle from '../shared/commonStyle';
 const ComentaryBox = ({
   _id,
   author,
-  placeRatingHistory = { score: 0 },
+  placeRatingHistory,
   content,
   date = '21/07/2020',
   likes = 0,
@@ -32,7 +32,9 @@ const ComentaryBox = ({
             <View style={[styles.iconWithTex, styles.classificationBox]}>
               <Icon name="star" size={20} color={commonStyle.colors.FullStar} />
               <Text style={commonStyle.colors.primaryFontColor}>
-                {Number(placeRatingHistory.score).toFixed(1)}
+                {Number(
+                  placeRatingHistory ? placeRatingHistory.score : 0
+                ).toFixed(1)}
               </Text>
             </View>
           )}

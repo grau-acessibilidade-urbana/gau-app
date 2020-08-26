@@ -1,32 +1,31 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
 import * as googleApi from '../../api/google';
 import {
   FIND_PLACES,
-  LOADING_DETAILS,
-  QUERY_CHANGED,
-  SET_PLACE,
-  UPDATE_CURRENT_LOCATION,
-  LIKE_COMMENT_ERROR,
-  LIKE_COMMENT,
-  REPLY_COMMENT_ERROR,
-  REPLY_COMMENT,
-  RATE_PLACE_ERROR,
-  RATE_PLACE,
-  RATE_PLACE_SUCCESS,
   FIND_PLACE_RATINGS,
   FIND_USER_RATINGS,
   FIND_USER_RATINGS_ERROR,
   FIND_USER_RATINGS_SUCCESS,
-  SET_USER_RATING,
-  SET_ANSWERS,
+  LIKE_COMMENT,
+  LIKE_COMMENT_ERROR,
+  LOADING_DETAILS,
+  QUERY_CHANGED,
+  RATE_PLACE,
+  RATE_PLACE_ERROR,
+  RATE_PLACE_SUCCESS,
+  REPLY_COMMENT,
+  REPLY_COMMENT_ERROR,
   SET_ANSWER1,
   SET_ANSWER2,
   SET_ANSWER3,
   SET_ANSWER4,
   SET_ANSWER5,
   SET_COMMENT,
+  SET_PLACE,
+  SET_USER_RATING,
+  UPDATE_CURRENT_LOCATION,
 } from '../actionTypes';
 
 const config = {
@@ -179,6 +178,27 @@ export function ratePlace(placeRating) {
   };
 }
 
+export function updatePlaceRating(placeRating) {
+  return async (dispatch) => {
+    dispatch({ type: RATE_PLACE });
+    const token = await AsyncStorage.getItem('token');
+    axios
+      .put(`/place/rate`, placeRating, {
+        ...config,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((error) => {
+        dispatch({ type: RATE_PLACE_ERROR, payload: error });
+      })
+      .then(() => {
+        dispatch(findUserRatings());
+        dispatch({ type: RATE_PLACE_SUCCESS });
+      });
+  };
+}
+
 export function setAnswer1(answer) {
   return (dispatch) => {
     dispatch({ type: SET_ANSWER1, payload: answer });
@@ -253,6 +273,7 @@ export function findUserRatings() {
 
 export function setUserRating(userRating) {
   return (dispatch) => {
+    dispatch(setPlace(null, userRating.placeId));
     dispatch({ type: SET_USER_RATING, payload: userRating });
-  }
+  };
 }

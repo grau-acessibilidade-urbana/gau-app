@@ -38,6 +38,7 @@ const initialState = {
   loadingUserRatings: false,
   userRatings: [],
   selectedUserRating: null,
+  editMode: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -106,6 +107,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         submittingRating: false,
+        editMode: false,
       };
     case FIND_PLACE_RATINGS:
       return {
@@ -124,7 +126,6 @@ const reducer = (state = initialState, action) => {
         loadingUserRatings: true,
       };
     case FIND_USER_RATINGS_SUCCESS:
-      console.log('action: ' + JSON.stringify(action.payload));
       return {
         ...state,
         loadingUserRatings: false,
@@ -140,6 +141,7 @@ const reducer = (state = initialState, action) => {
         question4: action.payload.question4,
         question5: action.payload.question5,
         comment: action.payload.comment ? action.payload.comment.content : null,
+        editMode: true,
       };
     case SET_ANSWER1:
       return {
