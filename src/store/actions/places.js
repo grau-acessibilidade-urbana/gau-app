@@ -26,6 +26,7 @@ import {
   SET_PLACE,
   SET_USER_RATING,
   UPDATE_CURRENT_LOCATION,
+  CLEAR_SELECTED_PLACE,
 } from '../actionTypes';
 
 const config = {
@@ -267,13 +268,13 @@ export function findUserRatings() {
         } else {
           dispatch({ type: FIND_USER_RATINGS_ERROR });
         }
-      });
+      })
+      .finally(() => dispatch({ type: CLEAR_SELECTED_PLACE }));
   };
 }
 
 export function setUserRating(userRating) {
   return (dispatch) => {
-    dispatch(setPlace(null, userRating.placeId));
     dispatch({ type: SET_USER_RATING, payload: userRating });
   };
 }

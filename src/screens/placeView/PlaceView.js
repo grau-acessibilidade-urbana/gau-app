@@ -104,7 +104,6 @@ class PlaceView extends Component {
                       </TouchableWithoutFeedback>
                     </Text>
                   </View>
-                  {/* O local ainda não possui avaliação, seja o primeiro a avaliar */}
                   <View style={styles.containerComentaries}>
                     {this.props.comments && this.props.comments.length > 0 ? (
                       <FlatList
