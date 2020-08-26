@@ -114,7 +114,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         selectedPlace: {
           ...state.selectedPlace,
-          _id: action.payload_id,
+          _id: action.payload._id,
           averageScore: action.payload.averageScore,
           reviewers: action.payload.reviewers,
         },
