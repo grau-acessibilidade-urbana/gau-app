@@ -110,6 +110,10 @@ const reducer = (state = initialState, action) => {
         ...state,
         submittingRating: false,
         editMode: false,
+        selectedPlace: {
+          ...state.selectedPlace,
+          userReviewed: true,
+        },
       };
     case FIND_PLACE_RATINGS:
       return {
