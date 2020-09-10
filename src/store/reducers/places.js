@@ -18,6 +18,8 @@ import {
   SET_ANSWER4,
   SET_ANSWER5,
   SET_COMMENT,
+  FIND_USER_RATING_SUCCESS,
+  FIND_USER_RATING_ERROR,
 } from '../actionTypes';
 
 const initialState = {
@@ -172,6 +174,22 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         comment: action.payload,
+      };
+    case FIND_USER_RATING_SUCCESS:
+      return {
+        ...state,
+        selectedPlace: {
+          ...state.selectedPlace,
+          userReviewed: !!action.payload,
+        },
+      };
+    case FIND_USER_RATING_ERROR:
+      return {
+        ...state,
+        selectedPlace: {
+          ...state.selectedPlace,
+          userReviewed: false,
+        },
       };
     default:
       return state;

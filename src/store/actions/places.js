@@ -3,6 +3,7 @@ import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
 import * as googleApi from '../../api/google';
 import {
+  CLEAR_SELECTED_PLACE,
   FIND_PLACES,
   FIND_PLACE_RATINGS,
   FIND_USER_RATINGS,
@@ -26,7 +27,8 @@ import {
   SET_PLACE,
   SET_USER_RATING,
   UPDATE_CURRENT_LOCATION,
-  CLEAR_SELECTED_PLACE,
+  FIND_USER_RATING_SUCCESS,
+  FIND_USER_RATING_ERROR,
 } from '../actionTypes';
 
 const config = {
@@ -44,6 +46,7 @@ export function setPlace(currentLocation, placeId) {
       dispatch({ type: SET_PLACE, payload });
       if (payload) {
         dispatch(findPlaceRatings(placeId));
+        dispatch(findUserRatingByPlace(placeId));
       }
     } catch (error) {
       dispatch({ type: SET_PLACE, payload: error });
@@ -73,6 +76,7 @@ export function findPlaces(currentLocation, query) {
         currentLocation,
         query
       );
+      console.log('payload: ' + JSON.stringify(payload));
       dispatch({ type: FIND_PLACES, payload });
     } catch (error) {
       dispatch({ type: FIND_PLACES, payload: error });
@@ -273,8 +277,64 @@ export function findUserRatings() {
   };
 }
 
+export function findUserRatingByPlace(placeId) {
+  return async (dispatch) => {
+    const token = await AsyncStorage.getItem('token');
+    axios
+      .get(`/place/${placeId}/user/ratings`, {
+        ...config,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((error) => {
+        dispatch({ type: FIND_USER_RATING_ERROR, payload: error });
+        console.error(error);
+      })
+      .then((res) => {
+        console.log('res :' + JSON.stringify(res));
+        if (res && res.data) {
+          dispatch({ type: FIND_USER_RATING_SUCCESS, payload: res.data });
+        }
+      });
+  };
+}
+
 export function setUserRating(userRating) {
   return (dispatch) => {
     dispatch({ type: SET_USER_RATING, payload: userRating });
   };
 }
+
+// function getCurrentPosition() {
+//   return new Promise((resolve, reject) => {
+//     Geolocation.getCurrentPosition(
+//       (position) => {
+//         const payload = {
+//           latitude: position.coords.latitude,
+//           longitude: position.coords.longitude,
+//           latitudeDelta: 0.02,
+//           longitudeDelta: 0.02,
+//         };
+//         console.log('payload:' + JSON.stringify(payload));
+//         resolve(payload);
+//       },
+//       (err) => reject(err)
+//     );
+//   });
+// }
+
+// export function setUpUserLocation() {
+//   return (dispatch) => {
+//     getCurrentPosition()
+//       .catch((error) => {
+//         console.log('error: ' + JSON.stringify(error));
+//         dispatch({ type: UPDATE_CURRENT_LOCATION, payload: error });
+//       })
+//       .then((location) => {
+//         console.log('location: ' + JSON.stringify(location));
+//         dispatch({ type: UPDATE_CURRENT_LOCATION, payload: location });
+//         dispatch(findPlaces(location));
+//       });
+//   };
+// }

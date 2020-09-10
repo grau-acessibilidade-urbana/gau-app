@@ -59,13 +59,18 @@ class PlaceView extends Component {
                     style={styles.imageLocation}
                     source={{ uri: this.props.selectedPlace.image }}
                   />
-                  <TouchableOpacity
-                    style={styles.rateLocationButton}
-                    activeOpacity={0.8}
-                    onPress={this.ratePlace}
-                  >
-                    <Text style={styles.rateLocationText}>Avaliar local</Text>
-                  </TouchableOpacity>
+                  {this.props.loggedUser &&
+                    !this.props.selectedPlace.userReviewed && (
+                      <TouchableOpacity
+                        style={styles.rateLocationButton}
+                        activeOpacity={0.8}
+                        onPress={this.ratePlace}
+                      >
+                        <Text style={styles.rateLocationText}>
+                          Avaliar local
+                        </Text>
+                      </TouchableOpacity>
+                    )}
                 </View>
                 <View style={styles.detailLocalContainer}>
                   <Text style={styles.detailLocalContainer_title}>

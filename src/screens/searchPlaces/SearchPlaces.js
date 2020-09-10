@@ -19,13 +19,6 @@ import {
 } from '../../store/actions/places';
 import styles from './style';
 
-const MAP_REGION = {
-  latitude: 0.0,
-  longitude: 0.0,
-  latitudeDelta: 0.001,
-  longitudeDelta: 0.001,
-};
-
 const initialState = {
   query: '',
 };
@@ -33,12 +26,6 @@ class SearchPlaces extends Component {
   state = {
     ...initialState,
   };
-
-  componentDidMount() {
-    setTimeout(() => {
-      this.props.onUpdateCurrentLocation();
-    }, 200);
-  }
 
   componentDidUpdate() {
     if (this.props.selectedPlace) {
@@ -92,7 +79,7 @@ class SearchPlaces extends Component {
           provider={PROVIDER_GOOGLE}
           style={styles.map}
           loadingEnabled
-          initialRegion={MAP_REGION}
+          initialRegion={this.props.currentLocation}
           ref={(map) => {
             this.map = map;
           }}

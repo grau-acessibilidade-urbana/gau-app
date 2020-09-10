@@ -22,6 +22,7 @@ import SearchPlaces from './screens/searchPlaces/SearchPlaces';
 import SignUp from './screens/signup/SignUp';
 import commonStyles from './shared/commonStyle';
 import PlaceRating from './screens/placeRating/PlaceRating';
+import Splash from './screens/splash/Splash';
 
 const loginNavigator = createStackNavigator(
   {
@@ -46,6 +47,9 @@ const loginNavigator = createStackNavigator(
 
 const homeStackNavigator = createStackNavigator(
   {
+    Splash: {
+      screen: Splash,
+    },
     SearchPlaces: {
       screen: SearchPlaces,
     },

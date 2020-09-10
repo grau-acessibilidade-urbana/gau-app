@@ -86,9 +86,14 @@ export function getPlaceDetailsById(currentLocation, id) {
 export function findNearbyPlacesByText(location, text) {
   return axios
     .get(
-      `/place/nearbysearch/json?location=${location.latitude},${location.longitude}&radius=50000&type=establishment&keyword=${text}&key=${Config.GOOGLE_API_KEY}`
+      `/place/nearbysearch/json?location=${location.latitude},
+      ${location.longitude}&radius=5000&type=establishment${
+        text ? `&keyword=${text}` : ``
+      }
+      &key=${Config.GOOGLE_API_KEY}`
     )
     .then((res) => {
+      console.log('res: ' + JSON.stringify(res));
       if (res && res.data && res.data.results) {
         const { results } = res.data;
         return results.map((place) => {
