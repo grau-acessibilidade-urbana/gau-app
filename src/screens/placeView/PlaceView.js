@@ -11,7 +11,8 @@ import {
   View,
 } from 'react-native';
 import { Rating } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import MatIcon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 import ComentaryBox from '../../components/ComentaryBox';
 import Header from '../../components/Header';
@@ -109,6 +110,55 @@ class PlaceView extends Component {
                       </TouchableWithoutFeedback>
                     </Text>
                   </View>
+                  <View style={styles.summary}>
+                    <Text style={styles.summaryTitle}>
+                      Resumo das avaliações
+                    </Text>
+                    <View style={styles.summaryDetails}>
+                      <View style={styles.thumbsContainer}>
+                        <Icon
+                          style={styles.thumbs}
+                          name="thumb-down"
+                          size={15}
+                          color="#fff"
+                        />
+                      </View>
+                      <Text>Obstáculos no local</Text>
+                    </View>
+                    <View style={styles.summaryDetails}>
+                      <View style={styles.thumbsContainer}>
+                        <Icon
+                          style={styles.thumbs}
+                          name="thumb-down"
+                          size={15}
+                          color="#fff"
+                        />
+                      </View>
+                      <Text>Piso de qualidade</Text>
+                    </View>
+                    <View style={styles.summaryDetails}>
+                      <View style={styles.thumbsContainer}>
+                        <Icon
+                          style={styles.thumbs}
+                          name="thumb-down"
+                          size={15}
+                          color="#fff"
+                        />
+                      </View>
+                      <Text>Sanitário com área ampla</Text>
+                    </View>
+                    <View style={styles.summaryDetails}>
+                      <View style={styles.thumbsContainer}>
+                        <Icon
+                          style={styles.thumbs}
+                          name="thumb-down"
+                          size={15}
+                          color="#fff"
+                        />
+                      </View>
+                      <Text>Possibilidade de um cadeirante se deslocar</Text>
+                    </View>
+                  </View>
                   <View style={styles.containerComentaries}>
                     {this.props.comments && this.props.comments.length > 0 ? (
                       <FlatList
@@ -159,7 +209,7 @@ class PlaceView extends Component {
               style={styles.btnResponse}
               onPress={this.onReplySend}
             >
-              <Icon
+              <MatIcon
                 name="send"
                 size={30}
                 color={commonStyle.colors.primaryColor}

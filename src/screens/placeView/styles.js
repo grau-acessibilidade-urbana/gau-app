@@ -77,6 +77,29 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
+  summary: {
+    marginTop: 15,
+    marginLeft: 10,
+  },
+  summaryTitle: {
+    marginBottom: 10,
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: commonStyle.colors.primaryColor,
+  },
+  summaryDetails: {
+    flexDirection: 'row',
+    marginBottom: 5,
+  },
+  thumbsContainer: {
+    height: 25,
+    width: 25,
+    borderRadius: 30,
+    backgroundColor: '#EC2B0C',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 5,
+  },
   containerInputResponse: {
     flexDirection: 'row',
     backgroundColor: '#f4f4f4',
