@@ -20,6 +20,7 @@ import {
   SET_COMMENT,
   FIND_USER_RATING_SUCCESS,
   FIND_USER_RATING_ERROR,
+  FIND_PLACE_RATINGS_SUMMARY,
 } from '../actionTypes';
 
 const initialState = {
@@ -125,6 +126,14 @@ const reducer = (state = initialState, action) => {
           reviewers: action.payload.reviewers,
         },
         comments: action.payload.comments,
+      };
+    case FIND_PLACE_RATINGS_SUMMARY:
+      return {
+        ...state,
+        selectedPlace: {
+          ...state.selectedPlace,
+          ratingsSummary: action.payload,
+        },
       };
     case FIND_USER_RATINGS:
       return {

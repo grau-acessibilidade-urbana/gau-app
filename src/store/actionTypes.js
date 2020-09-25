@@ -25,6 +25,7 @@ export const SET_ANSWER3 = 'SET_ANSWER3';
 export const SET_ANSWER4 = 'SET_ANSWER4';
 export const SET_ANSWER5 = 'SET_ANSWER5';
 export const SET_COMMENT = 'SET_COMMENT';
+export const FIND_PLACE_RATINGS_SUMMARY = 'FIND_PLACE_RATINGS_SUMMARY';
 
 // USERS ACTIONS
 export const SIGN_UP = 'SIGN_UP';

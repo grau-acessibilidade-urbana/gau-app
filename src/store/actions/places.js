@@ -29,6 +29,7 @@ import {
   UPDATE_CURRENT_LOCATION,
   FIND_USER_RATING_SUCCESS,
   FIND_USER_RATING_ERROR,
+  FIND_PLACE_RATINGS_SUMMARY,
 } from '../actionTypes';
 
 const config = {
@@ -47,6 +48,7 @@ export function setPlace(currentLocation, placeId) {
       if (payload) {
         dispatch(findPlaceRatings(placeId));
         dispatch(findUserRatingByPlace(placeId));
+        dispatch(findPlaceRatingsSummary(placeId));
       }
     } catch (error) {
       dispatch({ type: SET_PLACE, payload: error });
@@ -64,6 +66,21 @@ export function findPlaceRatings(placeId) {
       .then((res) => {
         if (res && res.data) {
           dispatch({ type: FIND_PLACE_RATINGS, payload: res.data });
+        }
+      });
+  };
+}
+
+export function findPlaceRatingsSummary(placeId) {
+  return (dispatch) => {
+    axios
+      .get(`/place/${placeId}/ratings/summary`, config)
+      .catch((error) => {
+        console.error(error);
+      })
+      .then((res) => {
+        if (res && res.data) {
+          dispatch({ type: FIND_PLACE_RATINGS_SUMMARY, payload: res.data });
         }
       });
   };
