@@ -111,7 +111,7 @@ class PlaceView extends Component {
                     </Text>
                   </View>
                   <View style={styles.summary}>
-                    <Text style={styles.summaryTitle}>
+                    <Text style={styles.sectionTitle}>
                       Resumo das avaliações
                     </Text>
                     <View style={styles.summaryDetails}>
@@ -123,7 +123,9 @@ class PlaceView extends Component {
                           color="#fff"
                         />
                       </View>
-                      <Text>Obstáculos no local</Text>
+                      <Text style={styles.summaryText}>
+                        Local não possui obstáculos
+                      </Text>
                     </View>
                     <View style={styles.summaryDetails}>
                       <View style={styles.thumbsContainer}>
@@ -134,7 +136,7 @@ class PlaceView extends Component {
                           color="#fff"
                         />
                       </View>
-                      <Text>Piso de qualidade</Text>
+                      <Text style={styles.summaryText}>Piso de qualidade</Text>
                     </View>
                     <View style={styles.summaryDetails}>
                       <View style={styles.thumbsContainer}>
@@ -145,7 +147,9 @@ class PlaceView extends Component {
                           color="#fff"
                         />
                       </View>
-                      <Text>Sanitário com área ampla</Text>
+                      <Text style={styles.summaryText}>
+                        Sanitário com área ampla
+                      </Text>
                     </View>
                     <View style={styles.summaryDetails}>
                       <View style={styles.thumbsContainer}>
@@ -156,10 +160,17 @@ class PlaceView extends Component {
                           color="#fff"
                         />
                       </View>
-                      <Text>Possibilidade de um cadeirante se deslocar</Text>
+                      <Text style={styles.summaryText}>
+                        Possibilidade de um cadeirante se deslocar
+                      </Text>
                     </View>
                   </View>
                   <View style={styles.containerComentaries}>
+                    <Text
+                      style={[styles.sectionTitle, styles.sectionTitleSpacing]}
+                    >
+                      Comentários
+                    </Text>
                     {this.props.comments && this.props.comments.length > 0 ? (
                       <FlatList
                         data={this.props.comments}

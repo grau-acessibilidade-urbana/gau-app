@@ -81,15 +81,23 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginLeft: 10,
   },
-  summaryTitle: {
+  sectionTitle: {
     marginBottom: 10,
-    fontSize: 17,
+    fontSize: 19,
     fontWeight: 'bold',
     color: commonStyle.colors.primaryColor,
   },
+  sectionTitleSpacing: {
+    marginLeft: 15,
+    marginBottom: 0,
+  },
   summaryDetails: {
     flexDirection: 'row',
-    marginBottom: 5,
+    marginBottom: 15,
+  },
+  summaryText: {
+    color: commonStyle.colors.primaryFontColor,
+    fontSize: 16,
   },
   thumbsContainer: {
     height: 25,
@@ -98,7 +106,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#EC2B0C',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 5,
+    marginRight: 15,
   },
   containerInputResponse: {
     flexDirection: 'row',
