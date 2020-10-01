@@ -103,10 +103,15 @@ const styles = StyleSheet.create({
     height: 25,
     width: 25,
     borderRadius: 30,
-    backgroundColor: '#EC2B0C',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 15,
+  },
+  thumbsUp: {
+    backgroundColor: '#217501',
+  },
+  thumbsDown: {
+    backgroundColor: '#EC2B0C',
   },
   containerInputResponse: {
     flexDirection: 'row',

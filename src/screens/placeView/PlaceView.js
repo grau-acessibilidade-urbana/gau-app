@@ -26,12 +26,30 @@ class PlaceView extends Component {
     response: null,
   };
 
+  componentDidMount = () => {
+    console.log(this.props.selectedPlace.ratingsSummary);
+  };
+
   ratePlace = () => {
     if (this.props.loggedUser) {
       this.props.navigation.navigate('PlaceRating');
     } else {
       this.props.navigation.navigate('Login');
     }
+  };
+
+  getThumbsStyle = (question) => {
+    if (this.props.selectedPlace.ratingsSummary[question]) {
+      return styles.thumbsUp;
+    }
+    return styles.thumbsDown;
+  };
+
+  getThumbsIcon = (question) => {
+    if (this.props.selectedPlace.ratingsSummary[question]) {
+      return 'thumb-up';
+    }
+    return 'thumb-down';
   };
 
   onReplySend = () => {
@@ -110,61 +128,103 @@ class PlaceView extends Component {
                       </TouchableWithoutFeedback>
                     </Text>
                   </View>
-                  <View style={styles.summary}>
-                    <Text style={styles.sectionTitle}>
-                      Resumo das avaliações
-                    </Text>
-                    <View style={styles.summaryDetails}>
-                      <View style={styles.thumbsContainer}>
-                        <Icon
-                          style={styles.thumbs}
-                          name="thumb-down"
-                          size={15}
-                          color="#fff"
-                        />
-                      </View>
-                      <Text style={styles.summaryText}>
-                        Local não possui obstáculos
+                  {this.props.selectedPlace.ratingsSummary && (
+                    <View style={styles.summary}>
+                      <Text style={styles.sectionTitle}>
+                        Resumo das avaliações
                       </Text>
-                    </View>
-                    <View style={styles.summaryDetails}>
-                      <View style={styles.thumbsContainer}>
-                        <Icon
-                          style={styles.thumbs}
-                          name="thumb-down"
-                          size={15}
-                          color="#fff"
-                        />
+                      <View style={styles.summaryDetails}>
+                        <View
+                          style={[
+                            styles.thumbsContainer,
+                            this.getThumbsStyle('question1'),
+                          ]}
+                        >
+                          <Icon
+                            style={styles.thumbs}
+                            name={this.getThumbsIcon('question1')}
+                            size={15}
+                            color="#fff"
+                          />
+                        </View>
+                        <Text style={styles.summaryText}>
+                          Local não possui obstáculos
+                        </Text>
                       </View>
-                      <Text style={styles.summaryText}>Piso de qualidade</Text>
-                    </View>
-                    <View style={styles.summaryDetails}>
-                      <View style={styles.thumbsContainer}>
-                        <Icon
-                          style={styles.thumbs}
-                          name="thumb-down"
-                          size={15}
-                          color="#fff"
-                        />
+                      <View style={styles.summaryDetails}>
+                        <View
+                          style={[
+                            styles.thumbsContainer,
+                            this.getThumbsStyle('question2'),
+                          ]}
+                        >
+                          <Icon
+                            style={styles.thumbs}
+                            name={this.getThumbsIcon('question2')}
+                            size={15}
+                            color="#fff"
+                          />
+                        </View>
+                        <Text style={styles.summaryText}>
+                          Piso de qualidade
+                        </Text>
                       </View>
-                      <Text style={styles.summaryText}>
-                        Sanitário com área ampla
-                      </Text>
-                    </View>
-                    <View style={styles.summaryDetails}>
-                      <View style={styles.thumbsContainer}>
-                        <Icon
-                          style={styles.thumbs}
-                          name="thumb-down"
-                          size={15}
-                          color="#fff"
-                        />
+                      <View style={styles.summaryDetails}>
+                        <View
+                          style={[
+                            styles.thumbsContainer,
+                            this.getThumbsStyle('question3'),
+                          ]}
+                        >
+                          <Icon
+                            style={styles.thumbs}
+                            name={this.getThumbsIcon('question3')}
+                            size={15}
+                            color="#fff"
+                          />
+                        </View>
+                        <Text style={styles.summaryText}>
+                          Sanitário com área ampla
+                        </Text>
                       </View>
-                      <Text style={styles.summaryText}>
-                        Possibilidade de um cadeirante se deslocar
-                      </Text>
+                      <View style={styles.summaryDetails}>
+                        <View
+                          style={[
+                            styles.thumbsContainer,
+                            this.getThumbsStyle('question4'),
+                          ]}
+                        >
+                          <Icon
+                            style={styles.thumbs}
+                            name={this.getThumbsIcon('question4')}
+                            size={15}
+                            color="#fff"
+                          />
+                        </View>
+                        <Text style={styles.summaryText}>
+                          Possibilidade de um cadeirante se deslocar
+                        </Text>
+                      </View>
+                      <View style={styles.summaryDetails}>
+                        <View
+                          style={[
+                            styles.thumbsContainer,
+                            this.getThumbsStyle('question5'),
+                          ]}
+                        >
+                          <Icon
+                            style={styles.thumbs}
+                            name={this.getThumbsIcon('question5')}
+                            size={15}
+                            color="#fff"
+                          />
+                        </View>
+                        <Text style={styles.summaryText}>
+                          Vagas reservadas para portadores de deficiência
+                        </Text>
+                      </View>
                     </View>
-                  </View>
+                  )}
                   <View style={styles.containerComentaries}>
                     <Text
                       style={[styles.sectionTitle, styles.sectionTitleSpacing]}
