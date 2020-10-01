@@ -20,7 +20,6 @@ class History extends Component {
 
   onShowDetails = (_id) => {
     const userRating = this.props.userRatings.find((u) => u._id === _id);
-    console.log('userRating: ' + JSON.stringify(userRating));
     this.props.onSetUserRating(userRating);
     this.props.navigation.navigate('PlaceHistory');
   };

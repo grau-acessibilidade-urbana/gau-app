@@ -19,7 +19,7 @@ export function getPlacesPredictions(query) {
       }
       return null;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 }
 
 export function getImageByPhotoReference(photoReference) {
@@ -28,7 +28,7 @@ export function getImageByPhotoReference(photoReference) {
       `/place/photo?maxwidth=400&photoreference=${photoReference}&key=${Config.GOOGLE_API_KEY}`
     )
     .then((res) => res.request.responseURL)
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 }
 
 export function getDistanceBetweenPlaces(origin, destination) {
@@ -80,7 +80,7 @@ export function getPlaceDetailsById(currentLocation, id) {
 
       return null;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 }
 
 export function findNearbyPlacesByText(location, text) {
@@ -93,7 +93,7 @@ export function findNearbyPlacesByText(location, text) {
       &key=${Config.GOOGLE_API_KEY}`
     )
     .then((res) => {
-      console.log('res: ' + JSON.stringify(res));
+      console.error('res: ' + JSON.stringify(res));
       if (res && res.data && res.data.results) {
         const { results } = res.data;
         return results.map((place) => {
@@ -109,5 +109,5 @@ export function findNearbyPlacesByText(location, text) {
       }
       return null;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 }

@@ -93,7 +93,6 @@ export function findPlaces(currentLocation, query) {
         currentLocation,
         query
       );
-      console.log('payload: ' + JSON.stringify(payload));
       dispatch({ type: FIND_PLACES, payload });
     } catch (error) {
       dispatch({ type: FIND_PLACES, payload: error });
@@ -309,7 +308,6 @@ export function findUserRatingByPlace(placeId) {
         console.error(error);
       })
       .then((res) => {
-        console.log('res :' + JSON.stringify(res));
         if (res && res.data) {
           dispatch({ type: FIND_USER_RATING_SUCCESS, payload: res.data });
         }
@@ -322,36 +320,3 @@ export function setUserRating(userRating) {
     dispatch({ type: SET_USER_RATING, payload: userRating });
   };
 }
-
-// function getCurrentPosition() {
-//   return new Promise((resolve, reject) => {
-//     Geolocation.getCurrentPosition(
-//       (position) => {
-//         const payload = {
-//           latitude: position.coords.latitude,
-//           longitude: position.coords.longitude,
-//           latitudeDelta: 0.02,
-//           longitudeDelta: 0.02,
-//         };
-//         console.log('payload:' + JSON.stringify(payload));
-//         resolve(payload);
-//       },
-//       (err) => reject(err)
-//     );
-//   });
-// }
-
-// export function setUpUserLocation() {
-//   return (dispatch) => {
-//     getCurrentPosition()
-//       .catch((error) => {
-//         console.log('error: ' + JSON.stringify(error));
-//         dispatch({ type: UPDATE_CURRENT_LOCATION, payload: error });
-//       })
-//       .then((location) => {
-//         console.log('location: ' + JSON.stringify(location));
-//         dispatch({ type: UPDATE_CURRENT_LOCATION, payload: location });
-//         dispatch(findPlaces(location));
-//       });
-//   };
-// }

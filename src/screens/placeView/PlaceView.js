@@ -26,10 +26,6 @@ class PlaceView extends Component {
     response: null,
   };
 
-  componentDidMount = () => {
-    console.log(this.props.selectedPlace.ratingsSummary);
-  };
-
   ratePlace = () => {
     if (this.props.loggedUser) {
       this.props.navigation.navigate('PlaceRating');

@@ -85,7 +85,6 @@ class Profile extends Component {
       },
       (res) => {
         this.setState({ photoUser: 'data:image/jpeg;base64,' + res.data });
-        console.log(this.state.photoUser);
       }
     );
   };

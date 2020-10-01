@@ -44,7 +44,7 @@ class AuthenticationOptions extends Component {
       const userInfo = await GoogleSignin.signInSilently();
       this.props.onSignin(userInfo.idToken);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -64,7 +64,7 @@ class AuthenticationOptions extends Component {
       await GoogleSignin.revokeAccess();
       await GoogleSignin.signOut();
     } catch (error) {
-      console.log(JSON.stringify(error));
+      console.error(JSON.stringify(error));
     }
   };
 

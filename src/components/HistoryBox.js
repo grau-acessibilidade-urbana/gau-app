@@ -1,7 +1,16 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import commonStyles from '../shared/commonStyle';
+
+const { width } = Dimensions.get('window');
 
 const HistoryBox = ({
   _id,
@@ -16,7 +25,9 @@ const HistoryBox = ({
       <Image style={styles.placeImage} source={{ uri: placeImage }} />
       <View style={styles.dataPlace}>
         <View style={styles.titleBox}>
-          <Text style={styles.textTitle}>{placeName}</Text>
+          <Text style={styles.textTitle} numberOfLines={1}>
+            {placeName}
+          </Text>
           <View style={styles.containerStar}>
             <Icon name="star" size={25} color={commonStyles.colors.FullStar} />
             <Text style={styles.textStar}>{score}</Text>
@@ -70,6 +81,7 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     fontSize: 17,
+    width: width * 0.35,
     color: commonStyles.colors.primaryFontColor,
   },
   containerStar: {
