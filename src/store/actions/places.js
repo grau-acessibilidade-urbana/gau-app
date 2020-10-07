@@ -30,6 +30,7 @@ import {
   FIND_USER_RATING_SUCCESS,
   FIND_USER_RATING_ERROR,
   FIND_PLACE_RATINGS_SUMMARY,
+  SET_HELP_ITEM,
 } from '../actionTypes';
 
 const config = {
@@ -318,5 +319,11 @@ export function findUserRatingByPlace(placeId) {
 export function setUserRating(userRating) {
   return (dispatch) => {
     dispatch({ type: SET_USER_RATING, payload: userRating });
+  };
+}
+
+export function setHelpItem(helpItem) {
+  return (dispatch) => {
+    dispatch({ type: SET_HELP_ITEM, payload: helpItem });
   };
 }

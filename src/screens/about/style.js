@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   title: {
     color: commonStyles.colors.primaryColor,
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 25,
     padding: 10,
   },
   image: {
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     color: commonStyles.colors.primaryFontColor,
     padding: 10,
     fontSize: 18,
+    textAlign: 'center',
   },
 });
 

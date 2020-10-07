@@ -14,15 +14,15 @@ export default class About extends Component {
           source={require('../../../assets/imgs/iluastracao-sobre.png')}
         />
         <Text style={styles.text}>
-          {' '}
-          Do mesmo modo, o comprometimento entre as equipes possibilita uma
-          melhor visão global do levantamento das variáveis envolvidas. Gostaria
-          de enfatizar que o fenômeno da Internet exige a precisão e a definição
-          dos índices pretendidos. No entanto, não podemos esquecer que a
-          estrutura atual da organização auxilia a preparação e a composição da
-          gestão inovadora da qual fazemos parte. O empenho em analisar o
-          acompanhamento das preferências de consumo obstaculiza a apreciação da
-          importância dos níveis de motivação departamental.{' '}
+          G.A.U (Grau de Acessibilidade Urbana) é um aplicativo com o objetivo
+          de auxiliar pessoas com deficiência motora, possibilitando a consulta
+          e compartilhamento de informações sobre o grau de acessibilidade de um
+          local. O sistema funciona de forma colaborativa, portanto, o usuário
+          pode avaliar um local que já frequentou, informando quais são suas
+          qualidades e/ou limitações, podendo também deixar um comentário para
+          complementar a avaliação. As avaliações que os locais recebem são
+          armazenadas e uma nota é calculada, assim os usuários podem verificar
+          se um local é acessível, antes mesmo de conhecê-lo.
         </Text>
       </View>
     );

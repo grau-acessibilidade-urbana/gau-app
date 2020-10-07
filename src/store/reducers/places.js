@@ -21,6 +21,7 @@ import {
   FIND_USER_RATING_SUCCESS,
   FIND_USER_RATING_ERROR,
   FIND_PLACE_RATINGS_SUMMARY,
+  SET_HELP_ITEM,
 } from '../actionTypes';
 
 const initialState = {
@@ -42,6 +43,7 @@ const initialState = {
   userRatings: [],
   selectedUserRating: null,
   editMode: false,
+  helpItem: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -203,6 +205,11 @@ const reducer = (state = initialState, action) => {
           ...state.selectedPlace,
           userReviewed: false,
         },
+      };
+    case SET_HELP_ITEM:
+      return {
+        ...state,
+        helpItem: action.payload,
       };
     default:
       return state;
