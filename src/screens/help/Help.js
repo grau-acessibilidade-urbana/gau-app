@@ -28,6 +28,27 @@ class Help extends Component {
       subtitle: 'Descubra como editar suas avaliações',
       text: `Para editar uma avaliação, acesse o menu, clique em "Histórico", procure pela local avaliado e clique na opção "Ver mais", em seguida clique em "Editar avaliação". Agora basta fazer as alterações desejadas e ao final, clicar em "Concluir".`,
     },
+    {
+      id: '4',
+      title: 'Resumo de avaliação',
+      subtitle: 'Entenda como funciona',
+      text:
+        'Sempre que você faz uma avaliação de um local, suas respostas são armazenadas em nossa base de dados. Para deixar ainda mais clara a avaliação do local, este resumo informa a resposta dada por um maior número de usuários para cada pergunta. Caso a pergunta obteve mais respostas positivas, um ícone verde positivo será exibido, em caso da maioria das respostas for negativa, um ícone vermelho negativo será exibido.',
+    },
+    {
+      id: '5',
+      title: 'Alterar senha',
+      subtitle: 'Descubra como alterar sua senha.',
+      text:
+        'Para alterar sua senha é simples, basta ir até a tela de perfil (acessando pelo menu lateral) e escolher a opção de nova senha. Lembre-se que para alterar a senha é preciso digitar a anterior.',
+    },
+    {
+      id: '6',
+      title: 'Comentário do local',
+      subtitle: 'Fazer um comentário',
+      text:
+        'O comentário exibido na página do local é criado no momento em que você fizer uma avaliação, ou seja, não é possível apenas escrever comentários sem fazer uma avaliação. Para fazer um comentário, faça uma pesquisa do local desejado e clique na opção de avaliar o local, responda todas as perguntas e ao final escreva o que desejar.',
+    },
   ];
 
   onSelectOption = (helpItem) => {
