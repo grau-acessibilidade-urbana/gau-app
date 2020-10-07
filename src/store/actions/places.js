@@ -33,7 +33,7 @@ import {
 } from '../actionTypes';
 
 const config = {
-  baseURL: 'http://10.0.2.2:3000',
+  baseURL: 'https://gau-api.herokuapp.com',
 };
 
 export function setPlace(currentLocation, placeId) {

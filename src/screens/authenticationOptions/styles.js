@@ -10,9 +10,15 @@ const styles = StyleSheet.create({
     height,
   },
   image: {
-    height: height * 0.55,
-    width: width * 0.9,
+    height: height * 0.45,
+    width: width * 0.8,
     resizeMode: 'contain',
+    marginBottom: 10,
+  },
+  appTitle: {
+    color: commonStyle.colors.primaryColor,
+    fontSize: 25,
+    fontWeight: 'bold',
     marginBottom: 30,
   },
   imageGoogle: {

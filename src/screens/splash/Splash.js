@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { View, Image, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { updateCurrentLocation } from '../../store/actions/places';
 import styles from './style';
@@ -11,14 +11,21 @@ class Splash extends Component {
 
   componentDidUpdate() {
     if (this.props.currentLocation) {
-      this.props.navigation.navigate('SearchPlaces');
+      setTimeout(() => {
+        this.props.navigation.navigate('SearchPlaces');
+      }, 3000);
     }
   }
 
   render() {
     return (
       <View style={styles.containerView}>
-        <ActivityIndicator style={styles.activity} size="large" />
+        <Image
+          source={require('../../../assets/imgs/logo.png')}
+          style={styles.image}
+        />
+        <Text style={styles.appTitle}>G.A.U</Text>
+        <Text style={styles.appFullTitle}>Grau de acessibilidade urbana</Text>
       </View>
     );
   }

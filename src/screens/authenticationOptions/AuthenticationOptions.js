@@ -72,9 +72,10 @@ class AuthenticationOptions extends Component {
     return (
       <View style={styles.container}>
         <Image
-          source={require('../../../assets/imgs/ilustracao-entrada.png')}
+          source={require('../../../assets/imgs/logo.png')}
           style={styles.image}
         />
+        <Text style={styles.appTitle}>G.A.U</Text>
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Login')}
           style={[styles.button, styles.signinButton]}
