@@ -3,10 +3,14 @@ import { View, Image, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { updateCurrentLocation } from '../../store/actions/places';
 import styles from './style';
+import { signinSilently } from '../../store/actions/users';
 
 class Splash extends Component {
   componentDidMount() {
     this.props.onSetCurrentLocation();
+    if (!this.props.loggedUser) {
+      this.props.onSigninSilently();
+    }
   }
 
   componentDidUpdate() {
@@ -31,15 +35,17 @@ class Splash extends Component {
   }
 }
 
-const mapStateToProps = ({ places }) => {
+const mapStateToProps = ({ places, users }) => {
   return {
     currentLocation: places.currentLocation,
+    loggedUser: users.loggedUser,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onSetCurrentLocation: () => dispatch(updateCurrentLocation()),
+    onSigninSilently: () => dispatch(signinSilently()),
   };
 };
 

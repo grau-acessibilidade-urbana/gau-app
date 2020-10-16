@@ -28,7 +28,7 @@ class AuthenticationOptions extends Component {
   componentDidUpdate() {
     if (this.props.error) {
       ToastAndroid.showWithGravityAndOffset(
-        'Não foi autenticar com o google.',
+        'Não foi possível autenticar com o google.',
         ToastAndroid.SHORT,
         ToastAndroid.TOP,
         25,
@@ -38,15 +38,6 @@ class AuthenticationOptions extends Component {
       console.error('err' + JSON.stringify(this.props.error));
     }
   }
-
-  signInSilently = async () => {
-    try {
-      const userInfo = await GoogleSignin.signInSilently();
-      this.props.onSignin(userInfo.idToken);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   signIn = async () => {
     try {
