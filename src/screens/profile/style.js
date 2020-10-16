@@ -61,9 +61,6 @@ const styles = StyleSheet.create({
     paddingVertical: 7,
     paddingHorizontal: 15,
   },
-  containerInputPassword: {
-    width: '73%',
-  },
   label: {
     color: commonStyles.colors.secondFontColor,
     marginBottom: 5,
@@ -80,11 +77,8 @@ const styles = StyleSheet.create({
   inputDisabled: {
     backgroundColor: '#f7f7f7',
   },
-  containerEditPassword: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   editPassword: {
+    marginLeft: 15,
     paddingTop: 15,
     color: commonStyles.colors.secondFontColor,
     textDecorationLine: 'underline',

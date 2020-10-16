@@ -193,13 +193,15 @@ class Profile extends Component {
                         </Text>
                       )}
                     </View>
-                    <TouchableWithoutFeedback
-                      onPress={() => {
-                        this.setState({ isOpen: true });
-                      }}
-                    >
-                      <Text style={styles.editPassword}>Editar dados</Text>
-                    </TouchableWithoutFeedback>
+                    {!this.state.isOpen && (
+                      <TouchableWithoutFeedback
+                        onPress={() => {
+                          this.setState({ isOpen: true });
+                        }}
+                      >
+                        <Text style={styles.editPassword}>Editar dados</Text>
+                      </TouchableWithoutFeedback>
+                    )}
                   </View>
                   {this.state.isOpen && (
                     <View style={styles.newPassword}>
