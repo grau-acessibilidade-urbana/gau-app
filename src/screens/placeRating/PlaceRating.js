@@ -9,6 +9,7 @@ import {
 import { AirbnbRating } from 'react-native-elements';
 import { ProgressStep, ProgressSteps } from 'react-native-progress-steps';
 import { connect } from 'react-redux';
+import Header from '../../components/Header';
 import commonStyle from '../../shared/commonStyle';
 import {
   ratePlace,
@@ -56,6 +57,7 @@ class PlaceRating extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Header goBack={this.props.navigation.goBack} />
         {this.props.submittingRating ? (
           <ActivityIndicator size="large" style={styles.activity} />
         ) : (

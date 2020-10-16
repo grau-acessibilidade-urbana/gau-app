@@ -113,6 +113,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         submittingRating: false,
         editMode: false,
+        question1: null,
+        question2: null,
+        question3: null,
+        question4: null,
+        question5: null,
+        comment: null,
         selectedPlace: {
           ...state.selectedPlace,
           userReviewed: true,

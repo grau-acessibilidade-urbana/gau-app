@@ -6,6 +6,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
+  scroll: {
+    alignItems: 'center',
+  },
   title: {
     color: commonStyles.colors.primaryColor,
     textAlign: 'center',

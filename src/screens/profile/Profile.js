@@ -77,14 +77,16 @@ class Profile extends Component {
   };
 
   pickImage = () => {
-    ImagePicker.showImagePicker(
+    ImagePicker.launchImageLibrary(
       {
         title: 'Escolha a imagem',
         maxHeight: 100,
         maxWidth: 100,
       },
       (res) => {
-        this.setState({ photoUser: 'data:image/jpeg;base64,' + res.data });
+        if (res && res.data) {
+          this.setState({ photoUser: 'data:image/jpeg;base64,' + res.data });
+        }
       }
     );
   };
@@ -114,13 +116,15 @@ class Profile extends Component {
                     uri: this.state.photoUser || this.props.loggedUser.photo,
                   }}
                 />
-                <TouchableOpacity
-                  style={styles.edit}
-                  activeOpacity={0.7}
-                  onPress={this.pickImage}
-                >
-                  <Icon name="create" size={20} color="#fff" />
-                </TouchableOpacity>
+                {this.props.loggedUser.authMethod === 'app' && (
+                  <TouchableOpacity
+                    style={styles.edit}
+                    activeOpacity={0.7}
+                    onPress={this.pickImage}
+                  >
+                    <Icon name="create" size={20} color="#fff" />
+                  </TouchableOpacity>
+                )}
               </View>
               <Text style={styles.name}>{this.props.loggedUser.name}</Text>
               <Text style={styles.email}>{this.props.loggedUser.email}</Text>

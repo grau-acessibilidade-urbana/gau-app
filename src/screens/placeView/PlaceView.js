@@ -124,7 +124,7 @@ class PlaceView extends Component {
                       </TouchableWithoutFeedback>
                     </Text>
                   </View>
-                  {this.props.selectedPlace.ratingsSummary && (
+                  {this.props.selectedPlace.reviewers && (
                     <View style={styles.summary}>
                       <Text style={styles.sectionTitle}>
                         Resumo das avaliações

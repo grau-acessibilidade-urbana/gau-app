@@ -93,7 +93,7 @@ class SearchPlaces extends Component {
               <View style={styles.currLocationPin}>
                 <Image
                   style={styles.pinImage}
-                  source={require('../../../assets/imgs/wheelchair.png')}
+                  source={require('../../../assets/imgs/pin.png')}
                 />
               </View>
             </Marker>

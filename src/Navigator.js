@@ -137,6 +137,19 @@ const menuNavigatorLoggedUser = createDrawerNavigator(
         ),
       },
     },
+    PlaceRanking: {
+      screen: stackHistory,
+      navigationOptions: {
+        title: 'Locais Mais acessíveis',
+        drawerIcon: () => (
+          <Icon
+            name="wheelchair"
+            size={25}
+            color={commonStyles.colors.primaryFontColor}
+          />
+        ),
+      },
+    },
     History: {
       screen: stackHistory,
       navigationOptions: {
@@ -224,6 +237,19 @@ const menuNavigator = createDrawerNavigator(
           backgroundColor: 'red',
         },
         headerTintColor: 'aqua',
+      },
+    },
+    PlaceRanking: {
+      screen: stackHistory,
+      navigationOptions: {
+        title: 'Locais Mais acessíveis',
+        drawerIcon: () => (
+          <Icon
+            name="wheelchair"
+            size={25}
+            color={commonStyles.colors.primaryFontColor}
+          />
+        ),
       },
     },
     Help: {

@@ -132,8 +132,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   currLocationPin: {
-    height: 50,
-    width: 50,
+    height: 35,
+    width: 35,
     alignItems: 'center',
     justifyContent: 'center',
   },
