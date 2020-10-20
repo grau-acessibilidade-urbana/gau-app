@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ToastAndroid,
   ActivityIndicator,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -55,12 +56,12 @@ class Login extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="position">
         <Header goBack={this.props.navigation.goBack} />
         {this.props.isLoading ? (
           <ActivityIndicator style={styles.activity} size="large" />
         ) : (
-          <View style={{ alignItems: 'center' }}>
+          <View style={styles.content}>
             <Image
               source={require('../../../assets/imgs/ilustracao-login.png')}
               style={styles.image}
@@ -133,7 +134,7 @@ class Login extends Component {
             </Formik>
           </View>
         )}
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

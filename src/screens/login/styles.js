@@ -5,8 +5,11 @@ const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
-    height,
-    width,
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    alignItems: 'center',
   },
   activity: {
     height,
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
   signinButton: {
     backgroundColor: commonStyle.colors.primaryColor,
     height: 40,
-    marginTop: 20,
+    marginTop: 40,
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',

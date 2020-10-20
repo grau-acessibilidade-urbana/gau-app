@@ -8,6 +8,7 @@ import {
   View,
   ActivityIndicator,
   ToastAndroid,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -102,12 +103,12 @@ class Profile extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="position">
         <Header goBack={this.props.navigation.goBack} />
         {this.props.isLoading ? (
           <ActivityIndicator style={styles.activity} size="large" />
         ) : (
-          <View style={styles.container}>
+          <View style={styles.content}>
             <View style={styles.contantUser}>
               <View style={styles.photoContainer}>
                 <Image
@@ -273,7 +274,7 @@ class Profile extends Component {
             </Formik>
           </View>
         )}
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
