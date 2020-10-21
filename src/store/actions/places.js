@@ -9,8 +9,6 @@ import {
   FIND_USER_RATINGS,
   FIND_USER_RATINGS_ERROR,
   FIND_USER_RATINGS_SUCCESS,
-  LIKE_COMMENT,
-  LIKE_COMMENT_ERROR,
   LOADING_DETAILS,
   QUERY_CHANGED,
   RATE_PLACE,
@@ -31,6 +29,8 @@ import {
   FIND_USER_RATING_ERROR,
   FIND_PLACE_RATINGS_SUMMARY,
   SET_HELP_ITEM,
+  UPDATE_COMMENT,
+  UPDATE_COMMENT_ERROR,
 } from '../actionTypes';
 
 const config = {
@@ -148,10 +148,14 @@ export function likeComment(placeId, commentId) {
         },
       })
       .catch((error) => {
-        dispatch({ type: LIKE_COMMENT_ERROR, payload: error });
+        console.log(error);
+        dispatch({ type: UPDATE_COMMENT_ERROR, payload: error });
       })
-      .then(() => {
-        dispatch({ type: LIKE_COMMENT, payload: commentId });
+      .then((res) => {
+        if (res && res.data) {
+          console.log(res.data);
+          dispatch({ type: UPDATE_COMMENT, payload: res.data });
+        }
       });
   };
 }
@@ -195,6 +199,7 @@ export function ratePlace(placeRating) {
       })
       .then(() => {
         dispatch(findPlaceRatings(placeRating.placeId));
+        dispatch(findPlaceRatingsSummary(placeRating.placeId));
         dispatch({ type: RATE_PLACE_SUCCESS });
       });
   };

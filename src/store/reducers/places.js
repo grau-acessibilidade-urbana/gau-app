@@ -1,7 +1,6 @@
 import {
   FIND_PLACES,
   FIND_PLACE_RATINGS,
-  LIKE_COMMENT,
   LOADING_DETAILS,
   QUERY_CHANGED,
   RATE_PLACE,
@@ -22,6 +21,8 @@ import {
   FIND_USER_RATING_ERROR,
   FIND_PLACE_RATINGS_SUMMARY,
   SET_HELP_ITEM,
+  UPDATE_COMMENT,
+  UPDATE_COMMENT_ERROR,
 } from '../actionTypes';
 
 const initialState = {
@@ -77,21 +78,26 @@ const reducer = (state = initialState, action) => {
         ...state,
         loadingDetails: true,
       };
-    case LIKE_COMMENT:
+    case UPDATE_COMMENT:
       return {
         ...state,
         comments: state.comments.map((comment) => {
-          if (comment._id === action.payload) {
-            comment.likes++;
+          console.log(comment);
+          if (comment._id === action.payload._id) {
+            comment = action.payload;
           } else if (comment.responses) {
             comment.responses.forEach((response) => {
-              if (response._id === action.payload) {
-                response.likes++;
+              if (response._id === action.payload._id) {
+                response = action.payload;
               }
             });
           }
           return comment;
         }),
+      };
+    case UPDATE_COMMENT_ERROR:
+      return {
+        ...state,
       };
     case REPLY_COMMENT:
       return {
