@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginBottom: 15,
+    marginBottom: 30,
   },
   activity: {
     height,

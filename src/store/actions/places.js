@@ -200,6 +200,7 @@ export function ratePlace(placeRating) {
       .then(() => {
         dispatch(findPlaceRatings(placeRating.placeId));
         dispatch(findPlaceRatingsSummary(placeRating.placeId));
+        dispatch(findUserRatings());
         dispatch({ type: RATE_PLACE_SUCCESS });
       });
   };

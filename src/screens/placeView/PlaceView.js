@@ -250,8 +250,7 @@ class PlaceView extends Component {
                     ) : (
                       <View>
                         <Text style={styles.noRatingsText}>
-                          O local ainda não possui avaliação, seja o primeiro a
-                          avaliar
+                          O local ainda não possui comentários.
                         </Text>
                       </View>
                     )}
