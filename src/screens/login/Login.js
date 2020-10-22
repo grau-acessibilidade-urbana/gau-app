@@ -114,15 +114,6 @@ class Login extends Component {
                   )}
 
                   <TouchableOpacity
-                    activeOpacity={0.5}
-                    style={styles.forgotPassowordButton}
-                  >
-                    <Text style={styles.forgotPassowrdText}>
-                      Esqueci a senha
-                    </Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
                     onPress={handleSubmit}
                     activeOpacity={0.5}
                     style={styles.signinButton}
