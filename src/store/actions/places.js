@@ -32,10 +32,15 @@ import {
   UPDATE_COMMENT,
   UPDATE_COMMENT_ERROR,
   UPDATE_PLACE_RATING_SUCCESS,
+  DELETE_PLACE_RATING,
+  DELETE_PLACE_RATING_ERROR,
+  DELETE_PLACE_RATING_SUCCESS,
 } from '../actionTypes';
 
+// https://gau-api.herokuapp.com
+// http://10.0.2.2:3000
 const config = {
-  baseURL: 'https://gau-api.herokuapp.com',
+  baseURL: 'http://10.0.2.2:3000',
 };
 
 export function setPlace(currentLocation, placeId) {
@@ -222,6 +227,27 @@ export function updatePlaceRating(placeRating) {
       .then(() => {
         dispatch(findUserRatings());
         dispatch({ type: UPDATE_PLACE_RATING_SUCCESS });
+      });
+  };
+}
+
+export function deletePlaceRating(placeId) {
+  return async (dispatch) => {
+    dispatch({ type: DELETE_PLACE_RATING });
+    const token = await AsyncStorage.getItem('token');
+    axios
+      .delete(`/place/${placeId}/rate`, {
+        ...config,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((error) => {
+        dispatch({ type: DELETE_PLACE_RATING_ERROR, payload: error });
+      })
+      .then(() => {
+        dispatch(findUserRatings());
+        dispatch({ type: DELETE_PLACE_RATING_SUCCESS });
       });
   };
 }

@@ -5,8 +5,14 @@ import { connect } from 'react-redux';
 import Header from '../../components/Header';
 import commonStyle from '../../shared/commonStyle';
 import styles from './style';
+import { deletePlaceRating } from '../../store/actions/places';
 
 class PlaceHistory extends Component {
+  deleteUserRating = () => {
+    this.props.navigation.goBack();
+    this.props.onDeleteUserRating(this.props.selectedUserRating.placeId);
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -40,7 +46,11 @@ class PlaceHistory extends Component {
             <Text style={styles.textEdit}>Editar avalição</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.btnDelete} activeOpacity={0.7}>
+          <TouchableOpacity
+            onPress={this.deleteUserRating}
+            style={styles.btnDelete}
+            activeOpacity={0.7}
+          >
             <Text style={styles.textDelete}>Excluir avalição</Text>
           </TouchableOpacity>
         </ScrollView>
@@ -51,10 +61,16 @@ class PlaceHistory extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onDeleteUserRating: (placeId) => dispatch(deletePlaceRating(placeId)),
+  };
+};
+
 const mapStateToProps = ({ places }) => {
   return {
     selectedUserRating: places.selectedUserRating,
   };
 };
 
-export default connect(mapStateToProps)(PlaceHistory);
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceHistory);

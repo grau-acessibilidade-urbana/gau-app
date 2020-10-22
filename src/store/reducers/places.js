@@ -24,6 +24,7 @@ import {
   UPDATE_COMMENT,
   UPDATE_COMMENT_ERROR,
   UPDATE_PLACE_RATING_SUCCESS,
+  DELETE_PLACE_RATING,
 } from '../actionTypes';
 
 const initialState = {
@@ -98,6 +99,11 @@ const reducer = (state = initialState, action) => {
     case UPDATE_COMMENT_ERROR:
       return {
         ...state,
+      };
+    case DELETE_PLACE_RATING:
+      return {
+        ...state,
+        loadingUserRatings: true,
       };
     case REPLY_COMMENT:
       return {
