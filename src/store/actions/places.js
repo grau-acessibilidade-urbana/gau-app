@@ -37,10 +37,8 @@ import {
   DELETE_PLACE_RATING_SUCCESS,
 } from '../actionTypes';
 
-// https://gau-api.herokuapp.com
-// http://10.0.2.2:3000
 const config = {
-  baseURL: 'http://10.0.2.2:3000',
+  baseURL: 'https://gau-api.herokuapp.com',
 };
 
 export function setPlace(currentLocation, placeId) {
