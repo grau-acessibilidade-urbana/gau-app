@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  Alert,
 } from 'react-native';
 import { Rating } from 'react-native-elements';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
@@ -30,7 +31,22 @@ class PlaceView extends Component {
     if (this.props.loggedUser) {
       this.props.navigation.navigate('PlaceRating');
     } else {
-      this.props.navigation.navigate('Login');
+      Alert.alert(
+        'Atenção',
+        'Para avaliar é necessário fazer o login.',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'Entrar',
+            onPress: () => this.props.navigation.navigate('Login'),
+          },
+        ],
+        { cancelable: false }
+      );
     }
   };
 
@@ -74,18 +90,15 @@ class PlaceView extends Component {
                     style={styles.imageLocation}
                     source={{ uri: this.props.selectedPlace.image }}
                   />
-                  {this.props.loggedUser &&
-                    !this.props.selectedPlace.userReviewed && (
-                      <TouchableOpacity
-                        style={styles.rateLocationButton}
-                        activeOpacity={0.8}
-                        onPress={this.ratePlace}
-                      >
-                        <Text style={styles.rateLocationText}>
-                          Avaliar local
-                        </Text>
-                      </TouchableOpacity>
-                    )}
+                  {!this.props.selectedPlace.userReviewed && (
+                    <TouchableOpacity
+                      style={styles.rateLocationButton}
+                      activeOpacity={0.8}
+                      onPress={this.ratePlace}
+                    >
+                      <Text style={styles.rateLocationText}>Avaliar local</Text>
+                    </TouchableOpacity>
+                  )}
                 </View>
                 <View style={styles.detailLocalContainer}>
                   <Text style={styles.detailLocalContainer_title}>

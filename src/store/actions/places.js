@@ -302,6 +302,10 @@ export function findUserRatings() {
 export function findUserRatingByPlace(placeId) {
   return async (dispatch) => {
     const token = await AsyncStorage.getItem('token');
+    if (!token) {
+      return;
+    }
+
     axios
       .get(`/place/${placeId}/user/ratings`, {
         ...config,

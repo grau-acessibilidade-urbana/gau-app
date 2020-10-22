@@ -59,6 +59,9 @@ const homeStackNavigator = createStackNavigator(
     PlaceRating: {
       screen: PlaceRating,
     },
+    Login: {
+      screen: loginNavigator,
+    },
   },
   {
     headerMode: 'none',
