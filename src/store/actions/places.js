@@ -31,6 +31,7 @@ import {
   SET_HELP_ITEM,
   UPDATE_COMMENT,
   UPDATE_COMMENT_ERROR,
+  UPDATE_PLACE_RATING_SUCCESS,
 } from '../actionTypes';
 
 const config = {
@@ -148,12 +149,10 @@ export function likeComment(placeId, commentId) {
         },
       })
       .catch((error) => {
-        console.log(error);
         dispatch({ type: UPDATE_COMMENT_ERROR, payload: error });
       })
       .then((res) => {
         if (res && res.data) {
-          console.log(res.data);
           dispatch({ type: UPDATE_COMMENT, payload: res.data });
         }
       });
@@ -222,7 +221,7 @@ export function updatePlaceRating(placeRating) {
       })
       .then(() => {
         dispatch(findUserRatings());
-        dispatch({ type: RATE_PLACE_SUCCESS });
+        dispatch({ type: UPDATE_PLACE_RATING_SUCCESS });
       });
   };
 }

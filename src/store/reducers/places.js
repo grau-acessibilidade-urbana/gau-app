@@ -23,6 +23,7 @@ import {
   SET_HELP_ITEM,
   UPDATE_COMMENT,
   UPDATE_COMMENT_ERROR,
+  UPDATE_PLACE_RATING_SUCCESS,
 } from '../actionTypes';
 
 const initialState = {
@@ -82,7 +83,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         comments: state.comments.map((comment) => {
-          console.log(comment);
           if (comment._id === action.payload._id) {
             comment = action.payload;
           } else if (comment.responses) {
@@ -129,6 +129,18 @@ const reducer = (state = initialState, action) => {
           ...state.selectedPlace,
           userReviewed: true,
         },
+      };
+    case UPDATE_PLACE_RATING_SUCCESS:
+      return {
+        ...state,
+        submittingRating: false,
+        editMode: false,
+        question1: null,
+        question2: null,
+        question3: null,
+        question4: null,
+        question5: null,
+        comment: null,
       };
     case FIND_PLACE_RATINGS:
       return {

@@ -137,23 +137,23 @@ const menuNavigatorLoggedUser = createDrawerNavigator(
         ),
       },
     },
-    PlaceRanking: {
-      screen: stackHistory,
-      navigationOptions: {
-        title: 'Locais Mais acessíveis',
-        drawerIcon: () => (
-          <Icon
-            name="wheelchair"
-            size={25}
-            color={commonStyles.colors.primaryFontColor}
-          />
-        ),
-      },
-    },
+    // PlaceRanking: {
+    //   screen: stackHistory,
+    //   navigationOptions: {
+    //     title: 'Locais Mais acessíveis',
+    //     drawerIcon: () => (
+    //       <Icon
+    //         name="wheelchair"
+    //         size={25}
+    //         color={commonStyles.colors.primaryFontColor}
+    //       />
+    //     ),
+    //   },
+    // },
     History: {
       screen: stackHistory,
       navigationOptions: {
-        title: 'Histórico',
+        title: 'Histórico de Avaliação',
         drawerIcon: () => (
           <Icon
             name="history"
@@ -239,19 +239,19 @@ const menuNavigator = createDrawerNavigator(
         headerTintColor: 'aqua',
       },
     },
-    PlaceRanking: {
-      screen: stackHistory,
-      navigationOptions: {
-        title: 'Locais Mais acessíveis',
-        drawerIcon: () => (
-          <Icon
-            name="wheelchair"
-            size={25}
-            color={commonStyles.colors.primaryFontColor}
-          />
-        ),
-      },
-    },
+    // PlaceRanking: {
+    //   screen: stackHistory,
+    //   navigationOptions: {
+    //     title: 'Locais Mais acessíveis',
+    //     drawerIcon: () => (
+    //       <Icon
+    //         name="wheelchair"
+    //         size={25}
+    //         color={commonStyles.colors.primaryFontColor}
+    //       />
+    //     ),
+    //   },
+    // },
     Help: {
       screen: stackHelp,
       navigationOptions: {
