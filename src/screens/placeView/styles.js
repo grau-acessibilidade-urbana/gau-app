@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
   summaryText: {
     color: commonStyle.colors.primaryFontColor,
     fontSize: 16,
+    width: width * 0.8,
   },
   thumbsContainer: {
     height: 25,

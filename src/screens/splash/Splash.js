@@ -33,7 +33,7 @@ class Splash extends Component {
           source={require('../../../assets/imgs/logo.png')}
           style={styles.image}
         />
-        <Text style={styles.appTitle}>G.A.U</Text>
+        <Text style={styles.appTitle}>GAU</Text>
         <Text style={styles.appFullTitle}>Grau de acessibilidade urbana</Text>
       </View>
     );
