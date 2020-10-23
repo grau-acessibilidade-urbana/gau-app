@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { Image, Text, ToastAndroid, View } from 'react-native';
+import {
+  Image,
+  Text,
+  ToastAndroid,
+  View,
+  ActivityIndicator,
+} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { GoogleSignin } from 'react-native-google-signin';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -45,6 +51,7 @@ class AuthenticationOptions extends Component {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       this.props.onSignin(userInfo.idToken);
+      this.setState({ isSigninInProgress: false });
     } catch (error) {
       console.error(JSON.stringify(error));
     }
@@ -62,35 +69,41 @@ class AuthenticationOptions extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image
-          source={require('../../../assets/imgs/logo.png')}
-          style={styles.image}
-        />
-        <Text style={styles.appTitle}>G.A.U</Text>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Login')}
-          style={[styles.button, styles.signinButton]}
-        >
-          <Icon name="person" size={40} color="#FFF" />
-          <Text style={styles.signinText}>Entrar com email</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.signinGoogleButton]}
-          onPress={this.signIn}
-          disabled={this.state.isSigninInProgress}
-        >
-          <Image
-            source={require('../../../assets/imgs/google.png')}
-            style={styles.imageGoogle}
-          />
-          <Text style={styles.signinGoogleText}>Entrar com Google</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('SignUp')}
-          styles={[styles.button, styles.signupButton]}
-        >
-          <Text style={styles.signupText}>Ainda não tenho cadastro</Text>
-        </TouchableOpacity>
+        {this.state.isSigninInProgress ? (
+          <ActivityIndicator style={styles.activity} size="large" />
+        ) : (
+          <View style={styles.container}>
+            <Image
+              source={require('../../../assets/imgs/logo.png')}
+              style={styles.image}
+            />
+            <Text style={styles.appTitle}>G.A.U</Text>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Login')}
+              style={[styles.button, styles.signinButton]}
+            >
+              <Icon name="person" size={40} color="#FFF" />
+              <Text style={styles.signinText}>Entrar com email</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, styles.signinGoogleButton]}
+              onPress={this.signIn}
+              disabled={this.state.isSigninInProgress}
+            >
+              <Image
+                source={require('../../../assets/imgs/google.png')}
+                style={styles.imageGoogle}
+              />
+              <Text style={styles.signinGoogleText}>Entrar com Google</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('SignUp')}
+              styles={[styles.button, styles.signupButton]}
+            >
+              <Text style={styles.signupText}>Ainda não tenho cadastro</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     );
   }

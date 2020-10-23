@@ -7,7 +7,10 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    height,
+    flex: 1,
+  },
+  activity: {
+    flex: 1,
   },
   image: {
     height: height * 0.45,

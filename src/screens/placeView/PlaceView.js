@@ -10,6 +10,8 @@ import {
   TouchableWithoutFeedback,
   View,
   Alert,
+  KeyboardAvoidingView,
+  Keyboard,
 } from 'react-native';
 import { Rating } from 'react-native-elements';
 import MatIcon from 'react-native-vector-icons/MaterialIcons';
@@ -25,6 +27,19 @@ class PlaceView extends Component {
   state = {
     selectedCommentId: null,
     response: null,
+  };
+
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillMount = () => {
+    this.keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      this.keyboardDidHide
+    );
+  };
+
+  componentWillUnmount = () => {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
   };
 
   ratePlace = () => {
@@ -75,9 +90,13 @@ class PlaceView extends Component {
     this.setState({ selectedCommentId: null });
   };
 
+  keyboardDidHide = () => {
+    this.setState({ selectedCommentId: null });
+  };
+
   render() {
     return (
-      <View style={styles.containerView}>
+      <KeyboardAvoidingView style={styles.containerView} behavior="position">
         <Header goBack={this.props.navigation.goBack} lightweight />
         <ScrollView>
           {this.props.isLoading ? (
@@ -296,7 +315,7 @@ class PlaceView extends Component {
             </TouchableOpacity>
           </View>
         )}
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
