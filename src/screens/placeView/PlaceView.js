@@ -38,8 +38,9 @@ class PlaceView extends Component {
   };
 
   componentWillUnmount = () => {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
+    if (this.keyboardDidHideListener) {
+      this.keyboardDidHideListener.remove();
+    }
   };
 
   ratePlace = () => {

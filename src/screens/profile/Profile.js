@@ -168,42 +168,44 @@ class Profile extends Component {
                     )}
                   </View>
 
-                  <View style={styles.containerEditPassword}>
-                    <View
-                      style={[
-                        styles.containerInput,
-                        styles.containerInputPassword,
-                      ]}
-                    >
-                      <Text style={styles.label}>Senha atual</Text>
-                      <TextInput
+                  {this.props.loggedUser.authMethod === 'app' && (
+                    <View style={styles.containerEditPassword}>
+                      <View
                         style={[
-                          styles.input,
-                          !this.state.isOpen ? styles.inputDisabled : '',
+                          styles.containerInput,
+                          styles.containerInputPassword,
                         ]}
-                        placeholder="Digite sua senha"
-                        secureTextEntry
-                        editable={!!this.state.isOpen}
-                        value={values.currentPassword}
-                        onChangeText={handleChange('currentPassword')}
-                        onBlur={handleBlur('currentPassword')}
-                      />
-                      {errors.currentPassword && (
-                        <Text style={{ color: 'red' }}>
-                          {errors.currentPassword}
-                        </Text>
+                      >
+                        <Text style={styles.label}>Senha atual</Text>
+                        <TextInput
+                          style={[
+                            styles.input,
+                            !this.state.isOpen ? styles.inputDisabled : '',
+                          ]}
+                          placeholder="Digite sua senha"
+                          secureTextEntry
+                          editable={!!this.state.isOpen}
+                          value={values.currentPassword}
+                          onChangeText={handleChange('currentPassword')}
+                          onBlur={handleBlur('currentPassword')}
+                        />
+                        {errors.currentPassword && (
+                          <Text style={{ color: 'red' }}>
+                            {errors.currentPassword}
+                          </Text>
+                        )}
+                      </View>
+                      {!this.state.isOpen && (
+                        <TouchableWithoutFeedback
+                          onPress={() => {
+                            this.setState({ isOpen: true });
+                          }}
+                        >
+                          <Text style={styles.editPassword}>Editar dados</Text>
+                        </TouchableWithoutFeedback>
                       )}
                     </View>
-                    {!this.state.isOpen && (
-                      <TouchableWithoutFeedback
-                        onPress={() => {
-                          this.setState({ isOpen: true });
-                        }}
-                      >
-                        <Text style={styles.editPassword}>Editar dados</Text>
-                      </TouchableWithoutFeedback>
-                    )}
-                  </View>
+                  )}
                   {this.state.isOpen && (
                     <View style={styles.newPassword}>
                       <View>
