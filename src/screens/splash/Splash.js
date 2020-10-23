@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Image, Text } from 'react-native';
 import { connect } from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
 import { updateCurrentLocation } from '../../store/actions/places';
 import styles from './style';
 import { signinSilently } from '../../store/actions/users';
@@ -13,13 +14,17 @@ class Splash extends Component {
     }
   }
 
-  componentDidUpdate() {
-    if (this.props.currentLocation) {
+  componentDidUpdate = async () => {
+    const alreadyAccessed = await AsyncStorage.getItem('already-accessed');
+    if (!alreadyAccessed) {
+      AsyncStorage.setItem('already-accessed', JSON.stringify(true));
+      this.props.navigation.navigate('Welcome');
+    } else if (this.props.currentLocation) {
       setTimeout(() => {
         this.props.navigation.navigate('SearchPlaces');
       }, 3000);
     }
-  }
+  };
 
   render() {
     return (

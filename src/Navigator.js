@@ -23,6 +23,7 @@ import SignUp from './screens/signup/SignUp';
 import commonStyles from './shared/commonStyle';
 import PlaceRating from './screens/placeRating/PlaceRating';
 import Splash from './screens/splash/Splash';
+import Welcome from './screens/welcome/Welcome';
 
 const loginNavigator = createStackNavigator(
   {
@@ -49,6 +50,9 @@ const homeStackNavigator = createStackNavigator(
   {
     Splash: {
       screen: Splash,
+    },
+    Welcome: {
+      screen: Welcome,
     },
     SearchPlaces: {
       screen: SearchPlaces,
