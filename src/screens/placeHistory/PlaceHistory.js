@@ -18,7 +18,11 @@ class PlaceHistory extends Component {
       <View style={styles.container}>
         <Image
           style={styles.image}
-          source={{ uri: this.props.selectedUserRating.placeImage }}
+          source={
+            this.props.selectedUserRating.placeImage
+              ? { uri: this.props.selectedUserRating.placeImage }
+              : require('../../../assets/imgs/default-image.png')
+          }
         />
 
         <ScrollView style={styles.details}>
@@ -35,8 +39,9 @@ class PlaceHistory extends Component {
           </View>
 
           <Text style={styles.comment}>
-            {' '}
-            {this.props.selectedUserRating.comment.content}{' '}
+            {this.props.selectedUserRating.comment
+              ? ` ${this.props.selectedUserRating.comment.content} `
+              : ''}
           </Text>
           <TouchableOpacity
             style={styles.btnEdit}
@@ -55,7 +60,11 @@ class PlaceHistory extends Component {
           </TouchableOpacity>
         </ScrollView>
 
-        <Header goBack={this.props.navigation.goBack} lightweight />
+        <Header
+          goBack={this.props.navigation.goBack}
+          lightweight
+          title="Detalhes da avaliação"
+        />
       </View>
     );
   }

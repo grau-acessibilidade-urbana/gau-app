@@ -22,7 +22,14 @@ const HistoryBox = ({
 }) => {
   return (
     <View style={styles.containerHistory}>
-      <Image style={styles.placeImage} source={{ uri: placeImage }} />
+      <Image
+        style={styles.placeImage}
+        source={
+          placeImage
+            ? { uri: placeImage }
+            : require('../../assets/imgs/default-image.png')
+        }
+      />
       <View style={styles.dataPlace}>
         <View style={styles.titleBox}>
           <Text style={styles.textTitle} numberOfLines={1}>

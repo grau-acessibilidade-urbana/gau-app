@@ -108,7 +108,11 @@ class PlaceView extends Component {
                 <View style={styles.imageContainer}>
                   <Image
                     style={styles.imageLocation}
-                    source={{ uri: this.props.selectedPlace.image }}
+                    source={
+                      this.props.selectedPlace.image
+                        ? { uri: this.props.selectedPlace.image }
+                        : require('../../../assets/imgs/default-image.png')
+                    }
                   />
                   {!this.props.selectedPlace.userReviewed && (
                     <TouchableOpacity

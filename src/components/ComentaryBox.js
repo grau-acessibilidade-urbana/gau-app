@@ -27,7 +27,14 @@ const ComentaryBox = ({
     <View style={styles.container}>
       <View style={styles.comentaryBox}>
         <View style={{ flex: 1, paddingRight: 5 }}>
-          <Image source={{ uri: author.photo }} style={styles.imageUser} />
+          <Image
+            source={
+              author.photo
+                ? { uri: author.photo }
+                : require('../../assets/imgs/default-image.png')
+            }
+            style={styles.imageUser}
+          />
           {!hideClassification && (
             <View style={[styles.iconWithTex, styles.classificationBox]}>
               <Icon name="star" size={20} color={commonStyle.colors.FullStar} />

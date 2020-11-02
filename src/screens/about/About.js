@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import { Image, Text, View, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 import Header from '../../components/Header';
 import styles from './style';
+import { findNearPlaces } from '../../store/actions/places';
 
-export default class About extends Component {
+class About extends Component {
+  componentDidMount = () => {
+    this.props.onFindNearPlaces(this.props.currentLocation);
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <Header goBack={() => this.props.navigation.navigate('SearchPlaces')} />
+        <Header
+          goBack={() => this.props.navigation.navigate('SearchPlaces')}
+          title="Sobre"
+        />
         <ScrollView contentContainerStyle={styles.scroll}>
           <Text style={styles.title}>Sobre o aplicativo</Text>
           <Image
@@ -31,3 +40,18 @@ export default class About extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ places }) => {
+  return {
+    currentLocation: places.currentLocation,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFindNearPlaces: (currentLocation) =>
+      dispatch(findNearPlaces(currentLocation)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(About);

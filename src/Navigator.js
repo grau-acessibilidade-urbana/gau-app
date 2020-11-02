@@ -24,6 +24,7 @@ import commonStyles from './shared/commonStyle';
 import PlaceRating from './screens/placeRating/PlaceRating';
 import Splash from './screens/splash/Splash';
 import Welcome from './screens/welcome/Welcome';
+import NearPlaces from './screens/nearPlaces/NearPlaces';
 
 const loginNavigator = createStackNavigator(
   {
@@ -144,19 +145,19 @@ const menuNavigatorLoggedUser = createDrawerNavigator(
         ),
       },
     },
-    // PlaceRanking: {
-    //   screen: stackHistory,
-    //   navigationOptions: {
-    //     title: 'Locais Mais acessíveis',
-    //     drawerIcon: () => (
-    //       <Icon
-    //         name="wheelchair"
-    //         size={25}
-    //         color={commonStyles.colors.primaryFontColor}
-    //       />
-    //     ),
-    //   },
-    // },
+    NearPlaces: {
+      screen: NearPlaces,
+      navigationOptions: {
+        title: 'Locais próximos',
+        drawerIcon: () => (
+          <Icon
+            name="wheelchair"
+            size={25}
+            color={commonStyles.colors.primaryFontColor}
+          />
+        ),
+      },
+    },
     History: {
       screen: stackHistory,
       navigationOptions: {
@@ -246,19 +247,19 @@ const menuNavigator = createDrawerNavigator(
         headerTintColor: 'aqua',
       },
     },
-    // PlaceRanking: {
-    //   screen: stackHistory,
-    //   navigationOptions: {
-    //     title: 'Locais Mais acessíveis',
-    //     drawerIcon: () => (
-    //       <Icon
-    //         name="wheelchair"
-    //         size={25}
-    //         color={commonStyles.colors.primaryFontColor}
-    //       />
-    //     ),
-    //   },
-    // },
+    NearPlaces: {
+      screen: NearPlaces,
+      navigationOptions: {
+        title: 'Locais próximos',
+        drawerIcon: () => (
+          <Icon
+            name="wheelchair"
+            size={25}
+            color={commonStyles.colors.primaryFontColor}
+          />
+        ),
+      },
+    },
     Help: {
       screen: stackHelp,
       navigationOptions: {

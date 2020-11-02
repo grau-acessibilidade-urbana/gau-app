@@ -27,7 +27,10 @@ class History extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header goBack={() => this.props.navigation.navigate('SearchPlaces')} />
+        <Header
+          goBack={() => this.props.navigation.navigate('SearchPlaces')}
+          title="Histórico de Avaliação"
+        />
         {this.props.isLoading ? (
           <ActivityIndicator style={styles.activity} size="large" />
         ) : (

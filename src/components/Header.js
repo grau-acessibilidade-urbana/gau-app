@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import commonStyle from '../shared/commonStyle';
 
-const Header = ({ goBack, lightweight = false }) => {
+const Header = ({ goBack, lightweight = false, title = '' }) => {
   return (
     <View
       style={[
@@ -18,6 +18,14 @@ const Header = ({ goBack, lightweight = false }) => {
           color={lightweight ? commonStyle.colors.primaryFontColor : '#fff'}
         />
       </TouchableOpacity>
+      <Text
+        style={[
+          styles.title,
+          { color: lightweight ? commonStyle.colors.primaryFontColor : '#fff' },
+        ]}
+      >
+        {title}
+      </Text>
     </View>
   );
 };
@@ -28,8 +36,8 @@ const styles = StyleSheet.create({
   header: {
     width: '100%',
     height: 50,
-    display: 'flex',
-    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
     zIndex: 1,
     shadowColor: '#000',
     shadowOffset: {
@@ -47,4 +55,10 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   headerDark: { backgroundColor: commonStyle.colors.primaryColor, zIndex: 1 },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    flex: 1,
+    textAlign: 'center',
+  },
 });

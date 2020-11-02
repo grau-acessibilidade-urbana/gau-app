@@ -27,8 +27,10 @@ export function getImageByPhotoReference(photoReference) {
     .get(
       `/place/photo?maxwidth=400&photoreference=${photoReference}&key=${Config.GOOGLE_API_KEY}`
     )
-    .then((res) => res.request.responseURL)
-    .catch((err) => console.error(err));
+    .then((res) => {
+      return res.request.responseURL;
+    })
+    .catch((err) => console.log(err));
 }
 
 export function getDistanceBetweenPlaces(origin, destination) {
@@ -46,7 +48,8 @@ export function getDistanceBetweenPlaces(origin, destination) {
           : 'Não foi possível calcular a distância';
       }
       return null;
-    });
+    })
+    .catch((err) => console.error(err));
 }
 
 export function getPlaceDetailsById(currentLocation, id) {
@@ -63,9 +66,11 @@ export function getPlaceDetailsById(currentLocation, id) {
           latitude: result.geometry.location.lat,
           longitude: result.geometry.location.lng,
         };
+
         const distance = currentLocation
           ? await getDistanceBetweenPlaces(currentLocation, location)
           : 0;
+
         return {
           id: result.place_id,
           name: result.name,
@@ -80,32 +85,56 @@ export function getPlaceDetailsById(currentLocation, id) {
 
       return null;
     })
-    .catch((err) => console.error(err));
+    .catch((err) => console.log(err));
 }
 
-export function findNearbyPlacesByText(location, text) {
+export function findNearbyPlacesByText(
+  currentLocation,
+  text,
+  showDetails = false
+) {
   return axios
     .get(
-      `/place/nearbysearch/json?location=${location.latitude},
-      ${location.longitude}&radius=5000&type=establishment${
+      `/place/nearbysearch/json?location=${currentLocation.latitude},
+      ${currentLocation.longitude}&radius=5000&type=establishment${
         text ? `&keyword=${text}` : ``
       }
       &key=${Config.GOOGLE_API_KEY}`
     )
-    .then((res) => {
-      console.error('res: ' + JSON.stringify(res));
+    .then(async (res) => {
       if (res && res.data && res.data.results) {
         const { results } = res.data;
-        return results.map((place) => {
+        const placesPromises = results.map(async (place) => {
+          let distance = '';
+          let image = '';
+          if (showDetails) {
+            const photoReference = place.photos
+              ? place.photos[0].photo_reference
+              : null;
+            image = await getImageByPhotoReference(photoReference);
+            const location = {
+              latitude: place.geometry.location.lat,
+              longitude: place.geometry.location.lng,
+            };
+
+            distance = currentLocation
+              ? await getDistanceBetweenPlaces(currentLocation, location)
+              : 0;
+          }
+
           return {
             id: place.place_id,
             name: place.name,
+            image,
+            distance,
             location: {
               latitude: place.geometry.location.lat,
               longitude: place.geometry.location.lng,
             },
           };
         });
+
+        return Promise.all(placesPromises);
       }
       return null;
     })

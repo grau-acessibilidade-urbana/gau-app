@@ -8,7 +8,7 @@ export default {
     FullStar: '#FFC107',
     EmptyStar: '#D1D1D1',
     backgroundStar: '#FFEFC0',
-    whiteTransparent: 'rgba(255, 255, 255, 0.65)',
+    whiteTransparent: 'rgba(255, 255, 255, 0.80)',
   },
 };
 

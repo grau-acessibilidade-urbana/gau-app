@@ -25,6 +25,8 @@ import {
   UPDATE_COMMENT_ERROR,
   UPDATE_PLACE_RATING_SUCCESS,
   DELETE_PLACE_RATING,
+  FIND_NEAR_PLACES,
+  FIND_NEAR_PLACES_SUCCESS,
 } from '../actionTypes';
 
 const initialState = {
@@ -47,6 +49,8 @@ const initialState = {
   selectedUserRating: null,
   editMode: false,
   helpItem: null,
+  nearPlaces: null,
+  loadingNearPlaces: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -240,6 +244,17 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         helpItem: action.payload,
+      };
+    case FIND_NEAR_PLACES:
+      return {
+        ...state,
+        loadingNearPlaces: true,
+      };
+    case FIND_NEAR_PLACES_SUCCESS:
+      return {
+        ...state,
+        loadingNearPlaces: false,
+        nearPlaces: action.payload,
       };
     default:
       return state;

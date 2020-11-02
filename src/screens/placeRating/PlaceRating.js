@@ -57,7 +57,7 @@ class PlaceRating extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header goBack={this.props.navigation.goBack} />
+        <Header goBack={this.props.navigation.goBack} title="Avaliação" />
         {this.props.submittingRating ? (
           <ActivityIndicator size="large" style={styles.activity} />
         ) : (

@@ -35,6 +35,9 @@ import {
   DELETE_PLACE_RATING,
   DELETE_PLACE_RATING_ERROR,
   DELETE_PLACE_RATING_SUCCESS,
+  FIND_NEAR_PLACES_ERROR,
+  FIND_NEAR_PLACES_SUCCESS,
+  FIND_NEAR_PLACES,
 } from '../actionTypes';
 
 const config = {
@@ -102,6 +105,64 @@ export function findPlaces(currentLocation, query) {
     } catch (error) {
       dispatch({ type: FIND_PLACES, payload: error });
     }
+  };
+}
+
+export function findNearPlaces() {
+  return (dispatch) => {
+    dispatch({ type: FIND_NEAR_PLACES });
+    Geolocation.getCurrentPosition(
+      async (position) => {
+        const currentLocation = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          latitudeDelta: 0.02,
+          longitudeDelta: 0.02,
+        };
+        try {
+          const places = await googleApi.findNearbyPlacesByText(
+            currentLocation,
+            null,
+            true
+          );
+          let placeIdList = '';
+          places.slice(0, 15).forEach((place) => {
+            placeIdList += `${place.id},`;
+          });
+          placeIdList = placeIdList.slice(0, placeIdList.length - 1);
+          axios
+            .get(
+              `/place/places/findplacebyplaceids?placeIds=${placeIdList}`,
+              config
+            )
+            .catch((error) => {
+              console.error(error);
+              dispatch({ type: FIND_NEAR_PLACES_ERROR, payload: error });
+            })
+            .then((res) => {
+              if (res && res.data) {
+                const placesDetails = places.map((place) => {
+                  const placeRating =
+                    res.data.find((p) => p.placeId === place.id) || {};
+                  return {
+                    ...place,
+                    ...placeRating,
+                  };
+                });
+                console.log(placesDetails);
+                dispatch({
+                  type: FIND_NEAR_PLACES_SUCCESS,
+                  payload: placesDetails,
+                });
+              }
+            });
+        } catch (error) {
+          console.error(error);
+          dispatch({ type: FIND_NEAR_PLACES_ERROR, payload: error });
+        }
+      },
+      (err) => dispatch({ type: FIND_NEAR_PLACES_ERROR, payload: err })
+    );
   };
 }
 
@@ -203,6 +264,7 @@ export function ratePlace(placeRating) {
         dispatch(findPlaceRatings(placeRating.placeId));
         dispatch(findPlaceRatingsSummary(placeRating.placeId));
         dispatch(findUserRatings());
+        dispatch(findNearPlaces());
         dispatch({ type: RATE_PLACE_SUCCESS });
       });
   };

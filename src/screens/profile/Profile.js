@@ -104,7 +104,7 @@ class Profile extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior="position">
-        <Header goBack={this.props.navigation.goBack} />
+        <Header goBack={this.props.navigation.goBack} title="Perfil" />
         {this.props.isLoading ? (
           <ActivityIndicator style={styles.activity} size="large" />
         ) : (

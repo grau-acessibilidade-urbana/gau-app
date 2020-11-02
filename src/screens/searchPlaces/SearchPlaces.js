@@ -175,7 +175,11 @@ class SearchPlaces extends Component {
                 <View style={styles.placeDetails}>
                   <Image
                     style={styles.placeImage}
-                    source={{ uri: this.props.selectedPlace.image }}
+                    source={
+                      this.props.selectedPlace.image
+                        ? { uri: this.props.selectedPlace.image }
+                        : require('../../../assets/imgs/default-image.png')
+                    }
                   />
                   <View style={styles.placeDescription}>
                     <Text style={styles.placeAddressTitle}>
