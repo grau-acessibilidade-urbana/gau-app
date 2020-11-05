@@ -38,6 +38,11 @@ import {
   FIND_NEAR_PLACES_ERROR,
   FIND_NEAR_PLACES_SUCCESS,
   FIND_NEAR_PLACES,
+  FIND_PLACE_RATINGS_ERROR,
+  FIND_PLACE_RATINGS_SUCCESS,
+  FIND_USER_RATING,
+  FIND_PLACE_RATINGS_SUMMARY_ERROR,
+  FIND_PLACE_RATINGS_SUMMARY_SUCCESS,
 } from '../actionTypes';
 
 const config = {
@@ -66,14 +71,16 @@ export function setPlace(currentLocation, placeId) {
 
 export function findPlaceRatings(placeId) {
   return async (dispatch) => {
+    dispatch({ type: FIND_PLACE_RATINGS });
     axios
       .get(`/place/${placeId}`, config)
       .catch((error) => {
         console.error(error);
+        dispatch({ type: FIND_PLACE_RATINGS_ERROR });
       })
       .then((res) => {
-        if (res && res.data) {
-          dispatch({ type: FIND_PLACE_RATINGS, payload: res.data });
+        if (res) {
+          dispatch({ type: FIND_PLACE_RATINGS_SUCCESS, payload: res.data });
         }
       });
   };
@@ -81,14 +88,19 @@ export function findPlaceRatings(placeId) {
 
 export function findPlaceRatingsSummary(placeId) {
   return (dispatch) => {
+    dispatch({ type: FIND_PLACE_RATINGS_SUMMARY });
     axios
       .get(`/place/${placeId}/ratings/summary`, config)
       .catch((error) => {
         console.error(error);
+        dispatch({ type: FIND_PLACE_RATINGS_SUMMARY_ERROR, payload: error });
       })
       .then((res) => {
-        if (res && res.data) {
-          dispatch({ type: FIND_PLACE_RATINGS_SUMMARY, payload: res.data });
+        if (res) {
+          dispatch({
+            type: FIND_PLACE_RATINGS_SUMMARY_SUCCESS,
+            payload: res.data,
+          });
         }
       });
   };
@@ -391,7 +403,7 @@ export function findUserRatingByPlace(placeId) {
     if (!token) {
       return;
     }
-
+    dispatch({ type: FIND_USER_RATING });
     axios
       .get(`/place/${placeId}/user/ratings`, {
         ...config,
@@ -404,7 +416,7 @@ export function findUserRatingByPlace(placeId) {
         console.error(error);
       })
       .then((res) => {
-        if (res && res.data) {
+        if (res) {
           dispatch({ type: FIND_USER_RATING_SUCCESS, payload: res.data });
         }
       });

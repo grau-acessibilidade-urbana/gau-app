@@ -12,12 +12,23 @@ import { connect } from 'react-redux';
 import commonStyles from '../../shared/commonStyle';
 import styles from './style';
 import Header from '../../components/Header';
-import { findNearPlaces } from '../../store/actions/places';
+import { findNearPlaces, setPlace } from '../../store/actions/places';
 
 class NearPlaces extends Component {
   componentDidMount() {
     this.props.onFindNearPlaces();
   }
+
+  // componentDidUpdate = (prevProps) => {
+  //   if (prevProps.loadingDetails && !this.props.loadingDetails) {
+  //     this.props.navigation.navigate('PlaceView');
+  //   }
+  // };
+
+  onShowPlace = (placeId) => {
+    this.props.onSetPlace(this.props.currentLocation, placeId);
+    this.props.navigation.navigate('PlaceView');
+  };
 
   render() {
     return (
@@ -63,7 +74,7 @@ class NearPlaces extends Component {
                     <Text style={styles.textDistance}>{item.distance}</Text>
                     <TouchableOpacity
                       style={styles.more}
-                      onPress={() => this._onShowPlace(item.id)}
+                      onPress={() => this.onShowPlace(item.id)}
                     >
                       <Text style={styles.textMore}>Ver local</Text>
                     </TouchableOpacity>
@@ -81,7 +92,9 @@ class NearPlaces extends Component {
 const mapStateToProps = ({ places }) => {
   return {
     nearPlaces: places.nearPlaces,
+    selectedPlace: places.selectedPlace,
     isLoading: places.loadingNearPlaces,
+    loadingDetails: places.loadingDetails,
     currentLocation: places.currentLocation,
   };
 };
@@ -90,6 +103,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onFindNearPlaces: (currentLocation) =>
       dispatch(findNearPlaces(currentLocation)),
+    onSetPlace: (currentLocation, placeId) =>
+      dispatch(setPlace(currentLocation, placeId)),
   };
 };
 

@@ -96,6 +96,23 @@ const stackHistory = createStackNavigator(
   }
 );
 
+const stackNearPlaces = createStackNavigator(
+  {
+    NearPlaces: {
+      screen: NearPlaces,
+    },
+    PlaceView: {
+      screen: PlaceView,
+    },
+  },
+  {
+    headerMode: 'none',
+    defaultNavigationOptions: {
+      ...TransitionPresets.SlideFromRightIOS,
+    },
+  }
+);
+
 const stackHelp = createStackNavigator(
   {
     Help: {
@@ -146,7 +163,7 @@ const menuNavigatorLoggedUser = createDrawerNavigator(
       },
     },
     NearPlaces: {
-      screen: NearPlaces,
+      screen: stackNearPlaces,
       navigationOptions: {
         title: 'Locais próximos',
         drawerIcon: () => (
@@ -248,7 +265,7 @@ const menuNavigator = createDrawerNavigator(
       },
     },
     NearPlaces: {
-      screen: NearPlaces,
+      screen: stackNearPlaces,
       navigationOptions: {
         title: 'Locais próximos',
         drawerIcon: () => (

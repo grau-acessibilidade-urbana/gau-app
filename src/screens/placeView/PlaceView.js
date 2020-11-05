@@ -95,12 +95,25 @@ class PlaceView extends Component {
     this.setState({ selectedCommentId: null });
   };
 
+  isLoading = () => {
+    console.log('details: ' + this.props.isLoadingDetails);
+    console.log('rating: ' + this.props.isLoadingRating);
+    console.log('userRating: ' + this.props.isLoadingUserRating);
+    console.log('summary: ' + this.props.isLoadingSummary);
+    return (
+      this.props.isLoadingDetails ||
+      this.props.isLoadingRating ||
+      this.props.isLoadingUserRating ||
+      this.props.isLoadingSummary
+    );
+  };
+
   render() {
     return (
       <KeyboardAvoidingView style={styles.containerView} behavior="position">
         <Header goBack={this.props.navigation.goBack} lightweight />
         <ScrollView>
-          {this.props.isLoading ? (
+          {this.isLoading() ? (
             <ActivityIndicator style={styles.activity} size="large" />
           ) : (
             <View style={styles.container}>
@@ -331,7 +344,10 @@ const mapStateToProps = ({ places, users }) => {
     comments: places.comments,
     currentLocation: places.currentLocation,
     loggedUser: users.loggedUser,
-    isLoading: places.loadingRating,
+    isLoadingDetails: places.loadingDetails,
+    isLoadingRating: places.loadingRating,
+    isLoadingUserRating: places.loadingUserRating,
+    isLoadingSummary: places.loadingSummary,
   };
 };
 

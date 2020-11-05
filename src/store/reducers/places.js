@@ -27,6 +27,11 @@ import {
   DELETE_PLACE_RATING,
   FIND_NEAR_PLACES,
   FIND_NEAR_PLACES_SUCCESS,
+  FIND_PLACE_RATINGS_SUCCESS,
+  FIND_PLACE_RATINGS_ERROR,
+  FIND_USER_RATING,
+  FIND_PLACE_RATINGS_SUMMARY_SUCCESS,
+  FIND_PLACE_RATINGS_SUMMARY_ERROR,
 } from '../actionTypes';
 
 const initialState = {
@@ -37,6 +42,8 @@ const initialState = {
   places: null,
   loadingDetails: false,
   loadingRating: false,
+  loadingUserRating: false,
+  loadingSummary: false,
   comment: null,
   question1: null,
   question2: null,
@@ -155,6 +162,16 @@ const reducer = (state = initialState, action) => {
     case FIND_PLACE_RATINGS:
       return {
         ...state,
+        loadingRating: true,
+      };
+    case FIND_PLACE_RATINGS_ERROR:
+      return {
+        ...state,
+        loadingRating: false,
+      };
+    case FIND_PLACE_RATINGS_SUCCESS:
+      return {
+        ...state,
         selectedPlace: {
           ...state.selectedPlace,
           _id: action.payload._id,
@@ -162,14 +179,26 @@ const reducer = (state = initialState, action) => {
           reviewers: action.payload.reviewers,
         },
         comments: action.payload.comments,
+        loadingRating: false,
       };
     case FIND_PLACE_RATINGS_SUMMARY:
+      return {
+        ...state,
+        loadingSummary: true,
+      };
+    case FIND_PLACE_RATINGS_SUMMARY_SUCCESS:
       return {
         ...state,
         selectedPlace: {
           ...state.selectedPlace,
           ratingsSummary: action.payload,
         },
+        loadingSummary: false,
+      };
+    case FIND_PLACE_RATINGS_SUMMARY_ERROR:
+      return {
+        ...state,
+        loadingSummary: false,
       };
     case FIND_USER_RATINGS:
       return {
@@ -224,6 +253,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         comment: action.payload,
       };
+    case FIND_USER_RATING:
+      return {
+        ...state,
+        loadingUserRating: true,
+      };
     case FIND_USER_RATING_SUCCESS:
       return {
         ...state,
@@ -231,6 +265,7 @@ const reducer = (state = initialState, action) => {
           ...state.selectedPlace,
           userReviewed: !!action.payload,
         },
+        loadingUserRating: false,
       };
     case FIND_USER_RATING_ERROR:
       return {
@@ -239,6 +274,7 @@ const reducer = (state = initialState, action) => {
           ...state.selectedPlace,
           userReviewed: false,
         },
+        loadingUserRating: false,
       };
     case SET_HELP_ITEM:
       return {
