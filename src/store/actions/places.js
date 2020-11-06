@@ -43,6 +43,8 @@ import {
   FIND_USER_RATING,
   FIND_PLACE_RATINGS_SUMMARY_ERROR,
   FIND_PLACE_RATINGS_SUMMARY_SUCCESS,
+  SORT_NEAR_PLACES_BY_DISTANCE,
+  SORT_NEAR_PLACES_BY_RATING,
 } from '../actionTypes';
 
 const config = {
@@ -166,6 +168,7 @@ export function findNearPlaces() {
                   type: FIND_NEAR_PLACES_SUCCESS,
                   payload: placesDetails,
                 });
+                dispatch({ type: SORT_NEAR_PLACES_BY_DISTANCE });
               }
             });
         } catch (error) {
@@ -175,6 +178,16 @@ export function findNearPlaces() {
       },
       (err) => dispatch({ type: FIND_NEAR_PLACES_ERROR, payload: err })
     );
+  };
+}
+
+export function sortNearPlaces(sortValue) {
+  return (dispatch) => {
+    if (sortValue === 'distance') {
+      dispatch({ type: SORT_NEAR_PLACES_BY_DISTANCE });
+    } else if (sortValue === 'rating') {
+      dispatch({ type: SORT_NEAR_PLACES_BY_RATING });
+    }
   };
 }
 

@@ -32,6 +32,8 @@ import {
   FIND_USER_RATING,
   FIND_PLACE_RATINGS_SUMMARY_SUCCESS,
   FIND_PLACE_RATINGS_SUMMARY_ERROR,
+  SORT_NEAR_PLACES_BY_DISTANCE,
+  SORT_NEAR_PLACES_BY_RATING,
 } from '../actionTypes';
 
 const initialState = {
@@ -291,6 +293,24 @@ const reducer = (state = initialState, action) => {
         ...state,
         loadingNearPlaces: false,
         nearPlaces: action.payload,
+      };
+    case SORT_NEAR_PLACES_BY_DISTANCE:
+      return {
+        ...state,
+        nearPlaces: state.nearPlaces.sort((place1, place2) => {
+          const distance1 = +place1.distance.split(' ')[0];
+          console.log(distance1);
+          const distance2 = +place2.distance.split(' ')[0];
+          console.log(distance2);
+          return distance1 - distance2;
+        }),
+      };
+    case SORT_NEAR_PLACES_BY_RATING:
+      return {
+        ...state,
+        nearPlaces: state.nearPlaces.sort((place1, place2) => {
+          return (place2.averageScore || 0) - (place1.averageScore || 0);
+        }),
       };
     default:
       return state;

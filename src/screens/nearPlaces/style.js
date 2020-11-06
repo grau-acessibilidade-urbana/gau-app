@@ -10,10 +10,28 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingTop: 10,
+    marginBottom: 30,
   },
   activity: {
     height,
     width,
+  },
+  sortField: {
+    flexDirection: 'row',
+    width,
+    marginLeft: '5%',
+    marginTop: '5%',
+    marginBottom: 10,
+    alignItems: 'center',
+  },
+  sortLabel: {
+    color: commonStyles.colors.primaryFontColor,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  sortPicker: {
+    width: 150,
+    height: 30,
   },
   containerHistory: {
     width: '90%',

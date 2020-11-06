@@ -40,5 +40,6 @@ module.exports = {
     'prefer-template': 'off',
     'react/no-array-index-key': 'off',
     'no-plusplus': 'off',
+    'no-else-return': 'off',
   },
 };
