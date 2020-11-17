@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
+
 const { height, width } = Dimensions.get('window');
 
 const slides = [
@@ -29,17 +30,24 @@ const slides = [
   },
   {
     key: 4,
-    title: 'Avalie um local',
+    title: 'Encontre locais próximos',
     text:
-      'Clique em "Avaliar Local" e compartilhe suas experiências. Lembre-se, faça login para poder avaliar.',
+      'Clicando em "Locais próximos" no menu,  você encontra os locais perto de você.',
     image: require('../../../assets/imgs/slide3.png'),
-    backgroundColor: '#3197B5',
   },
   {
     key: 5,
+    title: 'Avalie um local',
+    text:
+      'Clique em "Avaliar Local" e compartilhe suas experiências. Lembre-se, faça login para poder avaliar.',
+    image: require('../../../assets/imgs/slide4.png'),
+    backgroundColor: '#3197B5',
+  },
+  {
+    key: 6,
     title: 'Vamos começar!',
     text: 'Agora você já sabe as principais funcionalidades, vamos começar!',
-    image: require('../../../assets/imgs/slide4.png'),
+    image: require('../../../assets/imgs/slide5.png'),
     backgroundColor: '#256B9E',
   },
 ];

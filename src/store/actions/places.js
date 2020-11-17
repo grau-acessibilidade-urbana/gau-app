@@ -163,7 +163,6 @@ export function findNearPlaces() {
                     ...placeRating,
                   };
                 });
-                console.log(placesDetails);
                 dispatch({
                   type: FIND_NEAR_PLACES_SUCCESS,
                   payload: placesDetails,

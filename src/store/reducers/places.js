@@ -34,6 +34,7 @@ import {
   FIND_PLACE_RATINGS_SUMMARY_ERROR,
   SORT_NEAR_PLACES_BY_DISTANCE,
   SORT_NEAR_PLACES_BY_RATING,
+  DELETE_PLACE_RATING_SUCCESS,
 } from '../actionTypes';
 
 const initialState = {
@@ -118,6 +119,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         loadingUserRatings: true,
       };
+    case DELETE_PLACE_RATING_SUCCESS:
+      return {
+        ...state,
+        question1: null,
+        question2: null,
+        question3: null,
+        question4: null,
+        question5: null,
+        comment: null,
+      }
     case REPLY_COMMENT:
       return {
         ...state,
@@ -299,9 +310,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         nearPlaces: state.nearPlaces.sort((place1, place2) => {
           const distance1 = +place1.distance.split(' ')[0];
-          console.log(distance1);
           const distance2 = +place2.distance.split(' ')[0];
-          console.log(distance2);
           return distance1 - distance2;
         }),
       };
