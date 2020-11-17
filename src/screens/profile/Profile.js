@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 import Header from '../../components/Header';
 import styles from './style';
 import { updateUser } from '../../store/actions/users';
+import { thisTypeAnnotation } from '@babel/types';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().label('Nome').required('Campo obrigatório'),
@@ -86,7 +87,16 @@ class Profile extends Component {
       },
       (res) => {
         if (res && res.data) {
-          this.setState({ photoUser: 'data:image/jpeg;base64,' + res.data });
+          this.setState(
+            { photoUser: 'data:image/jpeg;base64,' + res.data },
+            () => {
+              console.log(this.state.photoUser);
+              this.props.onUpdateUser({
+                id: this.props.loggedUser._id,
+                photo: this.state.photoUser,
+              });
+            }
+          );
         }
       }
     );
@@ -97,7 +107,6 @@ class Profile extends Component {
       id: this.props.loggedUser._id,
       name,
       password: newPassword,
-      photo: this.state.photoUser,
     });
   };
 

@@ -53,7 +53,7 @@ class PlaceView extends Component {
         [
           {
             text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
+            onPress: () => console.debug('Cancel Pressed'),
             style: 'cancel',
           },
           {
@@ -96,10 +96,6 @@ class PlaceView extends Component {
   };
 
   isLoading = () => {
-    console.log('details: ' + this.props.isLoadingDetails);
-    console.log('rating: ' + this.props.isLoadingRating);
-    console.log('userRating: ' + this.props.isLoadingUserRating);
-    console.log('summary: ' + this.props.isLoadingSummary);
     return (
       this.props.isLoadingDetails ||
       this.props.isLoadingRating ||
